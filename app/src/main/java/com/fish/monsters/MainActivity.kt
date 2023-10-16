@@ -18,10 +18,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FishMonstersTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    //color = MaterialTheme.colorScheme.background
-                ) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     Greeting("Android")
                 }
             }
