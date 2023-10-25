@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FishMonsters</string>
+    <string name="start">Rozpocznij</string>
+    <string name="settings">Ustawienia</string>
+    <string name="history">Historia</string>
+    <string name="about">O nas</string>
 </resources>
