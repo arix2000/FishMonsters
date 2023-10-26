@@ -18,26 +18,25 @@ import com.fish.monsters.features.start.StartScreen
 import org.koin.compose.koinInject
 
 /**
- * Declares all possible navigation routes in the application along with their arguments
+ * Defines all possible navigation routes within the application, along with their associated arguments.
  *
  * **How to add a screen?**
- * * Without arguments: add to [NavGraphBuilder] the following:
+ * - Without arguments: Add the following to the [NavGraphBuilder]:
  * ```
- *      composable(Screen.YourScreen.route) {
- *          YourScreen()
- *      }
+ * composable(Screen.YourScreen.route) {
+ *     YourScreen()
+ * }
  * ```
- *  * With arguments: add a function to [NavGraphBuilder] similar to the one
- *  above, but this time with argument handling:
- *  ```
- *       composable(Screen.YourScreen.route) { backStackEntry ->
- *          backStackEntry.arguments?.getString(Screen.YourScreen.argumentKeys[0])?.let {
- *              YourScreen(it)
- *          }
- *      }
- *  ```
+ * - With arguments: Add a function to the [NavGraphBuilder] similar to the one above, but this time, include argument handling:
+ * ```
+ * composable(Screen.YourScreen.route) { backStackEntry ->
+ *     backStackEntry.arguments?.getString(Screen.YourScreen.argumentKeys[0])?.let {
+ *         YourScreen(it)
+ *     }
+ * }
+ * ```
  *
- *  **WARNING** It is your responsibility to convert argument from/to String if you need
+ * **WARNING**: It is your responsibility to handle the conversion of arguments to and from String if necessary.
  */
 
 @Composable
