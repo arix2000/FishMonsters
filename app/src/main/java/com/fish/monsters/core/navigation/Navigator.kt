@@ -8,8 +8,8 @@ import com.fish.monsters.common.extensions.putArgument
  * This is a navigation handler. All navigation should be performed through [Navigator].
  *
  * Steps to add your screen to navigation:
- * - Add a new screen object to [Screen], providing a route and an argument key if necessary.
- * - Add a composable navigation entry to [AppNavHost].
+ * * Add a new screen object to [Screen], providing a route and an argument key if necessary.
+ * * Add a composable navigation entry to [AppNavHost].
  *
  * **USAGE**
  *

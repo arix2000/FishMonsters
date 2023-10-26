@@ -21,19 +21,19 @@ import org.koin.compose.koinInject
  * Defines all possible navigation routes within the application, along with their associated arguments.
  *
  * **How to add a screen?**
- * - Without arguments: Add the following to the [NavGraphBuilder]:
+ * * Without arguments: Add the following to the [NavGraphBuilder]:
  * ```
- * composable(Screen.YourScreen.route) {
- *     YourScreen()
- * }
+ *      composable(Screen.YourScreen.route) {
+ *          YourScreen()
+ *      }
  * ```
- * - With arguments: Add a function to the [NavGraphBuilder] similar to the one above, but this time, include argument handling:
+ * * With arguments: Add a function to the [NavGraphBuilder] similar to the one above, but this time, include argument handling:
  * ```
- * composable(Screen.YourScreen.route) { backStackEntry ->
- *     backStackEntry.arguments?.getString(Screen.YourScreen.argumentKeys[0])?.let {
- *         YourScreen(it)
- *     }
- * }
+ *       composable(Screen.YourScreen.route) { backStackEntry ->
+ *           backStackEntry.arguments?.getString(Screen.YourScreen.argumentKeys[0])?.let {
+ *               YourScreen(it)
+ *           }
+ *       }
  * ```
  *
  * **WARNING**: It is your responsibility to handle the conversion of arguments to and from String if necessary.
