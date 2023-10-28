@@ -1,4 +1,4 @@
-package com.fish.monsters.features.homeScreen
+package com.fish.monsters.features.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,13 +23,16 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.CapText
-import com.fish.monsters.common.views.FishButton
-import com.fish.monsters.common.views.OutlinedFishButton
+import com.fish.monsters.common.views.buttons.FishButton
+import com.fish.monsters.common.views.buttons.OutlinedFishButton
+import com.fish.monsters.core.navigation.Navigator
+import com.fish.monsters.core.navigation.Screen
 import com.fish.monsters.core.theme.FishMonstersTheme
+import com.fish.monsters.core.theme.SurfaceColor
+import org.koin.compose.koinInject
 
 @Composable
-fun HomeScreen() {
-    val surfaceColor = MaterialTheme.colorScheme.surface
+fun HomeScreen(navigator: Navigator = koinInject()) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(R.drawable.kraken_home_screen),
@@ -44,7 +46,7 @@ fun HomeScreen() {
                         Brush.verticalGradient(
                             colors = listOf(
                                 Color.Transparent,
-                                surfaceColor
+                                SurfaceColor
                             )
                         )
                     )
@@ -58,25 +60,31 @@ fun HomeScreen() {
         ) {
             FishButton(
                 indentationSize = DpSize(12.dp, 31.dp),
-                onClick = {},
+                onClick = { navigator.navigateTo(Screen.StartScreen) },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(52.dp)
             ) {
                 CapText(text = stringResource(R.string.start))
             }
-            HomeOutlineFishButton(stringResource(R.string.settings))
-            HomeOutlineFishButton(stringResource(R.string.history))
-            HomeOutlineFishButton(stringResource(R.string.about))
+            HomeOutlineFishButton(
+                stringResource(R.string.settings),
+                onClick = { navigator.navigateTo(Screen.SettingsScreen) })
+            HomeOutlineFishButton(
+                stringResource(R.string.history),
+                onClick = { navigator.navigateTo(Screen.HistoryScreen) })
+            HomeOutlineFishButton(
+                stringResource(R.string.about),
+                onClick = { navigator.navigateTo(Screen.AboutScreen) })
         }
     }
 }
 
 @Composable
-private fun HomeOutlineFishButton(buttonText: String) {
+private fun HomeOutlineFishButton(buttonText: String, onClick: () -> Unit) {
     OutlinedFishButton(
         indentationSize = DpSize(12.dp, 31.dp),
-        onClick = { },
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .height(52.dp)
@@ -90,7 +98,7 @@ private fun HomeOutlineFishButton(buttonText: String) {
 fun HomeScreenPreview() {
     FishMonstersTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
-            HomeScreen()
+            HomeScreen(Navigator())
         }
     }
 }
