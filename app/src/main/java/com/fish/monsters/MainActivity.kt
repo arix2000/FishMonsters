@@ -6,8 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.fish.monsters.core.navigation.AppNavHost
 import com.fish.monsters.core.theme.FishMonstersTheme
-import com.fish.monsters.features.homeScreen.HomeScreen
+import org.koin.compose.KoinContext
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             FishMonstersTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    HomeScreen()
+                    KoinContext {
+                        AppNavHost()
+                    }
                 }
             }
         }
