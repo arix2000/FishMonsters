@@ -18,7 +18,7 @@ fun SettingsScreen() {
 
 @Preview
 @Composable
-fun SettingsScreenPreview() {
+private fun SettingsScreenPreview() {
     FishMonstersTheme {
         Surface {
             SettingsScreen()

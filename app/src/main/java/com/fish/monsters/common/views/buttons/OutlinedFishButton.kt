@@ -10,15 +10,23 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
@@ -33,27 +41,77 @@ fun OutlinedFishButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     enabled: Boolean = true,
+    neonStyle: Boolean = false,
     content: @Composable RowScope.() -> Unit
 ) {
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        shape = PartiallyCutCornerShape(indentationSize),
-        border = border ?: BorderStroke(1.dp, DarkPrimaryColor),
-        contentPadding = contentPadding,
-        interactionSource = interactionSource,
-        enabled = enabled,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = DarkPrimaryColorA12,
-            contentColor = DarkPrimaryColor
-        ),
-        content = content,
-    )
+    if (neonStyle)
+        OutlinedFishButtonNeonStyle(
+            onClick = onClick,
+            modifier = modifier,
+            shape = PartiallyCutCornerShape(indentationSize),
+            indentationSize = indentationSize,
+            contentPadding = contentPadding,
+            interactionSource = interactionSource,
+            enabled = enabled,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = DarkPrimaryColorA12,
+                contentColor = DarkPrimaryColor
+            ),
+            content = content,
+        )
+    else
+        Button(
+            onClick = onClick,
+            modifier = modifier,
+            shape = PartiallyCutCornerShape(indentationSize),
+            border = border ?: BorderStroke(1.dp, DarkPrimaryColor),
+            contentPadding = contentPadding,
+            interactionSource = interactionSource,
+            enabled = enabled,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = DarkPrimaryColorA12,
+                contentColor = DarkPrimaryColor
+            ),
+            content = content,
+        )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun OutlinedFishButtonNeonStyle(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    shape: Shape,
+    indentationSize: DpSize,
+    colors: ButtonColors,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    enabled: Boolean = true,
+    content: @Composable RowScope.() -> Unit
+) {
+    CompositionLocalProvider(
+        LocalMinimumTouchTargetEnforcement provides false,
+    ) {
+        Button(
+            onClick = onClick,
+            modifier = modifier.drawWithContent {
+                drawContent()
+                drawNeonStroke(indentationSize)
+            },
+            shape = shape,
+            border = BorderStroke(1.dp, Color.Transparent),
+            contentPadding = contentPadding,
+            interactionSource = interactionSource,
+            enabled = enabled,
+            colors = colors,
+            content = content,
+        )
+    }
 }
 
 @Preview
 @Composable
-fun OutlinedFishButtonPreview() {
+private fun OutlinedFishButtonPreview() {
     FishMonstersTheme {
         Box(modifier = Modifier.padding(20.dp)) {
             Column(
@@ -75,6 +133,31 @@ fun OutlinedFishButtonPreview() {
                     indentationSize = DpSize(12.dp, 30.dp),
                     contentPadding = PaddingValues(13.dp),
                     modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "indentationSize = DpSize(12.dp, 30.dp)")
+                }
+                Text(text = "neonStyle true:")
+                OutlinedFishButton(
+                    onClick = {},
+                    modifier = Modifier.fillMaxWidth(),
+                    neonStyle = true
+                ) {
+                    Text(text = "Default indentationSize")
+                }
+                OutlinedFishButton(
+                    onClick = {},
+                    indentationSize = DpSize(10.dp, 10.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    neonStyle = true
+                ) {
+                    Text(text = "indentationSize = DpSize(10.dp, 10.dp)")
+                }
+                OutlinedFishButton(
+                    onClick = {},
+                    indentationSize = DpSize(12.dp, 30.dp),
+                    contentPadding = PaddingValues(13.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    neonStyle = true
                 ) {
                     Text(text = "indentationSize = DpSize(12.dp, 30.dp)")
                 }

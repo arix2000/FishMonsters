@@ -28,7 +28,7 @@ fun ScreenBox(
 
 @Preview
 @Composable
-fun ScreenViewPreview() {
+private fun ScreenViewPreview() {
     FishMonstersTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             ScreenBox(title = "Wybierz poziom trudności") { Text(text = "Hello Screen view") }

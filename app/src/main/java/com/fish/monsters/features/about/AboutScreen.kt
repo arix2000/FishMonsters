@@ -17,7 +17,7 @@ fun AboutScreen() {
 
 @Preview
 @Composable
-fun AboutScreenPreview() {
+private fun AboutScreenPreview() {
     FishMonstersTheme {
         Surface {
             AboutScreen()

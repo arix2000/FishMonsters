@@ -95,7 +95,7 @@ private fun HomeOutlineFishButton(buttonText: String, onClick: () -> Unit) {
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
+private fun HomeScreenPreview() {
     FishMonstersTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             HomeScreen(Navigator())

@@ -17,7 +17,7 @@ fun HistoryScreen() {
 
 @Preview
 @Composable
-fun HistoryScreenPreview() {
+private fun HistoryScreenPreview() {
     FishMonstersTheme {
         Surface() {
             HistoryScreen()

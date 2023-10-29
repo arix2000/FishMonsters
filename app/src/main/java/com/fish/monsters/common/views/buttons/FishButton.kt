@@ -10,17 +10,24 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.theme.TextColorDark
@@ -34,9 +41,26 @@ fun FishButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     enabled: Boolean = true,
+    neonStyle: Boolean = false,
     content: @Composable RowScope.() -> Unit
 ) {
-    Button(
+    if (neonStyle) FishButtonNeonStyle(
+        onClick = onClick,
+        modifier = modifier,
+        shape = PartiallyCutCornerShape(indentationSize),
+        contentPadding = contentPadding,
+        border = border,
+        interactionSource = interactionSource,
+        colors = ButtonDefaults.buttonColors(),
+        enabled = enabled,
+        indentationSize = indentationSize,
+        content = {
+            ProvideTextStyle(TextStyle(color = TextColorDark)) {
+                content()
+            }
+        },
+    )
+    else Button(
         onClick = onClick,
         modifier = modifier,
         shape = PartiallyCutCornerShape(indentationSize),
@@ -53,13 +77,47 @@ fun FishButton(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun FishButtonNeonStyle(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    shape: Shape,
+    indentationSize: DpSize,
+    border: BorderStroke? = null,
+    colors: ButtonColors,
+    contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    enabled: Boolean = true,
+    content: @Composable RowScope.() -> Unit
+) {
+    CompositionLocalProvider(
+        LocalMinimumTouchTargetEnforcement provides false,
+    ) {
+        Button(
+            onClick = onClick,
+            modifier = modifier.drawWithContent {
+                drawContent()
+                drawNeonStroke(indentationSize)
+            },
+            shape = shape,
+            border = border,
+            contentPadding = contentPadding,
+            interactionSource = interactionSource,
+            enabled = enabled,
+            colors = colors,
+            content = content,
+        )
+    }
+}
+
 @Preview
 @Composable
-fun FishButtonPreview() {
+private fun FishButtonPreview() {
     FishMonstersTheme {
         Box(modifier = Modifier.padding(20.dp)) {
             Column(
-                verticalArrangement = Arrangement.spacedBy(10.dp),
+                verticalArrangement = Arrangement.spacedBy(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 FishButton(onClick = {}, modifier = Modifier.fillMaxWidth()) {
@@ -77,6 +135,27 @@ fun FishButtonPreview() {
                     indentationSize = DpSize(12.dp, 30.dp),
                     contentPadding = PaddingValues(13.dp),
                     modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "indentationSize = DpSize(12.dp, 30.dp)")
+                }
+                Text(text = "Neon style true: ")
+                FishButton(onClick = {}, modifier = Modifier.fillMaxWidth(), neonStyle = true) {
+                    Text(text = "Default indentationSize")
+                }
+                FishButton(
+                    onClick = {},
+                    indentationSize = DpSize(10.dp, 10.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    neonStyle = true
+                ) {
+                    Text(text = "indentationSize = DpSize(10.dp, 10.dp)")
+                }
+                FishButton(
+                    onClick = {},
+                    indentationSize = DpSize(12.dp, 30.dp),
+                    contentPadding = PaddingValues(13.dp),
+                    modifier = Modifier.fillMaxWidth(),
+                    neonStyle = true
                 ) {
                     Text(text = "indentationSize = DpSize(12.dp, 30.dp)")
                 }
