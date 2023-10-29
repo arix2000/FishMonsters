@@ -26,12 +26,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
+import com.fish.monsters.common.extensions.isPreview
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.common.views.CapText
 import com.fish.monsters.core.theme.DangerColor
 import com.fish.monsters.core.theme.DangerColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
+import com.fish.monsters.features.settings.data.SettingsManager
+import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DangerOutlinedFishButton(
     modifier: Modifier = Modifier,
@@ -44,39 +48,42 @@ fun DangerOutlinedFishButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = DangerColorA12,
     ),
-    neonStyle: Boolean = false,
+    neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
     content: @Composable RowScope.() -> Unit
 ) {
-    if (neonStyle)
-        DangerOutlinedFishButtonNeonStyle(
-            onClick = onClick,
-            modifier = modifier,
-            shape = PartiallyCutCornerShape(indentationSize),
-            indentationSize = indentationSize,
-            contentPadding = contentPadding,
-            interactionSource = interactionSource,
-            enabled = enabled,
-            colors = colors,
-            content = content,
-        )
-    else
-        OutlinedFishButton(
-            onClick = onClick,
-            modifier = modifier,
-            border = border ?: BorderStroke(1.dp, DangerColor),
-            contentPadding = contentPadding,
-            interactionSource = interactionSource,
-            enabled = enabled,
-            colors = colors
-        ) {
-            ProvideTextStyle(TextStyle(color = DangerColor)) {
-                content()
+    CompositionLocalProvider(
+        LocalMinimumTouchTargetEnforcement provides false,
+    ) {
+        if (neonStyle)
+            DangerOutlinedFishButtonNeonStyle(
+                onClick = onClick,
+                modifier = modifier,
+                shape = PartiallyCutCornerShape(indentationSize),
+                indentationSize = indentationSize,
+                contentPadding = contentPadding,
+                interactionSource = interactionSource,
+                enabled = enabled,
+                colors = colors,
+                content = content,
+            )
+        else
+            OutlinedFishButton(
+                onClick = onClick,
+                modifier = modifier,
+                border = border ?: BorderStroke(1.dp, DangerColor),
+                contentPadding = contentPadding,
+                interactionSource = interactionSource,
+                enabled = enabled,
+                colors = colors
+            ) {
+                ProvideTextStyle(TextStyle(color = DangerColor)) {
+                    content()
+                }
             }
-        }
+    }
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DangerOutlinedFishButtonNeonStyle(
     onClick: () -> Unit,
@@ -89,25 +96,21 @@ fun DangerOutlinedFishButtonNeonStyle(
     colors: ButtonColors,
     content: @Composable RowScope.() -> Unit
 ) {
-    CompositionLocalProvider(
-        LocalMinimumTouchTargetEnforcement provides false,
+    Button(
+        onClick = onClick,
+        modifier = modifier.drawWithContent {
+            drawContent()
+            drawNeonStroke(indentationSize, DangerColor)
+        },
+        shape = shape,
+        border = BorderStroke(1.dp, Color.Transparent),
+        contentPadding = contentPadding,
+        interactionSource = interactionSource,
+        enabled = enabled,
+        colors = colors,
     ) {
-        Button(
-            onClick = onClick,
-            modifier = modifier.drawWithContent {
-                drawContent()
-                drawNeonStroke(indentationSize, DangerColor)
-            },
-            shape = shape,
-            border = BorderStroke(1.dp, Color.Transparent),
-            contentPadding = contentPadding,
-            interactionSource = interactionSource,
-            enabled = enabled,
-            colors = colors,
-        ) {
-            ProvideTextStyle(TextStyle(color = DangerColor)) {
-                content()
-            }
+        ProvideTextStyle(TextStyle(color = DangerColor)) {
+            content()
         }
     }
 }

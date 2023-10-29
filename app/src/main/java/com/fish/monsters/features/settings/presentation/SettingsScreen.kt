@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Surface
@@ -15,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,15 +39,17 @@ import com.fish.monsters.common.views.buttons.DropdownTextButton
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
 import com.fish.monsters.common.views.screenContent.ScreenBox
 import com.fish.monsters.core.theme.FishMonstersTheme
+import com.fish.monsters.features.settings.data.SettingsManager
+import org.koin.compose.koinInject
 
 
 @Composable
-fun SettingsScreen() {
-    SettingsScreenContent()
+fun SettingsScreen(settingsManager: SettingsManager = koinInject()) {
+    SettingsScreenContent(settingsManager)
 }
 
 @Composable
-fun SettingsScreenContent() {
+fun SettingsScreenContent(settingsManager: SettingsManager) {
     ScreenBox(title = stringResource(id = R.string.settings)) {
         Column(
             Modifier
@@ -71,7 +75,13 @@ fun SettingsScreenContent() {
                 onValueChange = {})
             FadingHorizontalDivider()
             RowSection(label = stringResource(R.string.neon_styles)) {
-                FishSwitch(checked = false, onCheckedChange = {})
+                var checkedState by remember {
+                    mutableStateOf(false)
+                }
+                FishSwitch(checked = checkedState, onCheckedChange = {
+                    checkedState = it
+                    settingsManager.updateTempSettings(neonStyles = it)
+                })
             }
             ButtonsGridSection()
             DangerOutlinedFishButton(onClick = { }, modifier = Modifier.fillMaxWidth()) {
@@ -115,21 +125,23 @@ private fun SliderSection(label: String, defaultValue: Float, onValueChange: (Fl
 
 @Composable
 private fun ButtonsGridSection() {
+    val spacing = remember { 8.dp }
     Column(Modifier.fillMaxWidth()) {
         Row {
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.report_problem))
             }
-            Spacer(modifier = Modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(spacing))
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.how_to_play))
             }
         }
+        Spacer(modifier = Modifier.height(spacing))
         Row {
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.rate_us))
             }
-            Spacer(modifier = Modifier.width(6.dp))
+            Spacer(modifier = Modifier.width(spacing))
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.support))
             }
@@ -143,7 +155,7 @@ private fun SettingsScreenPreview() {
     FishMonstersTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Box {
-                SettingsScreenContent()
+                SettingsScreenContent(SettingsManager())
             }
         }
     }

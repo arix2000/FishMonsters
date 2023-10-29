@@ -27,11 +27,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
+import com.fish.monsters.common.extensions.isPreview
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
+import com.fish.monsters.features.settings.data.SettingsManager
+import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedFishButton(
     modifier: Modifier = Modifier,
@@ -44,36 +48,39 @@ fun OutlinedFishButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = DarkPrimaryColorA12,
     ),
-    neonStyle: Boolean = false,
+    neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
     content: @Composable RowScope.() -> Unit
 ) {
-    if (neonStyle)
-        OutlinedFishButtonNeonStyle(
-            onClick = onClick,
-            modifier = modifier,
-            shape = PartiallyCutCornerShape(indentationSize),
-            indentationSize = indentationSize,
-            contentPadding = contentPadding,
-            interactionSource = interactionSource,
-            enabled = enabled,
-            colors = colors,
-            content = content,
-        )
-    else
-        Button(
-            onClick = onClick,
-            modifier = modifier,
-            shape = PartiallyCutCornerShape(indentationSize),
-            border = border ?: BorderStroke(1.dp, DarkPrimaryColor),
-            contentPadding = contentPadding,
-            interactionSource = interactionSource,
-            enabled = enabled,
-            colors = colors,
-            content = content,
-        )
+    CompositionLocalProvider(
+        LocalMinimumTouchTargetEnforcement provides false,
+    ) {
+        if (neonStyle)
+            OutlinedFishButtonNeonStyle(
+                onClick = onClick,
+                modifier = modifier,
+                shape = PartiallyCutCornerShape(indentationSize),
+                indentationSize = indentationSize,
+                contentPadding = contentPadding,
+                interactionSource = interactionSource,
+                enabled = enabled,
+                colors = colors,
+                content = content,
+            )
+        else
+            Button(
+                onClick = onClick,
+                modifier = modifier,
+                shape = PartiallyCutCornerShape(indentationSize),
+                border = border ?: BorderStroke(1.dp, DarkPrimaryColor),
+                contentPadding = contentPadding,
+                interactionSource = interactionSource,
+                enabled = enabled,
+                colors = colors,
+                content = content,
+            )
+    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun OutlinedFishButtonNeonStyle(
     modifier: Modifier = Modifier,
@@ -86,24 +93,20 @@ private fun OutlinedFishButtonNeonStyle(
     enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit
 ) {
-    CompositionLocalProvider(
-        LocalMinimumTouchTargetEnforcement provides false,
-    ) {
-        Button(
-            onClick = onClick,
-            modifier = modifier.drawWithContent {
-                drawContent()
-                drawNeonStroke(indentationSize)
-            },
-            shape = shape,
-            border = BorderStroke(1.dp, Color.Transparent),
-            contentPadding = contentPadding,
-            interactionSource = interactionSource,
-            enabled = enabled,
-            colors = colors,
-            content = content,
-        )
-    }
+    Button(
+        onClick = onClick,
+        modifier = modifier.drawWithContent {
+            drawContent()
+            drawNeonStroke(indentationSize)
+        },
+        shape = shape,
+        border = BorderStroke(1.dp, Color.Transparent),
+        contentPadding = contentPadding,
+        interactionSource = interactionSource,
+        enabled = enabled,
+        colors = colors,
+        content = content,
+    )
 }
 
 @Preview

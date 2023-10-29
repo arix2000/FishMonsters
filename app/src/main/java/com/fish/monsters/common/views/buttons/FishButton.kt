@@ -28,10 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
+import com.fish.monsters.common.extensions.isPreview
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.theme.TextColorDark
+import com.fish.monsters.features.settings.data.SettingsManager
+import org.koin.compose.koinInject
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FishButton(
     modifier: Modifier = Modifier,
@@ -41,43 +45,46 @@ fun FishButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     enabled: Boolean = true,
-    neonStyle: Boolean = false,
+    neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
     content: @Composable RowScope.() -> Unit
 ) {
-    if (neonStyle) FishButtonNeonStyle(
-        onClick = onClick,
-        modifier = modifier,
-        shape = PartiallyCutCornerShape(indentationSize),
-        contentPadding = contentPadding,
-        border = border,
-        interactionSource = interactionSource,
-        colors = ButtonDefaults.buttonColors(),
-        enabled = enabled,
-        indentationSize = indentationSize,
-        content = {
-            ProvideTextStyle(TextStyle(color = TextColorDark)) {
-                content()
-            }
-        },
-    )
-    else Button(
-        onClick = onClick,
-        modifier = modifier,
-        shape = PartiallyCutCornerShape(indentationSize),
-        border = border,
-        contentPadding = contentPadding,
-        interactionSource = interactionSource,
-        colors = ButtonDefaults.buttonColors(),
-        enabled = enabled,
-        content = {
-            ProvideTextStyle(TextStyle(color = TextColorDark)) {
-                content()
-            }
-        },
-    )
+    CompositionLocalProvider(
+        LocalMinimumTouchTargetEnforcement provides false,
+    ) {
+        if (neonStyle) FishButtonNeonStyle(
+            onClick = onClick,
+            modifier = modifier,
+            shape = PartiallyCutCornerShape(indentationSize),
+            contentPadding = contentPadding,
+            border = border,
+            interactionSource = interactionSource,
+            colors = ButtonDefaults.buttonColors(),
+            enabled = enabled,
+            indentationSize = indentationSize,
+            content = {
+                ProvideTextStyle(TextStyle(color = TextColorDark)) {
+                    content()
+                }
+            },
+        )
+        else Button(
+            onClick = onClick,
+            modifier = modifier,
+            shape = PartiallyCutCornerShape(indentationSize),
+            border = border,
+            contentPadding = contentPadding,
+            interactionSource = interactionSource,
+            colors = ButtonDefaults.buttonColors(),
+            enabled = enabled,
+            content = {
+                ProvideTextStyle(TextStyle(color = TextColorDark)) {
+                    content()
+                }
+            },
+        )
+    }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FishButtonNeonStyle(
     modifier: Modifier = Modifier,
@@ -91,24 +98,20 @@ private fun FishButtonNeonStyle(
     enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit
 ) {
-    CompositionLocalProvider(
-        LocalMinimumTouchTargetEnforcement provides false,
-    ) {
-        Button(
-            onClick = onClick,
-            modifier = modifier.drawWithContent {
-                drawContent()
-                drawNeonStroke(indentationSize)
-            },
-            shape = shape,
-            border = border,
-            contentPadding = contentPadding,
-            interactionSource = interactionSource,
-            enabled = enabled,
-            colors = colors,
-            content = content,
-        )
-    }
+    Button(
+        onClick = onClick,
+        modifier = modifier.drawWithContent {
+            drawContent()
+            drawNeonStroke(indentationSize)
+        },
+        shape = shape,
+        border = border,
+        contentPadding = contentPadding,
+        interactionSource = interactionSource,
+        enabled = enabled,
+        colors = colors,
+        content = content,
+    )
 }
 
 @Preview
