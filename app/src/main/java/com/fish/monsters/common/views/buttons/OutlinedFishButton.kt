@@ -41,6 +41,9 @@ fun OutlinedFishButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     enabled: Boolean = true,
+    colors: ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = DarkPrimaryColorA12,
+    ),
     neonStyle: Boolean = false,
     content: @Composable RowScope.() -> Unit
 ) {
@@ -53,10 +56,7 @@ fun OutlinedFishButton(
             contentPadding = contentPadding,
             interactionSource = interactionSource,
             enabled = enabled,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = DarkPrimaryColorA12,
-                contentColor = DarkPrimaryColor
-            ),
+            colors = colors,
             content = content,
         )
     else
@@ -68,10 +68,7 @@ fun OutlinedFishButton(
             contentPadding = contentPadding,
             interactionSource = interactionSource,
             enabled = enabled,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = DarkPrimaryColorA12,
-                contentColor = DarkPrimaryColor
-            ),
+            colors = colors,
             content = content,
         )
 }

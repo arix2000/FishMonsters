@@ -1,5 +1,6 @@
 package com.fish.monsters.common.extensions
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.PaintingStyle
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
@@ -12,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.core.theme.DarkPrimaryColor
 
-fun ContentDrawScope.drawNeonStroke(indentationSize: DpSize) {
+fun ContentDrawScope.drawNeonStroke(indentationSize: DpSize, color: Color = DarkPrimaryColor) {
     this.drawIntoCanvas {
         val paint =
             Paint().apply {
@@ -22,8 +23,6 @@ fun ContentDrawScope.drawNeonStroke(indentationSize: DpSize) {
 
         val frameworkPaint =
             paint.asFrameworkPaint()
-
-        val color = DarkPrimaryColor
 
         this.drawIntoCanvas {
             frameworkPaint.color = color.copy(alpha = 0f).toArgb()
@@ -44,7 +43,7 @@ fun ContentDrawScope.drawNeonStroke(indentationSize: DpSize) {
                     Density(density),
                     indentationSize
                 ),
-                color = DarkPrimaryColor,
+                color = color,
                 style = Stroke(width = 1.dp.toPx())
             )
         }
