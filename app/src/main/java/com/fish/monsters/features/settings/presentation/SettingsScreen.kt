@@ -1,4 +1,4 @@
-package com.fish.monsters.features.settings
+package com.fish.monsters.features.settings.presentation
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -52,21 +53,29 @@ fun SettingsScreenContent() {
                 .padding(start = 20.dp, end = 20.dp, top = 30.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            RowSection(label = "Język: ") {
-                DropdownTextButton(items = listOf("Polski", "English"), onItemClicked = {})
+            RowSection(label = stringResource(R.string.language)) {
+                DropdownTextButton(
+                    items = stringArrayResource(R.array.languages).toList(),
+                    onItemClicked = {})
             }
-            RowSection(label = "Wibracje") {
+            RowSection(label = stringResource(R.string.vibration)) {
                 FishSwitch(checked = true, onCheckedChange = {})
             }
-            SliderSection(label = "Muzyka", defaultValue = 0.5f, onValueChange = {})
-            SliderSection(label = "Dźwięk", defaultValue = 0.5f, onValueChange = {})
+            SliderSection(
+                label = stringResource(R.string.music),
+                defaultValue = 0.5f,
+                onValueChange = {})
+            SliderSection(
+                label = stringResource(R.string.sound),
+                defaultValue = 0.5f,
+                onValueChange = {})
             FadingHorizontalDivider()
-            RowSection(label = "Neonowy styl przycisków") {
+            RowSection(label = stringResource(R.string.neon_styles)) {
                 FishSwitch(checked = false, onCheckedChange = {})
             }
             ButtonsGridSection()
             DangerOutlinedFishButton(onClick = { }, modifier = Modifier.fillMaxWidth()) {
-                CapText(text = "Wyczyść postęp")
+                CapText(text = stringResource(R.string.clear_progress))
             }
         }
     }
@@ -109,20 +118,20 @@ private fun ButtonsGridSection() {
     Column(Modifier.fillMaxWidth()) {
         Row {
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
-                CapText(text = "Zgłoś problem")
+                CapText(text = stringResource(R.string.report_problem))
             }
             Spacer(modifier = Modifier.width(6.dp))
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
-                CapText(text = "Jak grać?")
+                CapText(text = stringResource(R.string.how_to_play))
             }
         }
         Row {
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
-                CapText(text = "Oceń nas")
+                CapText(text = stringResource(R.string.rate_us))
             }
             Spacer(modifier = Modifier.width(6.dp))
             OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
-                CapText(text = "Wspieraj")
+                CapText(text = stringResource(R.string.support))
             }
         }
     }

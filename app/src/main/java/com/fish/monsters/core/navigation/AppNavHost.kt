@@ -13,7 +13,7 @@ import com.fish.monsters.features.game.MainGameScreen
 import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.history.HistoryScreen
 import com.fish.monsters.features.home.HomeScreen
-import com.fish.monsters.features.settings.SettingsScreen
+import com.fish.monsters.features.settings.presentation.SettingsScreen
 import com.fish.monsters.features.start.StartScreen
 import org.koin.compose.koinInject
 
