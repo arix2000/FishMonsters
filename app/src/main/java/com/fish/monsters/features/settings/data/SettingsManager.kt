@@ -2,6 +2,7 @@ package com.fish.monsters.features.settings.data
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import com.fish.monsters.common.models.ui.Language
 
 class SettingsManager {
     private val _state = mutableStateOf(SettingsState())
@@ -12,7 +13,7 @@ class SettingsManager {
     }
 
     fun updateTempSettings(
-        language: String? = null,
+        language: Language? = null,
         vibration: Boolean? = null,
         musicPercentage: Int? = null,
         soundPercentage: Int? = null,

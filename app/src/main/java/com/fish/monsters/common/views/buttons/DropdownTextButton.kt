@@ -18,17 +18,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.fish.monsters.common.models.ui.Language
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.FishMonstersTheme
 
 @Composable
 fun DropdownTextButton(
-    items: List<String>,
-    onItemClicked: (String) -> Unit,
-    defaultButtonText: String = items.first()
+    items: List<Language>,
+    onItemClicked: (Language) -> Unit,
+    defaultButtonText: String
 ) {
     var expanded by remember {
         mutableStateOf(false)
@@ -48,11 +50,12 @@ fun DropdownTextButton(
         )
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             items.forEach {
+                val itemTitle = stringResource(it.titleId)
                 DropdownMenuItem(
                     modifier = Modifier.defaultMinSize(minWidth = 130.dp),
-                    text = { Text(text = it) },
+                    text = { Text(text = stringResource(it.titleId)) },
                     onClick = {
-                        buttonText = it
+                        buttonText = itemTitle
                         expanded = false
                         onItemClicked(it)
                     })
@@ -66,7 +69,7 @@ fun DropdownTextButton(
 private fun DropdownTextButtonPreview() {
     FishMonstersTheme {
         Surface {
-            DropdownTextButton(listOf("Polski", "English"), onItemClicked = {})
+            DropdownTextButton(Language.values().toList(), onItemClicked = {}, "Polski")
         }
     }
 }

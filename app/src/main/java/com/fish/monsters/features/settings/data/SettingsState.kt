@@ -1,22 +1,26 @@
 package com.fish.monsters.features.settings.data
 
 import androidx.compose.ui.text.intl.Locale
+import com.fish.monsters.common.models.ui.Language
 
 data class SettingsState(
-    val language: String = Locale.current.language,
+    val language: Language = Language.values().first { it.code == Locale.current.language },
     val vibration: Boolean = true,
     val musicPercentage: Int = 100,
     val soundPercentage: Int = 100,
     val neonStyles: Boolean = false
 ) {
+    fun toSettings(): Settings {
+        return Settings(vibration, musicPercentage, soundPercentage, neonStyles)
+    }
+
     companion object {
         fun from(settings: Settings): SettingsState {
             return SettingsState(
-                settings.language,
-                settings.vibration,
-                settings.musicPercentage,
-                settings.soundPercentage,
-                settings.neonStyles
+                vibration = settings.vibration,
+                musicPercentage = settings.musicPercentage,
+                soundPercentage = settings.soundPercentage,
+                neonStyles = settings.neonStyles
             )
         }
     }

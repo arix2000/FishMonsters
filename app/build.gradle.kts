@@ -14,6 +14,7 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
+        resourceConfigurations += mutableSetOf("en", "pl")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

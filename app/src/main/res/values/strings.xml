@@ -14,8 +14,7 @@
     <string name="how_to_play">Jak grać?</string>
     <string name="rate_us">Oceń nas</string>
     <string name="support">Wspieraj</string>
-    <string-array name="languages" translatable="false">
-        <item>Polski</item>
-        <item>English</item>
-    </string-array>
+
+    <string name="polish" translatable="false">Polski</string>
+    <string name="english" translatable="false">English</string>
 </resources>

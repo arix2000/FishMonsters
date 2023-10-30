@@ -14,13 +14,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FishMonsters"
-        tools:targetApi="31">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        tools:targetApi="31"
+        android:localeConfig="@xml/locales_config">
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.FishMonsters">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
