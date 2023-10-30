@@ -22,8 +22,10 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.models.ui.IconProps
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
+import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.features.settings.data.SettingsManager
@@ -34,6 +36,7 @@ fun IconFishButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     iconProps: IconProps,
+    soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles
 ) {
     val partiallyCutCornerShape = remember {
@@ -49,7 +52,10 @@ fun IconFishButton(
             .size(48.dp)
             .clip(partiallyCutCornerShape)
             .background(DarkPrimaryColor, partiallyCutCornerShape)
-            .clickable { onClick() },
+            .clickable {
+                soundManager.playDefaultButtonSound()
+                onClick()
+            },
         contentAlignment = Alignment.Center
     ) {
         with(iconProps) {

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +22,11 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.CapText
+import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.FishButton
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
 import com.fish.monsters.core.navigation.Navigator
 import com.fish.monsters.core.navigation.Screen
-import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.theme.SurfaceColor
 import org.koin.compose.koinInject
 
@@ -96,9 +95,7 @@ private fun HomeOutlineFishButton(buttonText: String, onClick: () -> Unit) {
 @Preview
 @Composable
 private fun HomeScreenPreview() {
-    FishMonstersTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            HomeScreen(Navigator())
-        }
+    PreviewContainer(modifier = Modifier.fillMaxSize()) {
+        HomeScreen(Navigator())
     }
 }

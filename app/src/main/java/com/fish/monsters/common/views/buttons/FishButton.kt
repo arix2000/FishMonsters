@@ -29,7 +29,9 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
+import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.theme.TextColorDark
 import com.fish.monsters.features.settings.data.SettingsManager
@@ -46,13 +48,17 @@ fun FishButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     enabled: Boolean = true,
     neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
+    soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     content: @Composable RowScope.() -> Unit
 ) {
     CompositionLocalProvider(
         LocalMinimumTouchTargetEnforcement provides false,
     ) {
         if (neonStyle) FishButtonNeonStyle(
-            onClick = onClick,
+            onClick = {
+                soundManager.playDefaultButtonSound()
+                onClick()
+            },
             modifier = modifier,
             shape = PartiallyCutCornerShape(indentationSize),
             contentPadding = contentPadding,
@@ -68,7 +74,10 @@ fun FishButton(
             },
         )
         else Button(
-            onClick = onClick,
+            onClick = {
+                soundManager.playDefaultButtonSound()
+                onClick()
+            },
             modifier = modifier,
             shape = PartiallyCutCornerShape(indentationSize),
             border = border,

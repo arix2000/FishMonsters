@@ -24,8 +24,10 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.models.ui.IconOutlinedProps
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
+import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
@@ -37,6 +39,7 @@ fun IconOutlinedFishButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     iconProps: IconOutlinedProps,
+    soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles
 ) {
     val partiallyCutCornerShape = remember {
@@ -57,7 +60,10 @@ fun IconOutlinedFishButton(
                 partiallyCutCornerShape
             )
             .background(DarkPrimaryColorA12)
-            .clickable { onClick() },
+            .clickable {
+                soundManager.playDefaultButtonSound()
+                onClick()
+            },
         contentAlignment = Alignment.Center
     ) {
         with(iconProps) {

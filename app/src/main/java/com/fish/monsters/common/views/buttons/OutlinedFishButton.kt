@@ -28,7 +28,9 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
+import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
@@ -49,6 +51,7 @@ fun OutlinedFishButton(
         containerColor = DarkPrimaryColorA12,
     ),
     neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
+    soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     content: @Composable RowScope.() -> Unit
 ) {
     CompositionLocalProvider(
@@ -56,7 +59,10 @@ fun OutlinedFishButton(
     ) {
         if (neonStyle)
             OutlinedFishButtonNeonStyle(
-                onClick = onClick,
+                onClick = {
+                    soundManager.playDefaultButtonSound()
+                    onClick()
+                },
                 modifier = modifier,
                 shape = PartiallyCutCornerShape(indentationSize),
                 indentationSize = indentationSize,
@@ -68,7 +74,10 @@ fun OutlinedFishButton(
             )
         else
             Button(
-                onClick = onClick,
+                onClick = {
+                    soundManager.playDefaultButtonSound()
+                    onClick()
+                },
                 modifier = modifier,
                 shape = PartiallyCutCornerShape(indentationSize),
                 border = border ?: BorderStroke(1.dp, DarkPrimaryColor),
