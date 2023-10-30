@@ -18,7 +18,7 @@ import com.fish.monsters.common.views.PreviewContainer
 fun SettingsSliderSection(label: String, value: Int, onValueChange: (Int) -> Unit) {
     Column {
         Text(text = label, fontSize = 18.sp)
-        FishSlider(value = value.fromPercents(), onValueChange = {
+        FishSlider(value = Float.fromPercents(value), onValueChange = {
             onValueChange(it.toPercents())
         })
         Text(

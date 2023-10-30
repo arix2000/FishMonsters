@@ -1,5 +1,6 @@
 package com.fish.monsters.features.settings.presentation
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.models.ui.Language
+import com.fish.monsters.common.utils.MusicManager
 import com.fish.monsters.common.views.CapText
 import com.fish.monsters.common.views.FadingHorizontalDivider
 import com.fish.monsters.common.views.FishSwitch
@@ -59,7 +61,9 @@ private fun SettingsScreenContent(viewModel: SettingsViewModel) {
             SettingsSliderSection(
                 label = stringResource(R.string.music),
                 value = state.musicPercentage,
-                onValueChange = { viewModel.updateSettings(musicPercentage = it) })
+                onValueChange = {
+                    viewModel.setMusicVolume(it)
+                })
             SettingsSliderSection(
                 label = stringResource(R.string.sound),
                 value = state.soundPercentage,
@@ -82,6 +86,12 @@ private fun SettingsScreenContent(viewModel: SettingsViewModel) {
 @Composable
 private fun SettingsScreenPreview() {
     PreviewContainer {
-        SettingsScreenContent(SettingsViewModel(SettingsManager()))
+
+        SettingsScreenContent(
+            SettingsViewModel(
+                SettingsManager(),
+                MusicManager(MediaPlayer(), LocalContext.current)
+            )
+        )
     }
 }

@@ -18,10 +18,11 @@ import org.koin.compose.koinInject
 fun ScreenBox(
     title: String,
     navigator: Navigator = if (isPreview()) Navigator() else koinInject(),
+    onBackButtonClicked: ((Navigator) -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Column {
-        FishTopBar(title, navigator, content = content)
+        FishTopBar(title, navigator, onBackButtonClicked = onBackButtonClicked, content = content)
         Box(content = content)
     }
 }

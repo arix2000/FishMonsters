@@ -38,6 +38,7 @@ import com.fish.monsters.core.theme.TextColorDark
 fun FishTopBar(
     title: String? = null,
     navigator: Navigator,
+    onBackButtonClicked: ((Navigator) -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit = {}
 ) {
     val partiallyCutCornerShape = remember {
@@ -50,9 +51,12 @@ fun FishTopBar(
             .fillMaxWidth()
     ) {
         IconFishButton(
-            onClick = { navigator.popBackStack() },
-            iconProps = IconProps(Icons.Default.ArrowBack),
-            modifier = Modifier.fillMaxHeight()
+            onClick = {
+                if (onBackButtonClicked != null)
+                    onBackButtonClicked(navigator)
+                else
+                    navigator.popBackStack()
+            }, iconProps = IconProps(Icons.Default.ArrowBack), modifier = Modifier.fillMaxHeight()
         )
         Spacer(modifier = Modifier.width(10.dp))
         Box(
@@ -63,10 +67,8 @@ fun FishTopBar(
                 .background(DarkPrimaryColor, partiallyCutCornerShape)
         ) {
             ProvideTextStyle(TextStyle(color = TextColorDark)) {
-                if (title.isNullOrBlank())
-                    content()
-                else
-                    CapText(text = title)
+                if (title.isNullOrBlank()) content()
+                else CapText(text = title)
             }
         }
     }

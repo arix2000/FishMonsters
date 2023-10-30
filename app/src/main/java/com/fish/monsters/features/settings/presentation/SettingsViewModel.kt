@@ -9,10 +9,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
 import com.fish.monsters.common.models.ui.Language
+import com.fish.monsters.common.utils.MusicManager
 import com.fish.monsters.features.settings.data.SettingsManager
 import com.fish.monsters.features.settings.data.SettingsState
 
-class SettingsViewModel(private val settingsManager: SettingsManager) : ViewModel() {
+class SettingsViewModel(
+    private val settingsManager: SettingsManager,
+    private val musicManager: MusicManager
+) : ViewModel() {
 
     private val _state = mutableStateOf(settingsManager.state.value)
     val state: State<SettingsState> = _state
@@ -23,6 +27,11 @@ class SettingsViewModel(private val settingsManager: SettingsManager) : ViewMode
             val appLocale = LocaleListCompat.forLanguageTags(language.code)
             AppCompatDelegate.setApplicationLocales(appLocale)
         }
+    }
+
+    fun setMusicVolume(percents: Int) {
+        updateSettings(musicPercentage = percents)
+        musicManager.setVolume(percents)
     }
 
     fun updateSettings(
