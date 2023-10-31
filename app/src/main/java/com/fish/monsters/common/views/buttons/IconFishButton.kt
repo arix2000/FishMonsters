@@ -17,11 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.extensions.performVibration
 import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.models.ui.IconProps
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
@@ -29,6 +31,7 @@ import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.features.settings.data.SettingsManager
+import com.fish.monsters.features.settings.presentation.SettingsState
 import org.koin.compose.koinInject
 
 @Composable
@@ -37,16 +40,17 @@ fun IconFishButton(
     onClick: () -> Unit,
     iconProps: IconProps,
     soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
-    neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles
+    settingsState: SettingsState = if (isPreview()) SettingsState() else koinInject<SettingsManager>().state.value,
 ) {
     val partiallyCutCornerShape = remember {
         PartiallyCutCornerShape(DpSize(11.dp, 22.dp))
     }
+    val localView = LocalView.current
     Box(
         modifier = modifier
             .drawWithContent {
                 drawContent()
-                if (neonStyle)
+                if (settingsState.neonStyles)
                     drawNeonStroke(DpSize(11.dp, 22.dp))
             }
             .size(48.dp)
@@ -54,6 +58,7 @@ fun IconFishButton(
             .background(DarkPrimaryColor, partiallyCutCornerShape)
             .clickable {
                 soundManager.playDefaultButtonSound()
+                localView.performVibration(settingsState.vibration)
                 onClick()
             },
         contentAlignment = Alignment.Center
@@ -81,7 +86,7 @@ private fun IconFishButtonPreview() {
                 )
                 IconFishButton(
                     onClick = {},
-                    iconProps = IconProps(icon = Icons.Default.QuestionMark), neonStyle = true
+                    iconProps = IconProps(icon = Icons.Default.QuestionMark), settingsState = SettingsState(neonStyles = true)
                 )
             }
         }

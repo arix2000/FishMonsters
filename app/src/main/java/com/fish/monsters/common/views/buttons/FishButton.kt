@@ -23,18 +23,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.extensions.performVibration
 import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.theme.TextColorDark
 import com.fish.monsters.features.settings.data.SettingsManager
+import com.fish.monsters.features.settings.presentation.SettingsState
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,16 +50,18 @@ fun FishButton(
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     enabled: Boolean = true,
-    neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
+    settingsState: SettingsState = if (isPreview()) SettingsState() else koinInject<SettingsManager>().state.value,
     soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     content: @Composable RowScope.() -> Unit
 ) {
+    val localView = LocalView.current
     CompositionLocalProvider(
         LocalMinimumTouchTargetEnforcement provides false,
     ) {
-        if (neonStyle) FishButtonNeonStyle(
+        if (settingsState.neonStyles) FishButtonNeonStyle(
             onClick = {
                 soundManager.playDefaultButtonSound()
+                localView.performVibration(settingsState.vibration)
                 onClick()
             },
             modifier = modifier,
@@ -76,6 +81,7 @@ fun FishButton(
         else Button(
             onClick = {
                 soundManager.playDefaultButtonSound()
+                localView.performVibration(settingsState.vibration)
                 onClick()
             },
             modifier = modifier,
@@ -151,14 +157,18 @@ private fun FishButtonPreview() {
                     Text(text = "indentationSize = DpSize(12.dp, 30.dp)")
                 }
                 Text(text = "Neon style true: ")
-                FishButton(onClick = {}, modifier = Modifier.fillMaxWidth(), neonStyle = true) {
+                FishButton(
+                    onClick = {},
+                    modifier = Modifier.fillMaxWidth(),
+                    settingsState = SettingsState(neonStyles = true)
+                ) {
                     Text(text = "Default indentationSize")
                 }
                 FishButton(
                     onClick = {},
                     indentationSize = DpSize(10.dp, 10.dp),
                     modifier = Modifier.fillMaxWidth(),
-                    neonStyle = true
+                    settingsState = SettingsState(neonStyles = true)
                 ) {
                     Text(text = "indentationSize = DpSize(10.dp, 10.dp)")
                 }
@@ -167,7 +177,7 @@ private fun FishButtonPreview() {
                     indentationSize = DpSize(12.dp, 30.dp),
                     contentPadding = PaddingValues(13.dp),
                     modifier = Modifier.fillMaxWidth(),
-                    neonStyle = true
+                    settingsState = SettingsState(neonStyles = true)
                 ) {
                     Text(text = "indentationSize = DpSize(12.dp, 30.dp)")
                 }

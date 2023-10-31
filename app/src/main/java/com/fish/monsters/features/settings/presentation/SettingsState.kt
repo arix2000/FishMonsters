@@ -1,7 +1,8 @@
-package com.fish.monsters.features.settings.data
+package com.fish.monsters.features.settings.presentation
 
 import androidx.compose.ui.text.intl.Locale
 import com.fish.monsters.common.models.ui.Language
+import com.fish.monsters.features.settings.data.Settings
 
 data class SettingsState(
     val language: Language = Language.values().first { it.code == Locale.current.language },

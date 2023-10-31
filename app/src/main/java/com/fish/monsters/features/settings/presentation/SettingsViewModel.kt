@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 import com.fish.monsters.common.models.ui.Language
 import com.fish.monsters.common.utils.MusicManager
 import com.fish.monsters.features.settings.data.SettingsManager
-import com.fish.monsters.features.settings.data.SettingsState
 
 class SettingsViewModel(
     private val settingsManager: SettingsManager,

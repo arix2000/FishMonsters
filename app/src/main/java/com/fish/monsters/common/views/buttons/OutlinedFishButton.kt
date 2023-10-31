@@ -23,11 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.extensions.performVibration
 import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.common.utils.SoundsManager
@@ -35,6 +37,7 @@ import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.features.settings.data.SettingsManager
+import com.fish.monsters.features.settings.presentation.SettingsState
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,17 +53,19 @@ fun OutlinedFishButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = DarkPrimaryColorA12,
     ),
-    neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
+    settingsState: SettingsState = if (isPreview()) SettingsState() else koinInject<SettingsManager>().state.value,
     soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     content: @Composable RowScope.() -> Unit
 ) {
+    val localView = LocalView.current
     CompositionLocalProvider(
         LocalMinimumTouchTargetEnforcement provides false,
     ) {
-        if (neonStyle)
+        if (settingsState.neonStyles)
             OutlinedFishButtonNeonStyle(
                 onClick = {
                     soundManager.playDefaultButtonSound()
+                    localView.performVibration(settingsState.vibration)
                     onClick()
                 },
                 modifier = modifier,
@@ -76,6 +81,7 @@ fun OutlinedFishButton(
             Button(
                 onClick = {
                     soundManager.playDefaultButtonSound()
+                    localView.performVibration(settingsState.vibration)
                     onClick()
                 },
                 modifier = modifier,
@@ -149,7 +155,7 @@ private fun OutlinedFishButtonPreview() {
                 OutlinedFishButton(
                     onClick = {},
                     modifier = Modifier.fillMaxWidth(),
-                    neonStyle = true
+                    settingsState = SettingsState(neonStyles = true)
                 ) {
                     Text(text = "Default indentationSize")
                 }
@@ -157,7 +163,7 @@ private fun OutlinedFishButtonPreview() {
                     onClick = {},
                     indentationSize = DpSize(10.dp, 10.dp),
                     modifier = Modifier.fillMaxWidth(),
-                    neonStyle = true
+                    settingsState = SettingsState(neonStyles = true)
                 ) {
                     Text(text = "indentationSize = DpSize(10.dp, 10.dp)")
                 }
@@ -166,7 +172,7 @@ private fun OutlinedFishButtonPreview() {
                     indentationSize = DpSize(12.dp, 30.dp),
                     contentPadding = PaddingValues(13.dp),
                     modifier = Modifier.fillMaxWidth(),
-                    neonStyle = true
+                    settingsState = SettingsState(neonStyles = true)
                 ) {
                     Text(text = "indentationSize = DpSize(12.dp, 30.dp)")
                 }
