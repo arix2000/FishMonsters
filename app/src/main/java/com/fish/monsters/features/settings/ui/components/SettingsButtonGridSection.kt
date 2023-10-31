@@ -19,25 +19,30 @@ import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
 
 @Composable
-fun SettingsButtonGridSection() {
+fun SettingsButtonGridSection(
+    onReportProblemClicked: () -> Unit,
+    onHowToPlayClicked: () -> Unit,
+    onRateUsClicked: () -> Unit,
+    onSupportClicked: () -> Unit,
+) {
     val spacing = remember { 8.dp }
     Column(Modifier.fillMaxWidth()) {
         Row {
-            OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(onClick = onReportProblemClicked, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.report_problem))
             }
             Spacer(modifier = Modifier.width(spacing))
-            OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(onClick = onHowToPlayClicked, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.how_to_play))
             }
         }
         Spacer(modifier = Modifier.height(spacing))
         Row {
-            OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(onClick = onRateUsClicked, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.rate_us))
             }
             Spacer(modifier = Modifier.width(spacing))
-            OutlinedFishButton(onClick = { }, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(onClick = onSupportClicked, modifier = Modifier.weight(1f)) {
                 CapText(text = stringResource(R.string.support))
             }
         }
@@ -48,6 +53,6 @@ fun SettingsButtonGridSection() {
 @Composable
 private fun SettingsButtonGridSectionPreview() {
     PreviewContainer(modifier = Modifier.padding(20.dp)) {
-        SettingsButtonGridSection()
+        SettingsButtonGridSection({}, {}, {}, {})
     }
 }

@@ -17,4 +17,8 @@
 
     <string name="polish" translatable="false">Polski</string>
     <string name="english" translatable="false">English</string>
+    <string name="settings_clear_progress_dialog_title">Czy napewno chesz usunąć swój postęp?</string>
+    <string name="settings_clear_progress_dialog_content_text">Potwierdzenie spowoduje usunięcie wszystkich danych o twoim postępie. Usunięta zostanie historia podejść, statystyki gracza, a także zapisane ustawienia.</string>
+    <string name="cancel">Anuluj</string>
+    <string name="settings_clear_progress_dialog_accept_button_text">Usuń moje dane</string>
 </resources>

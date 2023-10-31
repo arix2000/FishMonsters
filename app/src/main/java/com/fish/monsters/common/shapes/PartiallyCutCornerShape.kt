@@ -23,7 +23,7 @@ import com.fish.monsters.common.views.buttons.FishButton
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
 import com.fish.monsters.core.theme.FishMonstersTheme
 
-class PartiallyCutCornerShape(private val indentationSize: DpSize) : Shape {
+class PartiallyCutCornerShape(val indentationSize: DpSize) : Shape {
     override fun createOutline(
         size: Size, layoutDirection: LayoutDirection, density: Density
     ): Outline {

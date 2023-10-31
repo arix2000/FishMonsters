@@ -15,4 +15,8 @@
     <string name="rate_us">Rate us</string>
     <string name="support">Support</string>
     <string name="vibration">Vibration</string>
+    <string name="settings_clear_progress_dialog_title">Are you sure you want to delete your progress?</string>
+    <string name="settings_clear_progress_dialog_content_text">Confirmation will delete all data about your progress. History, player statistics, and saved settings will be deleted.</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings_clear_progress_dialog_accept_button_text">Delete my data</string>
 </resources>

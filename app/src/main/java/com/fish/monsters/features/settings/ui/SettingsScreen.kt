@@ -6,8 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -21,8 +25,10 @@ import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.DangerOutlinedFishButton
 import com.fish.monsters.common.views.buttons.DropdownTextButton
 import com.fish.monsters.common.views.screenContent.ScreenBox
+import com.fish.monsters.core.SettingsUris
 import com.fish.monsters.features.settings.SettingsViewModel
 import com.fish.monsters.features.settings.ui.components.SettingsButtonGridSection
+import com.fish.monsters.features.settings.ui.components.SettingsClearProgressDialog
 import com.fish.monsters.features.settings.ui.components.SettingsRowSection
 import com.fish.monsters.features.settings.ui.components.SettingsSliderSection
 import org.koin.compose.koinInject
@@ -30,13 +36,19 @@ import org.koin.compose.koinInject
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel = koinInject()) {
-    SettingsScreenContent(viewModel.settingsGlobalState.value) { viewModel.invokeEvent(it) }
+    val isClearProgressDialogVisible = remember { mutableStateOf(false) }
+    SettingsScreenContent(
+        viewModel.settingsGlobalState.value, isClearProgressDialogVisible
+    ) { viewModel.invokeEvent(it) }
 }
 
 @Composable
 private fun SettingsScreenContent(
-    settingsGlobalState: SettingsGlobalState, invokeEvent: (event: SettingsEvent) -> Unit
+    settingsGlobalState: SettingsGlobalState,
+    isClearProgressDialogVisible: MutableState<Boolean>,
+    invokeEvent: (event: SettingsEvent) -> Unit
 ) {
+    val uriHandler = LocalUriHandler.current
     ScreenBox(title = stringResource(R.string.settings)) {
         Column(
             Modifier
@@ -73,10 +85,23 @@ private fun SettingsScreenContent(
                     invokeEvent(SettingsEvent.UpdateSettingsEvent(neonStyles = it))
                 })
             }
-            SettingsButtonGridSection()
-            DangerOutlinedFishButton(onClick = { }, modifier = Modifier.fillMaxWidth()) {
+            SettingsButtonGridSection(
+                onReportProblemClicked = { uriHandler.openUri(SettingsUris.reportProblem) },
+                onHowToPlayClicked = { },
+                onRateUsClicked = { uriHandler.openUri(SettingsUris.rateUs) },
+                onSupportClicked = { uriHandler.openUri(SettingsUris.support) },
+            )
+            DangerOutlinedFishButton(
+                onClick = { isClearProgressDialogVisible.value = true },
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 CapText(text = stringResource(R.string.clear_progress))
             }
+        }
+        if (isClearProgressDialogVisible.value) {
+            SettingsClearProgressDialog(onDismissRequest = {
+                isClearProgressDialogVisible.value = false
+            }, onAcceptClicked = {})
         }
     }
 }
@@ -86,7 +111,19 @@ private fun SettingsScreenContent(
 private fun SettingsScreenPreview() {
     PreviewContainer {
         SettingsScreenContent(
-            SettingsGlobalState()
+            SettingsGlobalState(language = Language.POLISH),
+            remember { mutableStateOf(false) }
+        ) {}
+    }
+}
+
+@Preview
+@Composable
+private fun SettingsScreenClearDataDialogOpenedPreview() {
+    PreviewContainer {
+        SettingsScreenContent(
+            SettingsGlobalState(language = Language.POLISH),
+            remember { mutableStateOf(true) }
         ) {}
     }
 }

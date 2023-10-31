@@ -16,7 +16,6 @@ import com.fish.monsters.features.settings.ui.SettingsEvent
 class SettingsViewModel(
     private val settingsManager: SettingsManager, private val musicManager: MusicManager
 ) : ViewModel() {
-
     val settingsGlobalState: State<SettingsGlobalState> = settingsManager.state
 
     fun invokeEvent(event: SettingsEvent) {
@@ -61,6 +60,6 @@ class SettingsViewModel(
     ) {
         settingsManager.updateSettings(
             language, vibration, musicPercentage, soundPercentage, neonStyles
-        ).value
+        )
     }
 }
