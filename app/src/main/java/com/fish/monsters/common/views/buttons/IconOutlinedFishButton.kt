@@ -33,8 +33,8 @@ import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
-import com.fish.monsters.features.settings.data.SettingsManager
-import com.fish.monsters.features.settings.presentation.SettingsState
+import com.fish.monsters.common.utils.settings.SettingsManager
+import com.fish.monsters.common.utils.settings.SettingsGlobalState
 import org.koin.compose.koinInject
 
 @Composable
@@ -43,7 +43,7 @@ fun IconOutlinedFishButton(
     onClick: () -> Unit,
     iconProps: IconOutlinedProps,
     soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
-    settingsState: SettingsState = if (isPreview()) SettingsState() else koinInject<SettingsManager>().state.value,
+    settingsGlobalState: SettingsGlobalState = if (isPreview()) SettingsGlobalState() else koinInject<SettingsManager>().state.value,
 ) {
     val partiallyCutCornerShape = remember {
         PartiallyCutCornerShape(DpSize(11.dp, 22.dp))
@@ -53,20 +53,20 @@ fun IconOutlinedFishButton(
         modifier = modifier
             .drawWithContent {
                 drawContent()
-                if (settingsState.neonStyles)
+                if (settingsGlobalState.neonStyles)
                     drawNeonStroke(DpSize(11.dp, 22.dp))
             }
             .size(48.dp)
             .clip(partiallyCutCornerShape)
             .border(
                 1.dp,
-                if (settingsState.neonStyles) Color.Transparent else DarkPrimaryColor,
+                if (settingsGlobalState.neonStyles) Color.Transparent else DarkPrimaryColor,
                 partiallyCutCornerShape
             )
             .background(DarkPrimaryColorA12)
             .clickable {
                 soundManager.playDefaultButtonSound()
-                localView.performVibration(settingsState.vibration)
+                localView.performVibration(settingsGlobalState.vibration)
                 onClick()
             },
         contentAlignment = Alignment.Center
@@ -95,7 +95,7 @@ private fun IconOutlinedFishButtonPreview() {
                 IconOutlinedFishButton(
                     onClick = {},
                     iconProps = IconOutlinedProps(icon = Icons.Default.QuestionMark),
-                    settingsState = SettingsState(neonStyles = true)
+                    settingsGlobalState = SettingsGlobalState(neonStyles = true)
                 )
             }
         }

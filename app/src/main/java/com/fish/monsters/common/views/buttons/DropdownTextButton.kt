@@ -26,10 +26,10 @@ import androidx.compose.ui.unit.sp
 import com.fish.monsters.common.extensions.isPreview
 import com.fish.monsters.common.extensions.performVibration
 import com.fish.monsters.common.models.ui.Language
+import com.fish.monsters.common.utils.settings.SettingsGlobalState
+import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.FishMonstersTheme
-import com.fish.monsters.features.settings.data.SettingsManager
-import com.fish.monsters.features.settings.presentation.SettingsState
 import org.koin.compose.koinInject
 
 @Composable
@@ -37,7 +37,7 @@ fun DropdownTextButton(
     items: List<Language>,
     onItemClicked: (Language) -> Unit,
     defaultButtonText: String,
-    settingsState: SettingsState = if (isPreview()) SettingsState() else koinInject<SettingsManager>().state.value,
+    settingsGlobalState: SettingsGlobalState = if (isPreview()) SettingsGlobalState() else koinInject<SettingsManager>().state.value,
     ) {
     var expanded by remember {
         mutableStateOf(false)
@@ -48,7 +48,7 @@ fun DropdownTextButton(
     val localView = LocalView.current
 
     Row(modifier = Modifier.clickable {
-        localView.performVibration(settingsState.vibration)
+        localView.performVibration(settingsGlobalState.vibration)
         expanded = true
     }) {
         Text(text = buttonText, fontSize = 18.sp)

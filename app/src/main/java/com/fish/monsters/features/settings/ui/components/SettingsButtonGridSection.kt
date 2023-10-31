@@ -1,4 +1,4 @@
-package com.fish.monsters.features.settings.presentation.components
+package com.fish.monsters.features.settings.ui.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

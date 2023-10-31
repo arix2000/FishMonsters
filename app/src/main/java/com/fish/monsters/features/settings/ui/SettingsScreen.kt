@@ -1,6 +1,5 @@
-package com.fish.monsters.features.settings.presentation
+package com.fish.monsters.features.settings.ui
 
-import android.media.MediaPlayer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,13 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.models.ui.Language
-import com.fish.monsters.common.utils.MusicManager
+import com.fish.monsters.common.utils.settings.SettingsGlobalState
 import com.fish.monsters.common.views.CapText
 import com.fish.monsters.common.views.FadingHorizontalDivider
 import com.fish.monsters.common.views.FishSwitch
@@ -23,22 +21,22 @@ import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.DangerOutlinedFishButton
 import com.fish.monsters.common.views.buttons.DropdownTextButton
 import com.fish.monsters.common.views.screenContent.ScreenBox
-import com.fish.monsters.features.settings.data.SettingsManager
-import com.fish.monsters.features.settings.presentation.components.SettingsButtonGridSection
-import com.fish.monsters.features.settings.presentation.components.SettingsRowSection
-import com.fish.monsters.features.settings.presentation.components.SettingsSliderSection
+import com.fish.monsters.features.settings.SettingsViewModel
+import com.fish.monsters.features.settings.ui.components.SettingsButtonGridSection
+import com.fish.monsters.features.settings.ui.components.SettingsRowSection
+import com.fish.monsters.features.settings.ui.components.SettingsSliderSection
 import org.koin.compose.koinInject
 
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel = koinInject()) {
-    SettingsScreenContent(viewModel)
+    SettingsScreenContent(viewModel.settingsGlobalState.value) { viewModel.invokeEvent(it) }
 }
 
 @Composable
-private fun SettingsScreenContent(viewModel: SettingsViewModel) {
-    val state = viewModel.state.value
-    LocalHapticFeedback
+private fun SettingsScreenContent(
+    settingsGlobalState: SettingsGlobalState, invokeEvent: (event: SettingsEvent) -> Unit
+) {
     ScreenBox(title = stringResource(R.string.settings)) {
         Column(
             Modifier
@@ -49,31 +47,30 @@ private fun SettingsScreenContent(viewModel: SettingsViewModel) {
             SettingsRowSection(label = stringResource(R.string.language)) {
                 val context = LocalContext.current
                 DropdownTextButton(
-                    items = Language.values().toList(),
-                    onItemClicked = {
-                        viewModel.changeLanguage(context, it)
-                    }, defaultButtonText = stringResource(state.language.titleId)
+                    items = Language.values().toList(), onItemClicked = {
+                        invokeEvent(SettingsEvent.ChangeLanguageEvent(context, it))
+                    }, defaultButtonText = stringResource(settingsGlobalState.language.titleId)
                 )
             }
             SettingsRowSection(label = stringResource(R.string.vibration)) {
-                FishSwitch(checked = state.vibration, onCheckedChange = {
-                    viewModel.updateSettings(vibration = it)
+                FishSwitch(checked = settingsGlobalState.vibration, onCheckedChange = {
+                    invokeEvent(SettingsEvent.UpdateSettingsEvent(vibration = it))
                 })
             }
-            SettingsSliderSection(
-                label = stringResource(R.string.music),
-                value = state.musicPercentage,
+            SettingsSliderSection(label = stringResource(R.string.music),
+                value = settingsGlobalState.musicPercentage,
                 onValueChange = {
-                    viewModel.setMusicVolume(it)
+                    invokeEvent(SettingsEvent.SetMusicVolumeEvent(it))
                 })
-            SettingsSliderSection(
-                label = stringResource(R.string.sound),
-                value = state.soundPercentage,
-                onValueChange = { viewModel.updateSettings(soundPercentage = it) })
+            SettingsSliderSection(label = stringResource(R.string.sound),
+                value = settingsGlobalState.soundPercentage,
+                onValueChange = {
+                    invokeEvent(SettingsEvent.UpdateSettingsEvent(soundPercentage = it))
+                })
             FadingHorizontalDivider()
             SettingsRowSection(label = stringResource(R.string.neon_styles)) {
-                FishSwitch(checked = state.neonStyles, onCheckedChange = {
-                    viewModel.updateSettings(neonStyles = it)
+                FishSwitch(checked = settingsGlobalState.neonStyles, onCheckedChange = {
+                    invokeEvent(SettingsEvent.UpdateSettingsEvent(neonStyles = it))
                 })
             }
             SettingsButtonGridSection()
@@ -88,12 +85,8 @@ private fun SettingsScreenContent(viewModel: SettingsViewModel) {
 @Composable
 private fun SettingsScreenPreview() {
     PreviewContainer {
-
         SettingsScreenContent(
-            SettingsViewModel(
-                SettingsManager(),
-                MusicManager(MediaPlayer(), LocalContext.current)
-            )
-        )
+            SettingsGlobalState()
+        ) {}
     }
 }

@@ -4,7 +4,7 @@ import android.media.MediaPlayer
 import com.fish.monsters.common.utils.MusicManager
 import com.fish.monsters.common.utils.SoundsManager
 import com.fish.monsters.core.navigation.Navigator
-import com.fish.monsters.features.settings.data.SettingsManager
+import com.fish.monsters.common.utils.settings.SettingsManager
 import org.koin.dsl.module
 
 val appModule = module {

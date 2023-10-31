@@ -36,8 +36,8 @@ import com.fish.monsters.common.views.CapText
 import com.fish.monsters.core.theme.DangerColor
 import com.fish.monsters.core.theme.DangerColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
-import com.fish.monsters.features.settings.data.SettingsManager
-import com.fish.monsters.features.settings.presentation.SettingsState
+import com.fish.monsters.common.utils.settings.SettingsManager
+import com.fish.monsters.common.utils.settings.SettingsGlobalState
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,7 +53,7 @@ fun DangerOutlinedFishButton(
     colors: ButtonColors = ButtonDefaults.buttonColors(
         containerColor = DangerColorA12,
     ),
-    settingsState: SettingsState = if (isPreview()) SettingsState() else koinInject<SettingsManager>().state.value,
+    settingsGlobalState: SettingsGlobalState = if (isPreview()) SettingsGlobalState() else koinInject<SettingsManager>().state.value,
     soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     content: @Composable RowScope.() -> Unit
 ) {
@@ -61,11 +61,11 @@ fun DangerOutlinedFishButton(
     CompositionLocalProvider(
         LocalMinimumTouchTargetEnforcement provides false,
     ) {
-        if (settingsState.neonStyles)
+        if (settingsGlobalState.neonStyles)
             DangerOutlinedFishButtonNeonStyle(
                 onClick = {
                     soundManager.playDefaultButtonSound()
-                    localView.performVibration(settingsState.vibration)
+                    localView.performVibration(settingsGlobalState.vibration)
                     onClick()
                 },
                 modifier = modifier,
@@ -136,7 +136,7 @@ private fun DangerOutlinedFishButtonPreview() {
                     CapText(text = "Default indentationSize")
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                DangerOutlinedFishButton(onClick = { }, settingsState = SettingsState(neonStyles = true)) {
+                DangerOutlinedFishButton(onClick = { }, settingsGlobalState = SettingsGlobalState(neonStyles = true)) {
                     CapText(text = "Default indentationSize")
                 }
             }

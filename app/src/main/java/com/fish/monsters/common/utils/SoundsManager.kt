@@ -5,7 +5,7 @@ import android.media.MediaPlayer
 import androidx.annotation.RawRes
 import com.fish.monsters.R
 import com.fish.monsters.common.extensions.fromPercents
-import com.fish.monsters.features.settings.data.SettingsManager
+import com.fish.monsters.common.utils.settings.SettingsManager
 
 class SoundsManager(private val context: Context, private val settingsManager: SettingsManager) {
 

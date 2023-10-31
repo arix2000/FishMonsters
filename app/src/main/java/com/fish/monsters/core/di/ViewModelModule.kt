@@ -1,6 +1,6 @@
 package com.fish.monsters.core.di
 
-import com.fish.monsters.features.settings.presentation.SettingsViewModel
+import com.fish.monsters.features.settings.SettingsViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

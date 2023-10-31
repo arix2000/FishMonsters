@@ -1,10 +1,10 @@
-package com.fish.monsters.features.settings.presentation
+package com.fish.monsters.common.utils.settings
 
 import androidx.compose.ui.text.intl.Locale
+import com.fish.monsters.common.models.data.Settings
 import com.fish.monsters.common.models.ui.Language
-import com.fish.monsters.features.settings.data.Settings
 
-data class SettingsState(
+data class SettingsGlobalState(
     val language: Language = Language.values().first { it.code == Locale.current.language },
     val vibration: Boolean = true,
     val musicPercentage: Int = 100,
@@ -16,8 +16,8 @@ data class SettingsState(
     }
 
     companion object {
-        fun from(settings: Settings): SettingsState {
-            return SettingsState(
+        fun from(settings: Settings): SettingsGlobalState {
+            return SettingsGlobalState(
                 vibration = settings.vibration,
                 musicPercentage = settings.musicPercentage,
                 soundPercentage = settings.soundPercentage,

@@ -1,25 +1,25 @@
-package com.fish.monsters.features.settings.data
+package com.fish.monsters.common.utils.settings
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import com.fish.monsters.common.models.data.Settings
 import com.fish.monsters.common.models.ui.Language
-import com.fish.monsters.features.settings.presentation.SettingsState
 
 class SettingsManager {
-    private val _state = mutableStateOf(SettingsState())
-    val state: State<SettingsState> = _state
+    private val _state = mutableStateOf(SettingsGlobalState())
+    val state: State<SettingsGlobalState> = _state
 
-    fun updateTempSettings(settings: Settings) {
-        _state.value = SettingsState.from(settings)
+    fun updateSettings(settings: Settings) {
+        _state.value = SettingsGlobalState.from(settings)
     }
 
-    fun updateTempSettings(
+    fun updateSettings(
         language: Language? = null,
         vibration: Boolean? = null,
         musicPercentage: Int? = null,
         soundPercentage: Int? = null,
         neonStyles: Boolean? = null
-    ): State<SettingsState> {
+    ): State<SettingsGlobalState> {
         _state.run {
             language?.let { value = value.copy(language = language) }
             vibration?.let { value = value.copy(vibration = vibration) }

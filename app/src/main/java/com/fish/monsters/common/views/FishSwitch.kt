@@ -42,7 +42,7 @@ import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.theme.TextColorDark
-import com.fish.monsters.features.settings.data.SettingsManager
+import com.fish.monsters.common.utils.settings.SettingsManager
 import org.koin.compose.koinInject
 
 @Composable
