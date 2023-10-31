@@ -13,7 +13,7 @@ class SoundsManager(private val context: Context, private val settingsManager: S
         playSound(R.raw.default_button_click_sound)
     }
 
-    private fun playSound(@RawRes resId: Int) {
+    fun playSound(@RawRes resId: Int) {
         val mediaPlayer = MediaPlayer.create(context, resId).apply {
             val soundVolume = Float.fromPercents(settingsManager.state.value.soundPercentage)
             setVolume(soundVolume, soundVolume)
