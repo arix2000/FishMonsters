@@ -31,38 +31,44 @@ import com.fish.monsters.core.theme.FishMonstersTheme
 fun FishSlider(
     value: Float,
     onValueChange: (Float) -> Unit,
+    onValueChangeFinished: (() -> Unit)? = null,
 ) {
-    Slider(value = value, onValueChange = onValueChange, track = { sliderPosition ->
-        val surfaceVariant = MaterialTheme.colorScheme.surfaceVariant
-        Canvas(modifier = Modifier
-            .height(8.dp)
-            .fillMaxWidth(),
-            onDraw = {
-                clipPath(
-                    PartiallyCutCornerShape.drawPath(
-                        size,
-                        Density(density, fontScale),
-                        DpSize(12.dp, 4.dp)
-                    )
-                ) {
-                    drawRect(surfaceVariant)
-                    drawRect(
+    Slider(
+        value = value,
+        onValueChange = onValueChange,
+        onValueChangeFinished = onValueChangeFinished,
+        track = { sliderPosition ->
+            val surfaceVariant = MaterialTheme.colorScheme.surfaceVariant
+            Canvas(modifier = Modifier
+                .height(8.dp)
+                .fillMaxWidth(),
+                onDraw = {
+                    clipPath(
+                        PartiallyCutCornerShape.drawPath(
+                            size,
+                            Density(density, fontScale),
+                            DpSize(12.dp, 4.dp)
+                        )
+                    ) {
+                        drawRect(surfaceVariant)
+                        drawRect(
+                            DarkPrimaryColor,
+                            size = Size(size.width * sliderPosition.positionFraction, size.height)
+                        )
+                    }
+                })
+        },
+        thumb = {
+            Box(
+                modifier = Modifier
+                    .size(28.dp)
+                    .shadow(10.dp, PartiallyCutCornerShape(DpSize(3.dp, 12.dp)))
+                    .background(
                         DarkPrimaryColor,
-                        size = Size(size.width * sliderPosition.positionFraction, size.height)
+                        shape = PartiallyCutCornerShape(DpSize(3.dp, 12.dp))
                     )
-                }
-            })
-    }, thumb = {
-        Box(
-            modifier = Modifier
-                .size(28.dp)
-                .shadow(10.dp, PartiallyCutCornerShape(DpSize(3.dp, 12.dp)))
-                .background(
-                    DarkPrimaryColor,
-                    shape = PartiallyCutCornerShape(DpSize(3.dp, 12.dp))
-                )
-        )
-    })
+            )
+        })
 }
 
 @Preview

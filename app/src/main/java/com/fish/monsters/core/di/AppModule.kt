@@ -3,14 +3,14 @@ package com.fish.monsters.core.di
 import android.media.MediaPlayer
 import com.fish.monsters.common.utils.MusicManager
 import com.fish.monsters.common.utils.SoundsManager
-import com.fish.monsters.core.navigation.Navigator
 import com.fish.monsters.common.utils.settings.SettingsManager
+import com.fish.monsters.core.navigation.Navigator
 import org.koin.dsl.module
 
 val appModule = module {
     single { Navigator() }
 
-    single { SettingsManager() }
+    single { SettingsManager(settingsDao = get()) }
 
     factory { MediaPlayer() }
 

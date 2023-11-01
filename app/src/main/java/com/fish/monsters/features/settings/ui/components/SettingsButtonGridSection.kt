@@ -28,21 +28,21 @@ fun SettingsButtonGridSection(
     val spacing = remember { 8.dp }
     Column(Modifier.fillMaxWidth()) {
         Row {
-            OutlinedFishButton(onClick = onReportProblemClicked, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(modifier = Modifier.weight(1f), onClick = onReportProblemClicked) {
                 CapText(text = stringResource(R.string.report_problem))
             }
             Spacer(modifier = Modifier.width(spacing))
-            OutlinedFishButton(onClick = onHowToPlayClicked, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(modifier = Modifier.weight(1f), onClick = onHowToPlayClicked) {
                 CapText(text = stringResource(R.string.how_to_play))
             }
         }
         Spacer(modifier = Modifier.height(spacing))
         Row {
-            OutlinedFishButton(onClick = onRateUsClicked, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(modifier = Modifier.weight(1f), onClick = onRateUsClicked) {
                 CapText(text = stringResource(R.string.rate_us))
             }
             Spacer(modifier = Modifier.width(spacing))
-            OutlinedFishButton(onClick = onSupportClicked, modifier = Modifier.weight(1f)) {
+            OutlinedFishButton(modifier = Modifier.weight(1f), onClick = onSupportClicked) {
                 CapText(text = stringResource(R.string.support))
             }
         }

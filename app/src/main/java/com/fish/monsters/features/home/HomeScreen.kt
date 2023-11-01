@@ -58,11 +58,11 @@ fun HomeScreen(navigator: Navigator = koinInject()) {
             verticalArrangement = Arrangement.spacedBy(35.dp)
         ) {
             FishButton(
-                indentationSize = DpSize(12.dp, 31.dp),
-                onClick = { navigator.navigateTo(Screen.StartScreen) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(52.dp)
+                    .height(52.dp),
+                onClick = { navigator.navigateTo(Screen.StartScreen) },
+                indentationSize = DpSize(12.dp, 31.dp)
             ) {
                 CapText(text = stringResource(R.string.start))
             }
@@ -82,11 +82,11 @@ fun HomeScreen(navigator: Navigator = koinInject()) {
 @Composable
 private fun HomeOutlineFishButton(buttonText: String, onClick: () -> Unit) {
     OutlinedFishButton(
-        indentationSize = DpSize(12.dp, 31.dp),
-        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(52.dp)
+            .height(52.dp),
+        onClick = onClick,
+        indentationSize = DpSize(12.dp, 31.dp)
     ) {
         CapText(text = buttonText)
     }

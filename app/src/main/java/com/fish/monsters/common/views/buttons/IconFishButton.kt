@@ -28,10 +28,10 @@ import com.fish.monsters.common.extensions.previewGetSoundsManager
 import com.fish.monsters.common.models.ui.IconProps
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.common.utils.SoundsManager
+import com.fish.monsters.common.utils.settings.SettingsGlobalState
+import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.FishMonstersTheme
-import com.fish.monsters.common.utils.settings.SettingsManager
-import com.fish.monsters.common.utils.settings.SettingsGlobalState
 import org.koin.compose.koinInject
 
 @Composable
@@ -39,9 +39,9 @@ fun IconFishButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     iconProps: IconProps,
-    soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject(),
     settingsGlobalState: SettingsGlobalState = if (isPreview()) SettingsGlobalState() else koinInject<SettingsManager>().state.value,
 ) {
+    val soundManager: SoundsManager = if (isPreview()) previewGetSoundsManager() else koinInject()
     val partiallyCutCornerShape = remember {
         PartiallyCutCornerShape(DpSize(11.dp, 22.dp))
     }

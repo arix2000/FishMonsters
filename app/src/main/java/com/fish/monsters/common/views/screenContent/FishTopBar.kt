@@ -51,12 +51,12 @@ fun FishTopBar(
             .fillMaxWidth()
     ) {
         IconFishButton(
-            onClick = {
+            modifier = Modifier.fillMaxHeight(), onClick = {
                 if (onBackButtonClicked != null)
                     onBackButtonClicked(navigator)
                 else
                     navigator.popBackStack()
-            }, iconProps = IconProps(Icons.Default.ArrowBack), modifier = Modifier.fillMaxHeight()
+            }, iconProps = IconProps(Icons.Default.ArrowBack)
         )
         Spacer(modifier = Modifier.width(10.dp))
         Box(

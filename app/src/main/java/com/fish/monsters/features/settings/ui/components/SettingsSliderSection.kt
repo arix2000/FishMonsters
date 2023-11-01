@@ -15,12 +15,17 @@ import com.fish.monsters.common.views.FishSlider
 import com.fish.monsters.common.views.PreviewContainer
 
 @Composable
-fun SettingsSliderSection(label: String, value: Int, onValueChange: (Int) -> Unit) {
+fun SettingsSliderSection(
+    label: String,
+    value: Int,
+    onValueChange: (Int) -> Unit,
+    onValueChangeFinished: () -> Unit
+) {
     Column {
         Text(text = label, fontSize = 18.sp)
         FishSlider(value = Float.fromPercents(value), onValueChange = {
             onValueChange(it.toPercents())
-        })
+        }, onValueChangeFinished = onValueChangeFinished)
         Text(
             text = value.toString(),
             modifier = Modifier.fillMaxWidth(),
@@ -34,6 +39,10 @@ fun SettingsSliderSection(label: String, value: Int, onValueChange: (Int) -> Uni
 @Composable
 fun SettingsSliderSectionPreview() {
     PreviewContainer {
-        SettingsSliderSection(label = "Label", value = 39, onValueChange = {})
+        SettingsSliderSection(
+            label = "Label",
+            value = 39,
+            onValueChange = {},
+            onValueChangeFinished = {})
     }
 }

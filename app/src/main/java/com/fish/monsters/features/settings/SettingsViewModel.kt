@@ -7,14 +7,22 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.runtime.State
 import androidx.core.os.LocaleListCompat
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.fish.monsters.common.models.ui.Language
 import com.fish.monsters.common.utils.MusicManager
 import com.fish.monsters.common.utils.settings.SettingsGlobalState
 import com.fish.monsters.common.utils.settings.SettingsManager
+import com.fish.monsters.core.database.FishDatabase
+import com.fish.monsters.core.database.dao.SettingsDao
+import com.fish.monsters.core.database.entities.Settings
 import com.fish.monsters.features.settings.ui.SettingsEvent
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(
-    private val settingsManager: SettingsManager, private val musicManager: MusicManager
+    private val settingsManager: SettingsManager,
+    private val musicManager: MusicManager,
+    private val settingsDao: SettingsDao,
+    private val fishDb: FishDatabase
 ) : ViewModel() {
     val settingsGlobalState: State<SettingsGlobalState> = settingsManager.state
 
@@ -29,6 +37,8 @@ class SettingsViewModel(
                     )
                 }
             }
+            is SettingsEvent.DeleteAllData -> deleteAllData()
+            SettingsEvent.SaveCurrentSettings -> saveCurrentSettings()
         }
     }
 
@@ -61,5 +71,19 @@ class SettingsViewModel(
         settingsManager.updateSettings(
             language, vibration, musicPercentage, soundPercentage, neonStyles
         )
+    }
+
+    private fun deleteAllData() {
+        viewModelScope.launch {
+            fishDb.deleteAllTables()
+        }.invokeOnCompletion {
+            settingsManager.updateSettings(Settings.default())
+        }
+    }
+
+    private fun saveCurrentSettings() {
+        viewModelScope.launch {
+            settingsDao.insert(settingsGlobalState.value.toSettings())
+        }
     }
 }

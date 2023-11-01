@@ -49,6 +49,7 @@ private fun SettingsScreenContent(
     invokeEvent: (event: SettingsEvent) -> Unit
 ) {
     val uriHandler = LocalUriHandler.current
+    val context = LocalContext.current
     ScreenBox(title = stringResource(R.string.settings)) {
         Column(
             Modifier
@@ -57,7 +58,6 @@ private fun SettingsScreenContent(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
             SettingsRowSection(label = stringResource(R.string.language)) {
-                val context = LocalContext.current
                 DropdownTextButton(
                     items = Language.values().toList(), onItemClicked = {
                         invokeEvent(SettingsEvent.ChangeLanguageEvent(context, it))
@@ -67,22 +67,28 @@ private fun SettingsScreenContent(
             SettingsRowSection(label = stringResource(R.string.vibration)) {
                 FishSwitch(checked = settingsGlobalState.vibration, onCheckedChange = {
                     invokeEvent(SettingsEvent.UpdateSettingsEvent(vibration = it))
+                    invokeEvent(SettingsEvent.SaveCurrentSettings)
                 })
             }
             SettingsSliderSection(label = stringResource(R.string.music),
                 value = settingsGlobalState.musicPercentage,
                 onValueChange = {
                     invokeEvent(SettingsEvent.SetMusicVolumeEvent(it))
+                }, onValueChangeFinished = {
+                    invokeEvent(SettingsEvent.SaveCurrentSettings)
                 })
             SettingsSliderSection(label = stringResource(R.string.sound),
                 value = settingsGlobalState.soundPercentage,
                 onValueChange = {
                     invokeEvent(SettingsEvent.UpdateSettingsEvent(soundPercentage = it))
+                }, onValueChangeFinished = {
+                    invokeEvent(SettingsEvent.SaveCurrentSettings)
                 })
             FadingHorizontalDivider()
             SettingsRowSection(label = stringResource(R.string.neon_styles)) {
                 FishSwitch(checked = settingsGlobalState.neonStyles, onCheckedChange = {
                     invokeEvent(SettingsEvent.UpdateSettingsEvent(neonStyles = it))
+                    invokeEvent(SettingsEvent.SaveCurrentSettings)
                 })
             }
             SettingsButtonGridSection(
@@ -92,8 +98,8 @@ private fun SettingsScreenContent(
                 onSupportClicked = { uriHandler.openUri(SettingsUris.support) },
             )
             DangerOutlinedFishButton(
-                onClick = { isClearProgressDialogVisible.value = true },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { isClearProgressDialogVisible.value = true }
             ) {
                 CapText(text = stringResource(R.string.clear_progress))
             }
@@ -101,7 +107,10 @@ private fun SettingsScreenContent(
         if (isClearProgressDialogVisible.value) {
             SettingsClearProgressDialog(onDismissRequest = {
                 isClearProgressDialogVisible.value = false
-            }, onAcceptClicked = {})
+            }, onAcceptClicked = {
+                invokeEvent(SettingsEvent.DeleteAllData)
+                isClearProgressDialogVisible.value = false
+            })
         }
     }
 }

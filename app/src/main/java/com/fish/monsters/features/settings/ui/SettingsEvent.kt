@@ -17,4 +17,8 @@ sealed class SettingsEvent {
         val neonStyles: Boolean? = null
     ) : SettingsEvent()
 
+    object DeleteAllData: SettingsEvent()
+
+    object SaveCurrentSettings: SettingsEvent()
+
 }
