@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Update
+import androidx.room.Upsert
 import com.fish.monsters.core.database.entities.Settings
 import kotlinx.coroutines.flow.Flow
 
@@ -16,6 +16,6 @@ interface SettingsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(settings: Settings)
 
-    @Update
-    suspend fun update(settings: Settings)
+    @Upsert
+    suspend fun upsert(settings: Settings)
 }

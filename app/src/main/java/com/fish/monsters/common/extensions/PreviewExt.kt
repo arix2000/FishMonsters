@@ -16,6 +16,6 @@ fun previewGetSoundsManager(): SoundsManager {
         }
 
         override suspend fun insert(settings: Settings) {}
-        override suspend fun update(settings: Settings) {}
+        override suspend fun upsert(settings: Settings) {}
     }))
 }

@@ -83,7 +83,7 @@ class SettingsViewModel(
 
     private fun saveCurrentSettings() {
         viewModelScope.launch {
-            settingsDao.insert(settingsGlobalState.value.toSettings())
+            settingsDao.upsert(settingsGlobalState.value.toSettings())
         }
     }
 }
