@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -84,6 +85,15 @@ fun FishSwitch(
     val thumbShape = PartiallyCutCornerShape(DpSize(3.dp, 10.dp))
 
     val localView = LocalView.current
+
+    DisposableEffect(key1 = checked, effect = {
+        thumbColor = if (checked) DarkPrimaryColor else TextColorDark
+        containerColor = if (checked) DarkPrimaryColorA12 else DarkPrimaryColor
+        thumbSize = if (checked) 16.dp else 20.dp
+        alignment = if (checked) Alignment.CenterStart else Alignment.CenterEnd
+        onDispose {  }
+    })
+
     Box(modifier = modifier
         .clip(containerShape)
         .clickable(
@@ -91,10 +101,6 @@ fun FishSwitch(
             interactionSource = remember { MutableInteractionSource() },
         ) {
             localView.performVibration(shouldVibrate)
-            thumbColor = if (checked) DarkPrimaryColor else TextColorDark
-            containerColor = if (checked) DarkPrimaryColorA12 else DarkPrimaryColor
-            thumbSize = if (checked) 16.dp else 20.dp
-            alignment = if (checked) Alignment.CenterStart else Alignment.CenterEnd
             onCheckedChange(!checked)
         }
         .background(
