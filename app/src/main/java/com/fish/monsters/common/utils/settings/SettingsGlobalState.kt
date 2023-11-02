@@ -30,7 +30,7 @@ data class SettingsGlobalState(
                     soundPercentage = settings.soundPercentage,
                     neonStyles = settings.neonStyles
                 )
-            else SettingsGlobalState()
+            else from(Settings.default())
         }
     }
 }
