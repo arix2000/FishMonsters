@@ -7,6 +7,7 @@ import com.fish.monsters.core.database.dao.SettingsDao
 import com.fish.monsters.core.database.entities.Settings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -14,8 +15,8 @@ class SettingsManager(val settingsDao: SettingsDao) {
     private val _state = mutableStateOf(SettingsGlobalState())
     val state: State<SettingsGlobalState> = _state
 
-    fun initSettingsFromDatabase() {
-        CoroutineScope(Dispatchers.IO).launch {
+    fun initSettingsFromDatabase(): Job {
+        return CoroutineScope(Dispatchers.IO).launch {
             _state.value = SettingsGlobalState.from(settingsDao.getSettings().first())
         }
     }
