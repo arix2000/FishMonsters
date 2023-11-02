@@ -87,10 +87,10 @@ fun FishSwitch(
     val localView = LocalView.current
 
     DisposableEffect(key1 = checked, effect = {
-        thumbColor = if (checked) DarkPrimaryColor else TextColorDark
-        containerColor = if (checked) DarkPrimaryColorA12 else DarkPrimaryColor
-        thumbSize = if (checked) 16.dp else 20.dp
-        alignment = if (checked) Alignment.CenterStart else Alignment.CenterEnd
+        thumbColor = if (checked) TextColorDark else DarkPrimaryColor
+        containerColor = if (checked) DarkPrimaryColor else DarkPrimaryColorA12
+        thumbSize = if (checked) 20.dp else 16.dp
+        alignment = if (checked) Alignment.CenterEnd else Alignment.CenterStart
         onDispose {  }
     })
 
