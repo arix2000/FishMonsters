@@ -4,4 +4,21 @@
     <string name="settings">Ustawienia</string>
     <string name="history">Historia</string>
     <string name="about">O nas</string>
+    <string name="neon_styles">Neonowy styl przycisków</string>
+    <string name="language">Język</string>
+    <string name="vibration">Wibracje</string>
+    <string name="music">Muzyka</string>
+    <string name="sound">Dźwięk</string>
+    <string name="clear_progress">Wyczyść postęp</string>
+    <string name="report_problem">Zgłoś problem</string>
+    <string name="how_to_play">Jak grać?</string>
+    <string name="rate_us">Oceń nas</string>
+    <string name="support">Wspieraj</string>
+
+    <string name="polish" translatable="false">Polski</string>
+    <string name="english" translatable="false">English</string>
+    <string name="settings_clear_progress_dialog_title">Czy napewno chesz usunąć swój postęp?</string>
+    <string name="settings_clear_progress_dialog_content_text">Potwierdzenie spowoduje usunięcie wszystkich danych o twoim postępie. Usunięta zostanie historia podejść, statystyki gracza, a także zapisane ustawienia.</string>
+    <string name="cancel">Anuluj</string>
+    <string name="settings_clear_progress_dialog_accept_button_text">Usuń moje dane</string>
 </resources>

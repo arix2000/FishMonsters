@@ -14,7 +14,7 @@ fun MainGameScreen(difficulty: Difficulty) {
 
 @Preview
 @Composable
-fun MainGameScreenPreview() {
+private fun MainGameScreenPreview() {
     FishMonstersTheme {
         Surface {
             MainGameScreen(Difficulty.HARD)

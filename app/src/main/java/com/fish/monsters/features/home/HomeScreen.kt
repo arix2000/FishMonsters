@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +22,11 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.CapText
+import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.FishButton
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
 import com.fish.monsters.core.navigation.Navigator
 import com.fish.monsters.core.navigation.Screen
-import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.theme.SurfaceColor
 import org.koin.compose.koinInject
 
@@ -59,11 +58,11 @@ fun HomeScreen(navigator: Navigator = koinInject()) {
             verticalArrangement = Arrangement.spacedBy(35.dp)
         ) {
             FishButton(
-                indentationSize = DpSize(12.dp, 31.dp),
-                onClick = { navigator.navigateTo(Screen.StartScreen) },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(52.dp)
+                    .height(52.dp),
+                onClick = { navigator.navigateTo(Screen.StartScreen) },
+                indentationSize = DpSize(12.dp, 31.dp)
             ) {
                 CapText(text = stringResource(R.string.start))
             }
@@ -83,11 +82,11 @@ fun HomeScreen(navigator: Navigator = koinInject()) {
 @Composable
 private fun HomeOutlineFishButton(buttonText: String, onClick: () -> Unit) {
     OutlinedFishButton(
-        indentationSize = DpSize(12.dp, 31.dp),
-        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
-            .height(52.dp)
+            .height(52.dp),
+        onClick = onClick,
+        indentationSize = DpSize(12.dp, 31.dp)
     ) {
         CapText(text = buttonText)
     }
@@ -95,10 +94,8 @@ private fun HomeOutlineFishButton(buttonText: String, onClick: () -> Unit) {
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
-    FishMonstersTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            HomeScreen(Navigator())
-        }
+private fun HomeScreenPreview() {
+    PreviewContainer(modifier = Modifier.fillMaxSize()) {
+        HomeScreen(Navigator())
     }
 }

@@ -18,17 +18,18 @@ import org.koin.compose.koinInject
 fun ScreenBox(
     title: String,
     navigator: Navigator = if (isPreview()) Navigator() else koinInject(),
+    onBackButtonClicked: ((Navigator) -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit,
 ) {
     Column {
-        FishTopBar(title, navigator, content = content)
+        FishTopBar(title, navigator, onBackButtonClicked = onBackButtonClicked, content = content)
         Box(content = content)
     }
 }
 
 @Preview
 @Composable
-fun ScreenViewPreview() {
+private fun ScreenViewPreview() {
     FishMonstersTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             ScreenBox(title = "Wybierz poziom trudności") { Text(text = "Hello Screen view") }
