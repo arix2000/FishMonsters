@@ -15,16 +15,11 @@ import com.fish.monsters.core.theme.FishMonstersTheme
 
 @Composable
 fun HistoryScreen() {
-    HistoryScreenContent()
-}
-
-@Composable
-fun HistoryScreenContent() {
     ScreenBox(title = stringResource(id = R.string.history)) {
         Column(
             Modifier
-            .fillMaxSize()
-            .padding(start = 20.dp, end = 20.dp, top = 30.dp)
+                .fillMaxSize()
+                .padding(start = 20.dp, end = 20.dp, top = 30.dp)
         ) {
 
         }
