@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.fish.monsters.core.database.dao.ContestDao
 import com.fish.monsters.core.database.dao.SettingsDao
 import com.fish.monsters.core.database.entities.Settings
 
@@ -11,6 +12,7 @@ import com.fish.monsters.core.database.entities.Settings
 abstract class FishDatabase : RoomDatabase() {
 
     abstract fun settingsDao(): SettingsDao
+    abstract fun contestInfoDao(): ContestDao
 
     suspend fun deleteAllTables() {
         settingsDao().insert(Settings.default())

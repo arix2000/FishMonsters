@@ -1,6 +1,5 @@
 package com.fish.monsters.features.history.ui.components
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -27,21 +26,21 @@ import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
-import com.fish.monsters.core.theme.DangerColor
+import com.fish.monsters.core.database.entities.ContestInfoEntity
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.features.contest.ContestInfo
 import com.fish.monsters.features.contest.DifficultyLevel
 import com.fish.monsters.features.contest.Duration
 
 @Composable
-fun HistoryItem(contestInfo: ContestInfo) {
+fun HistoryItem(contestInfo: ContestInfoEntity) {
     OutlinedFishButton(
         modifier = Modifier
             .fillMaxWidth()
             .height(66.dp),
         onClick = { println(contestInfo) },
         indentationSize = DpSize(12.dp, 31.dp),
-        contentPadding = PaddingValues(14.dp, 13.dp)
+        contentPadding = PaddingValues(13.dp, 14.dp)
     ) {
         Row(Modifier.fillMaxSize()) {
             Column(Modifier.width(200.dp)) {

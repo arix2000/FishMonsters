@@ -4,11 +4,16 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.fish.monsters.R
 import com.fish.monsters.features.about.AboutScreen
+import com.fish.monsters.features.contest.ContestInfo
+import com.fish.monsters.features.contest.DifficultyLevel
+import com.fish.monsters.features.contest.Duration
 import com.fish.monsters.features.game.MainGameScreen
 import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.history.ui.HistoryScreen
@@ -60,7 +65,24 @@ fun AppNavHost() {
             SettingsScreen()
         }
         composable(Screen.HistoryScreen.route) {
-            HistoryScreen()
+            HistoryScreen(listOf(
+                ContestInfo(
+                    "08 ${stringResource(R.string.november)} 2023",
+                    Duration(2, 30),
+                    85,
+                    DifficultyLevel.LOW
+                ), ContestInfo(
+                    "15 ${stringResource(R.string.january)} 2024",
+                    Duration(1, 45),
+                    92,
+                    DifficultyLevel.MEDIUM
+                ), ContestInfo(
+                    "20 ${stringResource(R.string.june)} 2025",
+                    Duration(3, 15),
+                    78,
+                    DifficultyLevel.HIGH
+                )
+            ))
         }
         composable(Screen.AboutScreen.route) {
             AboutScreen()
