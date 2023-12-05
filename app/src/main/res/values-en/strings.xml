@@ -24,6 +24,9 @@
     <string name="medium_difficulty">Intermediate</string>
     <string name="high_difficulty">Advanced</string>
 
+    <string name="empty_history_info">No history, complete at least one game to view your history.</string>
+    <string name="empty_history_start_button">START A NEW GAME</string>
+
     <string name="january">January</string>
     <string name="february">February</string>
     <string name="march">March</string>

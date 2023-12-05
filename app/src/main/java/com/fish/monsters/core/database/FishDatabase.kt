@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.fish.monsters.core.database.dao.ContestDao
 import com.fish.monsters.core.database.dao.SettingsDao
+import com.fish.monsters.core.database.entities.ContestInfoEntity
 import com.fish.monsters.core.database.entities.Settings
 
-@Database(entities = [Settings::class], version = 1, exportSchema = false)
+@Database(entities = [Settings::class, ContestInfoEntity::class], version = 1, exportSchema = false)
+@TypeConverters(DurationConverter::class)
 abstract class FishDatabase : RoomDatabase() {
 
     abstract fun settingsDao(): SettingsDao

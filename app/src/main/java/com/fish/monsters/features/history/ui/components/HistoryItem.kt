@@ -28,7 +28,6 @@ import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
 import com.fish.monsters.core.database.entities.ContestInfoEntity
 import com.fish.monsters.core.theme.DarkPrimaryColor
-import com.fish.monsters.features.contest.ContestInfo
 import com.fish.monsters.features.contest.DifficultyLevel
 import com.fish.monsters.features.contest.Duration
 
@@ -61,14 +60,14 @@ fun HistoryItem(contestInfo: ContestInfoEntity) {
                         .weight(1f)
                 )
                 Row {
-                    val difficultyStringRes = when (contestInfo.difficulty) {
+                    val difficultyStringRes = when (contestInfo.difficultyLevel) {
                         DifficultyLevel.LOW -> R.string.low_difficulty
                         DifficultyLevel.MEDIUM -> R.string.medium_difficulty
                         DifficultyLevel.HIGH -> R.string.high_difficulty
                     }
                     Text(
                         text = stringResource(id = difficultyStringRes),
-                        color = contestInfo.difficulty.color
+                        color = contestInfo.difficultyLevel.color
                     )
                 }
             }
@@ -83,7 +82,7 @@ fun HistoryItem(contestInfo: ContestInfoEntity) {
                         modifier = Modifier.width(18.dp)
                     )
                     Spacer(Modifier.width(4.dp))
-                    Text(text = contestInfo.score.toString())
+                    Text(text = contestInfo.points.toString())
                 }
                 Spacer(
                     modifier = Modifier
@@ -111,7 +110,8 @@ fun HistoryItem(contestInfo: ContestInfoEntity) {
 @Composable
 fun SettingsRowSectionPreview() {
     PreviewContainer {
-        val contestInfo = ContestInfo(
+        val contestInfo = ContestInfoEntity(
+            1,
             "08 ${stringResource(R.string.november)} 2023",
             Duration(2, 30),
             85,

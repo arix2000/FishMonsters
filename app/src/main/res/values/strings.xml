@@ -26,6 +26,9 @@
     <string name="medium_difficulty">Średniozaawansowany</string>
     <string name="high_difficulty">Zaawansowany</string>
 
+    <string name="empty_history_info">Brak historii, ukończ przynajmniej jedną grę aby przeglądać swoją historię.</string>
+    <string name="empty_history_start_button">ROZPOCZNIJ NOWĄ GRĘ</string>
+
     <string name="january">Stycznia</string>
     <string name="february">Lutego</string>
     <string name="march">Marca</string>

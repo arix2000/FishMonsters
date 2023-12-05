@@ -1,39 +1,45 @@
 package com.fish.monsters.features.history.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.screenContent.ScreenBox
-import com.fish.monsters.core.database.dao.ContestDao
 import com.fish.monsters.core.database.entities.ContestInfoEntity
+import com.fish.monsters.core.navigation.Navigator
 import com.fish.monsters.core.theme.FishMonstersTheme
-import com.fish.monsters.features.contest.ContestInfo
 import com.fish.monsters.features.contest.DifficultyLevel
 import com.fish.monsters.features.contest.Duration
+import com.fish.monsters.features.history.ui.components.HistoryEmptyScreen
 import com.fish.monsters.features.history.ui.components.HistoryItem
 
 @Composable
-fun HistoryScreen(contestDao: ContestDao) {
-    val contestInfoList: List<ContestInfoEntity> = contestDao.getAllContestInfo()
-
+fun HistoryScreen(contestData: List<ContestInfoEntity>) {
     ScreenBox(title = stringResource(id = R.string.history)) {
         Column(
             Modifier
                 .fillMaxSize()
                 .padding(start = 20.dp, end = 20.dp, top = 30.dp)
         ) {
-            contestInfoList.forEach { contestInfo ->
-                HistoryItem(contestInfo)
-                Spacer(modifier = Modifier.height(15.dp))
+            if (contestData.isEmpty()) {
+                Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+                    HistoryEmptyScreen(Navigator())
+                }
+            } else {
+                contestData.forEach { contestInfo ->
+                    HistoryItem(contestInfo)
+                    Spacer(modifier = Modifier.height(15.dp))
+                }
             }
         }
     }
@@ -67,11 +73,7 @@ private fun HistoryScreenPreviewWithData() {
     )
     FishMonstersTheme {
         Surface() {
-            HistoryScreen(object : ContestDao {
-                override suspend fun getAllContestInfo(): List<ContestInfoEntity> {
-                    return contestInfoList
-                }
-            })
+            HistoryScreen(emptyList())
         }
     }
 }
