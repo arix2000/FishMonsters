@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,29 +17,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.screenContent.ScreenBox
-import com.fish.monsters.core.database.entities.ContestInfoEntity
-import com.fish.monsters.core.navigation.Navigator
+import com.fish.monsters.core.database.entities.Contest
+import com.fish.monsters.core.database.entities.contest.Award
 import com.fish.monsters.core.theme.FishMonstersTheme
-import com.fish.monsters.features.contest.DifficultyLevel
-import com.fish.monsters.features.contest.Duration
+import com.fish.monsters.core.database.entities.contest.DifficultyLevel
+import com.fish.monsters.core.database.entities.contest.Duration
+import com.fish.monsters.core.database.entities.contest.Enhancement
+import com.fish.monsters.core.database.entities.contest.GameLocation
+import com.fish.monsters.features.history.HistoryViewModel
 import com.fish.monsters.features.history.ui.components.HistoryEmptyScreen
 import com.fish.monsters.features.history.ui.components.HistoryItem
+import org.koin.compose.koinInject
 
 @Composable
-fun HistoryScreen(contestData: List<ContestInfoEntity>) {
+fun HistoryScreen(viewModel: HistoryViewModel = koinInject()) {
+    val state = viewModel.state.value
     ScreenBox(title = stringResource(id = R.string.history)) {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .padding(start = 20.dp, end = 20.dp, top = 30.dp)
-        ) {
-            if (contestData.isEmpty()) {
-                Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
-                    HistoryEmptyScreen(Navigator())
-                }
-            } else {
-                contestData.forEach { contestInfo ->
-                    HistoryItem(contestInfo)
+        HistoryScreenContent(state.contests)
+    }
+}
+
+@Composable
+fun HistoryScreenContent(contests: List<Contest>) {
+    Column(
+        Modifier
+            .fillMaxSize()
+            .padding(start = 20.dp, end = 20.dp, top = 30.dp)
+    ) {
+        if (contests.isEmpty()) {
+            Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
+                HistoryEmptyScreen()
+            }
+        } else {
+            LazyColumn() {
+                items(contests) { contest ->
+                    HistoryItem(contest)
                     Spacer(modifier = Modifier.height(15.dp))
                 }
             }
@@ -49,31 +63,93 @@ fun HistoryScreen(contestData: List<ContestInfoEntity>) {
 @Composable
 private fun HistoryScreenPreviewWithData() {
     val contestInfoList = listOf(
-        ContestInfoEntity(
-            id = 1,
-            date = "08 ${stringResource(R.string.november)} 2023",
-            duration = Duration(2, 30),
-            points = 85,
-            difficultyLevel = DifficultyLevel.LOW
+        Contest(
+            id = 4,
+            date = "10 ${stringResource(R.string.march)} 2024",
+            duration = Duration(1, 15, 40),
+            points = 75,
+            difficultyLevel = DifficultyLevel.MEDIUM,
+            rewardsCount = 12,
+            enhancementsUsed = listOf(
+                Enhancement(
+                    name = "Enhancement 4",
+                    time = Duration(1, 30, 0)
+                )
+            ),
+            bypassedMonsters = 1,
+            awardsEarned = listOf(
+                Award(
+                    name = "Award 7"
+                )
+            ),
+            isGameSuccess = true,
+            gameLocation = GameLocation(
+                latitude = 25.0,
+                longitude = 20.0
+            )
         ),
-        ContestInfoEntity(
-            id = 2,
-            date = "15 ${stringResource(R.string.january)} 2024",
-            duration = Duration(1, 45),
-            points = 92,
-            difficultyLevel = DifficultyLevel.MEDIUM
+        Contest(
+            id = 5,
+            date = "05 ${stringResource(R.string.september)} 2023",
+            duration = Duration(2, 0, 15),
+            points = 88,
+            difficultyLevel = DifficultyLevel.HIGH,
+            rewardsCount = 10,
+            enhancementsUsed = listOf(
+                Enhancement(
+                    name = "Enhancement 5",
+                    time = Duration(0, 45, 0)
+                ),
+                Enhancement(
+                    name = "Enhancement 6",
+                    time = Duration(2, 30, 0)
+                )
+            ),
+            bypassedMonsters = 3,
+            awardsEarned = listOf(
+                Award(
+                    name = "Award 8"
+                ),
+                Award(
+                    name = "Award 9"
+                )
+            ),
+            isGameSuccess = false,
+            gameLocation = GameLocation(
+                latitude = 15.0,
+                longitude = 10.0
+            )
         ),
-        ContestInfoEntity(
-            id = 3,
-            date = "20 ${stringResource(R.string.june)} 2025",
-            duration = Duration(3, 15),
-            points = 78,
-            difficultyLevel = DifficultyLevel.HIGH
+        Contest(
+            id = 6,
+            date = "18 ${stringResource(R.string.april)} 2024",
+            duration = Duration(1, 45, 0),
+            points = 95,
+            difficultyLevel = DifficultyLevel.LOW,
+            rewardsCount = 15,
+            enhancementsUsed = emptyList(),
+            bypassedMonsters = 0,
+            awardsEarned = listOf(
+                Award(
+                    name = "Award 10"
+                ),
+                Award(
+                    name = "Award 11"
+                ),
+                Award(
+                    name = "Award 12"
+                )
+            ),
+            isGameSuccess = true,
+            gameLocation = GameLocation(
+                latitude = 35.0,
+                longitude = 30.0
+            )
         )
     )
     FishMonstersTheme {
         Surface() {
-            HistoryScreen(emptyList())
+            HistoryScreenContent(contestInfoList)
         }
     }
 }

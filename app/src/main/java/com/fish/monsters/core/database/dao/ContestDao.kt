@@ -3,13 +3,13 @@ package com.fish.monsters.core.database.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.fish.monsters.core.database.entities.ContestInfoEntity
+import com.fish.monsters.core.database.entities.Contest
 
 @Dao
 interface ContestDao {
     @Insert
-    fun insertContestInfo(contestInfo: ContestInfoEntity)
+    suspend fun insertContestInfo(contestInfo: Contest)
 
     @Query("SELECT * FROM contest_info")
-    fun getAllContestInfo(): List<ContestInfoEntity>
+    suspend fun getAllContestInfo(): List<Contest>
 }

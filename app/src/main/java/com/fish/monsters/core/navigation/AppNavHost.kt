@@ -60,32 +60,7 @@ fun AppNavHost() {
             SettingsScreen()
         }
         composable(Screen.HistoryScreen.route) {
-            HistoryScreen(
-                emptyList()
-//                listOf(
-//                ContestInfoEntity(
-//                    id = 1,
-//                    date = "08 ${stringResource(R.string.november)} 2023",
-//                    duration = Duration(2, 30),
-//                    points = 85,
-//                    difficultyLevel = DifficultyLevel.LOW
-//                ),
-//                ContestInfoEntity(
-//                    id = 2,
-//                    date = "15 ${stringResource(R.string.january)} 2024",
-//                    duration = Duration(1, 45),
-//                    points = 92,
-//                    difficultyLevel = DifficultyLevel.MEDIUM
-//                ),
-//                ContestInfoEntity(
-//                    id = 3,
-//                    date = "20 ${stringResource(R.string.june)} 2025",
-//                    duration = Duration(3, 15),
-//                    points = 78,
-//                    difficultyLevel = DifficultyLevel.HIGH
-//                )
-//            )
-            )
+            HistoryScreen()
         }
         composable(Screen.AboutScreen.route) {
             AboutScreen()

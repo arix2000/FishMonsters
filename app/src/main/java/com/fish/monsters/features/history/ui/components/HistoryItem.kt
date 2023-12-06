@@ -19,27 +19,43 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
+import com.fish.monsters.common.extensions.drawNeonStroke
+import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.OutlinedFishButton
-import com.fish.monsters.core.database.entities.ContestInfoEntity
+import com.fish.monsters.core.database.entities.Contest
+import com.fish.monsters.core.database.entities.contest.Award
 import com.fish.monsters.core.theme.DarkPrimaryColor
-import com.fish.monsters.features.contest.DifficultyLevel
-import com.fish.monsters.features.contest.Duration
+import com.fish.monsters.core.database.entities.contest.DifficultyLevel
+import com.fish.monsters.core.database.entities.contest.Duration
+import com.fish.monsters.core.database.entities.contest.GameLocation
+import org.koin.compose.koinInject
 
 @Composable
-fun HistoryItem(contestInfo: ContestInfoEntity) {
+fun HistoryItem(
+    contestInfo: Contest,
+    neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
+) {
     OutlinedFishButton(
         modifier = Modifier
             .fillMaxWidth()
-            .height(66.dp),
+            .height(66.dp)
+            .drawWithContent {
+                drawContent()
+                if (neonStyle)
+                    drawNeonStroke(DpSize(12.dp, 31.dp), DarkPrimaryColor)
+            },
         onClick = { println(contestInfo) },
         indentationSize = DpSize(12.dp, 31.dp),
-        contentPadding = PaddingValues(13.dp, 14.dp)
+        contentPadding = PaddingValues(13.dp, 14.dp),
     ) {
         Row(Modifier.fillMaxSize()) {
             Column(Modifier.width(200.dp)) {
@@ -99,7 +115,14 @@ fun HistoryItem(contestInfo: ContestInfoEntity) {
                         modifier = Modifier.width(14.dp)
                     )
                     Spacer(Modifier.width(4.dp))
-                    Text(text = "${contestInfo.duration.hours}h ${contestInfo.duration.minutes}min")
+                    Text(
+                        text = buildAnnotatedString {
+                            if (contestInfo.duration.hours > 0) {
+                                append("${contestInfo.duration.hours}h ")
+                            }
+                            append("${contestInfo.duration.minutes}min")
+                        }
+                    )
                 }
             }
         }
@@ -108,14 +131,33 @@ fun HistoryItem(contestInfo: ContestInfoEntity) {
 
 @Preview
 @Composable
-fun SettingsRowSectionPreview() {
+fun HistoryItemPreview() {
     PreviewContainer {
-        val contestInfo = ContestInfoEntity(
-            1,
-            "08 ${stringResource(R.string.november)} 2023",
-            Duration(2, 30),
-            85,
-            DifficultyLevel.MEDIUM
+        val contestInfo = Contest(
+            id = 6,
+            date = "18 ${stringResource(R.string.april)} 2024",
+            duration = Duration(1, 45, 0),
+            points = 95,
+            difficultyLevel = DifficultyLevel.LOW,
+            rewardsCount = 15,
+            enhancementsUsed = emptyList(),
+            bypassedMonsters = 0,
+            awardsEarned = listOf(
+                Award(
+                    name = "Award 10"
+                ),
+                Award(
+                    name = "Award 11"
+                ),
+                Award(
+                    name = "Award 12"
+                )
+            ),
+            isGameSuccess = true,
+            gameLocation = GameLocation(
+                latitude = 35.0,
+                longitude = 30.0
+            )
         )
         HistoryItem(contestInfo)
     }
