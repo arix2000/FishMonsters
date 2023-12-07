@@ -1,7 +1,12 @@
 package com.fish.monsters.features.history.ui.components
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -21,46 +26,49 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.fish.monsters.R
 import com.fish.monsters.common.extensions.drawNeonStroke
 import com.fish.monsters.common.extensions.isPreview
+import com.fish.monsters.common.shapes.PartiallyCutCornerShape
 import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.common.views.PreviewContainer
-import com.fish.monsters.common.views.buttons.OutlinedFishButton
 import com.fish.monsters.core.database.entities.Contest
 import com.fish.monsters.core.database.entities.contest.Award
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.GameLocation
+import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import org.koin.compose.koinInject
 
 @Composable
 fun HistoryItem(
     contestInfo: Contest,
     neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
+    shape: PartiallyCutCornerShape = PartiallyCutCornerShape(DpSize(12.dp, 31.dp))
 ) {
-    OutlinedFishButton(
+    Spacer(modifier = Modifier.height(7.5.dp))
+    Box(
         modifier = Modifier
             .fillMaxWidth()
             .height(66.dp)
+            .border(BorderStroke(1.dp, DarkPrimaryColor), shape = shape)
+            .background(DarkPrimaryColorA12, shape)
             .drawWithContent {
                 drawContent()
                 if (neonStyle)
                     drawNeonStroke(DpSize(12.dp, 31.dp), DarkPrimaryColor)
-            },
-        onClick = { println(contestInfo) },
-        indentationSize = DpSize(12.dp, 31.dp),
-        contentPadding = PaddingValues(13.dp, 14.dp),
+            }
+            .padding(horizontal = 15.dp)
+            .clickable { }
     ) {
-        Row(Modifier.fillMaxSize()) {
+        Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween) {
             Column(Modifier.width(200.dp)) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(top = 10.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.CalendarMonth,
@@ -76,20 +84,17 @@ fun HistoryItem(
                         .weight(1f)
                 )
                 Row {
-                    val difficultyStringRes = when (contestInfo.difficultyLevel) {
-                        DifficultyLevel.LOW -> R.string.low_difficulty
-                        DifficultyLevel.MEDIUM -> R.string.medium_difficulty
-                        DifficultyLevel.HIGH -> R.string.high_difficulty
-                    }
                     Text(
-                        text = stringResource(id = difficultyStringRes),
-                        color = contestInfo.difficultyLevel.color
+                        text = stringResource(id = contestInfo.difficultyLevel.stringRes),
+                        color = contestInfo.difficultyLevel.color,
+                        modifier = Modifier.padding(bottom = 10.dp)
                     )
                 }
             }
             Column(Modifier.width(200.dp), horizontalAlignment = Alignment.End) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(top = 10.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.SportsScore,
@@ -106,7 +111,8 @@ fun HistoryItem(
                         .weight(1f)
                 )
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(bottom = 10.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.AccessTime,
@@ -116,17 +122,13 @@ fun HistoryItem(
                     )
                     Spacer(Modifier.width(4.dp))
                     Text(
-                        text = buildAnnotatedString {
-                            if (contestInfo.duration.hours > 0) {
-                                append("${contestInfo.duration.hours}h ")
-                            }
-                            append("${contestInfo.duration.minutes}min")
-                        }
+                        text = contestInfo.duration.toString(includeSeconds = false)
                     )
                 }
             }
         }
     }
+    Spacer(modifier = Modifier.height(7.5.dp))
 }
 
 @Preview
@@ -135,7 +137,7 @@ fun HistoryItemPreview() {
     PreviewContainer {
         val contestInfo = Contest(
             id = 6,
-            date = "18 ${stringResource(R.string.april)} 2024",
+            date = "18 april 2024",
             duration = Duration(1, 45, 0),
             points = 95,
             difficultyLevel = DifficultyLevel.LOW,
@@ -143,15 +145,9 @@ fun HistoryItemPreview() {
             enhancementsUsed = emptyList(),
             bypassedMonsters = 0,
             awardsEarned = listOf(
-                Award(
-                    name = "Award 10"
-                ),
-                Award(
-                    name = "Award 11"
-                ),
-                Award(
-                    name = "Award 12"
-                )
+                Award.Grass,
+                Award.Grass,
+                Award.Flower
             ),
             isGameSuccess = true,
             gameLocation = GameLocation(

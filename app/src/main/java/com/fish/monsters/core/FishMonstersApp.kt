@@ -36,8 +36,8 @@ class FishMonstersApp : Application() {
         }
         val contestDao: ContestDao = get()
         CoroutineScope(Dispatchers.IO).launch {
-            if (contestDao.getAllContestInfo().isEmpty()) {
-                contestDao.insertContestInfo(
+            if (contestDao.getAllContests().isEmpty()) {
+                contestDao.insertContest(
                     Contest(
                         date = "08 November 2023",
                         duration = Duration(2, 30, 12),
@@ -52,9 +52,7 @@ class FishMonstersApp : Application() {
                         ),
                         bypassedMonsters = 0,
                         awardsEarned = listOf(
-                            Award(
-                                name = "Award 1"
-                            )
+                            Award.Flower
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(
@@ -63,7 +61,7 @@ class FishMonstersApp : Application() {
                         )
                     ),
                 )
-                contestDao.insertContestInfo(
+                contestDao.insertContest(
                     Contest(
                         date = "15 January 2024",
                         duration = Duration(1, 45, 30),
@@ -82,12 +80,8 @@ class FishMonstersApp : Application() {
                         ),
                         bypassedMonsters = 2,
                         awardsEarned = listOf(
-                            Award(
-                                name = "Award 2"
-                            ),
-                            Award(
-                                name = "Award 3"
-                            )
+                            Award.Pumpkin,
+                            Award.Pumpkin
                         ),
                         isGameSuccess = false,
                         gameLocation = GameLocation(
@@ -96,7 +90,7 @@ class FishMonstersApp : Application() {
                         )
                     )
                 )
-                contestDao.insertContestInfo(
+                contestDao.insertContest(
                     Contest(
                         date = "20 June 2025",
                         duration = Duration(0, 15, 45),
@@ -106,15 +100,9 @@ class FishMonstersApp : Application() {
                         enhancementsUsed = emptyList(),
                         bypassedMonsters = 5,
                         awardsEarned = listOf(
-                            Award(
-                                name = "Award 4"
-                            ),
-                            Award(
-                                name = "Award 5"
-                            ),
-                            Award(
-                                name = "Award 6"
-                            )
+                            Award.Pumpkin,
+                            Award.Flower,
+                            Award.Grass
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(

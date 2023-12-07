@@ -8,8 +8,8 @@ import com.fish.monsters.core.database.entities.Contest
 @Dao
 interface ContestDao {
     @Insert
-    suspend fun insertContestInfo(contestInfo: Contest)
+    suspend fun insertContest(contestInfo: Contest)
 
     @Query("SELECT * FROM contest_info")
-    suspend fun getAllContestInfo(): List<Contest>
+    suspend fun getAllContests(): List<Contest>
 }

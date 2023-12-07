@@ -1,4 +1,4 @@
-package com.fish.monsters.core.database
+package com.fish.monsters.core.database.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
@@ -9,7 +9,7 @@ import com.fish.monsters.core.database.entities.contest.GameLocation
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 
-class GsonConverter {
+class ContestConverter {
 
     private val gson = Gson()
 

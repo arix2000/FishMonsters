@@ -7,5 +7,5 @@ val databaseModule = module {
     single { FishDatabase.getDatabase(get()) }
 
     factory { get<FishDatabase>().settingsDao() }
-    factory { get<FishDatabase>().contestInfoDao() }
+    factory { get<FishDatabase>().contestDao() }
 }

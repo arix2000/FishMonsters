@@ -29,16 +29,7 @@
     <string name="empty_history_info">Brak historii, ukończ przynajmniej jedną grę aby przeglądać swoją historię.</string>
     <string name="empty_history_start_button">ROZPOCZNIJ NOWĄ GRĘ</string>
 
-    <string name="january">Stycznia</string>
-    <string name="february">Lutego</string>
-    <string name="march">Marca</string>
-    <string name="april">Kwietnia</string>
-    <string name="may">Maja</string>
-    <string name="june">Czerwca</string>
-    <string name="july">Lipca</string>
-    <string name="august">Sierpnia</string>
-    <string name="september">Września</string>
-    <string name="october">Października</string>
-    <string name="november">Listopada</string>
-    <string name="december">Grudnia</string>
+    <string name="grass_award">Trawa</string>
+    <string name="flower_award">Kwiat</string>
+    <string name="pumpkin_award">Dynia</string>
 </resources>

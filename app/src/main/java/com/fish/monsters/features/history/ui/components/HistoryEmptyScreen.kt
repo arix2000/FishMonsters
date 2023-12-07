@@ -1,12 +1,14 @@
 package com.fish.monsters.features.history.ui.components
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DoNotDisturbOn
@@ -31,14 +33,13 @@ import org.koin.compose.koinInject
 fun HistoryEmptyScreen(navigator: Navigator = koinInject()) {
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .height(199.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Row(
             modifier = Modifier
-                .width(74.dp)
-                .height(74.dp)
+                .size(74.dp)
                 .padding(7.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -49,7 +50,7 @@ fun HistoryEmptyScreen(navigator: Navigator = koinInject()) {
                 tint = DarkPrimaryColor
             )
         }
-        Row(
+        Box(
             modifier = Modifier
                 .width(278.dp)
                 .height(72.dp)
@@ -61,7 +62,7 @@ fun HistoryEmptyScreen(navigator: Navigator = koinInject()) {
             )
         }
         Spacer(modifier = Modifier.height(14.dp))
-        Row(
+        Box(
             modifier = Modifier
                 .height(36.dp)
                 .width(212.dp)

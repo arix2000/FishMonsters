@@ -16,7 +16,7 @@ class HistoryViewModel(private val contestDao: ContestDao): ViewModel(){
 
     private fun getAllContest() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(contests = contestDao.getAllContestInfo())
+            _state.value = _state.value.copy(contests = contestDao.getAllContests())
         }
     }
 }

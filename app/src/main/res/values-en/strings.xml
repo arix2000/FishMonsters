@@ -27,16 +27,7 @@
     <string name="empty_history_info">No history, complete at least one game to view your history.</string>
     <string name="empty_history_start_button">START A NEW GAME</string>
 
-    <string name="january">January</string>
-    <string name="february">February</string>
-    <string name="march">March</string>
-    <string name="april">April</string>
-    <string name="may">May</string>
-    <string name="june">June</string>
-    <string name="july">July</string>
-    <string name="august">August</string>
-    <string name="september">September</string>
-    <string name="october">October</string>
-    <string name="november">November</string>
-    <string name="december">December</string>
+    <string name="grass_award">Grass</string>
+    <string name="flower_award">Flower</string>
+    <string name="pumpkin_award">Pumpkin</string>
 </resources>

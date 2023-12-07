@@ -2,9 +2,7 @@ package com.fish.monsters.features.history.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -42,17 +40,16 @@ fun HistoryScreenContent(contests: List<Contest>) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(start = 20.dp, end = 20.dp, top = 30.dp)
+            .padding(start = 20.dp, end = 20.dp)
     ) {
         if (contests.isEmpty()) {
             Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
                 HistoryEmptyScreen()
             }
         } else {
-            LazyColumn() {
+            LazyColumn(modifier = Modifier.padding(top = 15.dp)) {
                 items(contests) { contest ->
                     HistoryItem(contest)
-                    Spacer(modifier = Modifier.height(15.dp))
                 }
             }
         }
@@ -65,7 +62,7 @@ private fun HistoryScreenPreviewWithData() {
     val contestInfoList = listOf(
         Contest(
             id = 4,
-            date = "10 ${stringResource(R.string.march)} 2024",
+            date = "10 march 2024",
             duration = Duration(1, 15, 40),
             points = 75,
             difficultyLevel = DifficultyLevel.MEDIUM,
@@ -78,9 +75,7 @@ private fun HistoryScreenPreviewWithData() {
             ),
             bypassedMonsters = 1,
             awardsEarned = listOf(
-                Award(
-                    name = "Award 7"
-                )
+                Award.Grass
             ),
             isGameSuccess = true,
             gameLocation = GameLocation(
@@ -90,7 +85,7 @@ private fun HistoryScreenPreviewWithData() {
         ),
         Contest(
             id = 5,
-            date = "05 ${stringResource(R.string.september)} 2023",
+            date = "05 july 2023",
             duration = Duration(2, 0, 15),
             points = 88,
             difficultyLevel = DifficultyLevel.HIGH,
@@ -107,12 +102,8 @@ private fun HistoryScreenPreviewWithData() {
             ),
             bypassedMonsters = 3,
             awardsEarned = listOf(
-                Award(
-                    name = "Award 8"
-                ),
-                Award(
-                    name = "Award 9"
-                )
+                Award.Flower,
+                Award.Pumpkin
             ),
             isGameSuccess = false,
             gameLocation = GameLocation(
@@ -122,7 +113,7 @@ private fun HistoryScreenPreviewWithData() {
         ),
         Contest(
             id = 6,
-            date = "18 ${stringResource(R.string.april)} 2024",
+            date = "18 april 2024",
             duration = Duration(1, 45, 0),
             points = 95,
             difficultyLevel = DifficultyLevel.LOW,
@@ -130,15 +121,9 @@ private fun HistoryScreenPreviewWithData() {
             enhancementsUsed = emptyList(),
             bypassedMonsters = 0,
             awardsEarned = listOf(
-                Award(
-                    name = "Award 10"
-                ),
-                Award(
-                    name = "Award 11"
-                ),
-                Award(
-                    name = "Award 12"
-                )
+                Award.Flower,
+                Award.Grass,
+                Award.Pumpkin
             ),
             isGameSuccess = true,
             gameLocation = GameLocation(
