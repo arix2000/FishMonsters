@@ -11,6 +11,8 @@ val SurfaceColor = Color(0xFF1C1B1F)
 
 val DangerColor = Color(0xFFAF2828)
 val DangerColorA12 = Color(0x1FAF2828)
+val WarningColor = Color(134, 152, 29)
+val EasyColor = Color(0,152,0)
 
 
 val LightPrimaryColor = Color(0xFF13AB99)

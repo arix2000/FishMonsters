@@ -19,4 +19,15 @@
     <string name="settings_clear_progress_dialog_content_text">Confirmation will delete all data about your progress. History, player statistics, and saved settings will be deleted.</string>
     <string name="cancel">Cancel</string>
     <string name="settings_clear_progress_dialog_accept_button_text">Delete my data</string>
+
+    <string name="low_difficulty">Easy</string>
+    <string name="medium_difficulty">Intermediate</string>
+    <string name="high_difficulty">Advanced</string>
+
+    <string name="empty_history_info">No history, complete at least one game to view your history.</string>
+    <string name="empty_history_start_button">START A NEW GAME</string>
+
+    <string name="grass_award">Grass</string>
+    <string name="flower_award">Flower</string>
+    <string name="pumpkin_award">Pumpkin</string>
 </resources>

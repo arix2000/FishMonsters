@@ -21,4 +21,15 @@
     <string name="settings_clear_progress_dialog_content_text">Potwierdzenie spowoduje usunięcie wszystkich danych o twoim postępie. Usunięta zostanie historia podejść, statystyki gracza, a także zapisane ustawienia.</string>
     <string name="cancel">Anuluj</string>
     <string name="settings_clear_progress_dialog_accept_button_text">Usuń moje dane</string>
+
+    <string name="low_difficulty">Łatwy</string>
+    <string name="medium_difficulty">Średniozaawansowany</string>
+    <string name="high_difficulty">Zaawansowany</string>
+
+    <string name="empty_history_info">Brak historii, ukończ przynajmniej jedną grę aby przeglądać swoją historię.</string>
+    <string name="empty_history_start_button">ROZPOCZNIJ NOWĄ GRĘ</string>
+
+    <string name="grass_award">Trawa</string>
+    <string name="flower_award">Kwiat</string>
+    <string name="pumpkin_award">Dynia</string>
 </resources>
