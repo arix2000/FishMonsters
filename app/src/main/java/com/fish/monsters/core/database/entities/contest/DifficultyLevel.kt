@@ -7,7 +7,7 @@ import com.fish.monsters.core.theme.EasyColor
 import com.fish.monsters.core.theme.WarningColor
 
 enum class DifficultyLevel(val color: Color, val stringRes: Int) {
-    LOW(DangerColor, R.string.low_difficulty),
+    LOW(EasyColor, R.string.low_difficulty),
     MEDIUM(WarningColor, R.string.medium_difficulty),
-    HIGH(EasyColor, R.string.high_difficulty)
+    HIGH(DangerColor, R.string.high_difficulty)
 }
