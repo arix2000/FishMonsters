@@ -65,7 +65,7 @@ fun HistoryItem(
             .clickable { }
     ) {
         Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Column(Modifier.width(200.dp)) {
+            Column() {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(top = 10.dp)
@@ -91,7 +91,7 @@ fun HistoryItem(
                     )
                 }
             }
-            Column(Modifier.width(200.dp), horizontalAlignment = Alignment.End) {
+            Column(horizontalAlignment = Alignment.End) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.padding(top = 10.dp)
