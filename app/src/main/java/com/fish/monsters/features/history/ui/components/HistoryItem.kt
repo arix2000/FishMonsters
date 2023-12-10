@@ -36,6 +36,7 @@ import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.core.database.entities.Contest
 import com.fish.monsters.core.database.entities.contest.Award
+import com.fish.monsters.core.database.entities.contest.AwardsCount
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
@@ -148,9 +149,8 @@ fun HistoryItemPreview() {
             enhancementsUsed = emptyList(),
             bypassedMonsters = 0,
             awardsEarned = listOf(
-                Award.Grass,
-                Award.Grass,
-                Award.Flower
+                AwardsCount(Award.Grass, 2),
+                AwardsCount(Award.Flower, 1)
             ),
             isGameSuccess = true,
             gameLocation = GameLocation(

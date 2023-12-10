@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.fish.monsters.common.views.screenContent.ScreenBox
 import com.fish.monsters.core.database.entities.Contest
 import com.fish.monsters.core.database.entities.contest.Award
+import com.fish.monsters.core.database.entities.contest.AwardsCount
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.Enhancement
@@ -36,11 +37,12 @@ fun HistoryDetailsScreen(contestId: Long, viewModel: HistoryViewModel = koinInje
 @Composable
 fun HistoryDetailsScreenContent(contestDetails: Contest?) {
     Box(modifier = Modifier.fillMaxSize())
+    {
     if (contestDetails != null) {
         Text(text = "HISTORY DETAILS $contestDetails", color = DarkPrimaryColor)
     } else {
         Text(text = "No contest selected", color = DarkPrimaryColor)
-    }
+    }}
 }
 
 @Preview
@@ -56,12 +58,14 @@ fun HistoryDetailsScreenPreview() {
         enhancementsUsed = listOf(
             Enhancement(
                 name = "Enhancement 4",
-                time = Duration(1, 30, 0)
+                time = Duration(1, 30, 12)
             )
         ),
         bypassedMonsters = 1,
         awardsEarned = listOf(
-            Award.Grass
+            AwardsCount(Award.Grass, 2),
+            AwardsCount(Award.Flower, 1),
+            AwardsCount(Award.Pumpkin,1)
         ),
         isGameSuccess = true,
         gameLocation = GameLocation(

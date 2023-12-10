@@ -6,6 +6,7 @@ import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.core.database.dao.ContestDao
 import com.fish.monsters.core.database.entities.Contest
 import com.fish.monsters.core.database.entities.contest.Award
+import com.fish.monsters.core.database.entities.contest.AwardsCount
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.Enhancement
@@ -52,15 +53,16 @@ class FishMonstersApp : Application() {
                         ),
                         bypassedMonsters = 0,
                         awardsEarned = listOf(
-                            Award.Flower
+                            AwardsCount(Award.Flower, 1)
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(
                             latitude = 10.0,
                             longitude = 10.0
                         )
-                    ),
+                    )
                 )
+
                 contestDao.insertContest(
                     Contest(
                         date = "15 January 2024",
@@ -80,8 +82,7 @@ class FishMonstersApp : Application() {
                         ),
                         bypassedMonsters = 2,
                         awardsEarned = listOf(
-                            Award.Pumpkin,
-                            Award.Pumpkin
+                            AwardsCount(Award.Pumpkin, 2)
                         ),
                         isGameSuccess = false,
                         gameLocation = GameLocation(
@@ -90,6 +91,7 @@ class FishMonstersApp : Application() {
                         )
                     )
                 )
+
                 contestDao.insertContest(
                     Contest(
                         date = "20 June 2025",
@@ -100,9 +102,9 @@ class FishMonstersApp : Application() {
                         enhancementsUsed = emptyList(),
                         bypassedMonsters = 5,
                         awardsEarned = listOf(
-                            Award.Pumpkin,
-                            Award.Flower,
-                            Award.Grass
+                            AwardsCount(Award.Pumpkin, 1),
+                            AwardsCount(Award.Flower, 1),
+                            AwardsCount(Award.Grass, 1)
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(
@@ -111,6 +113,7 @@ class FishMonstersApp : Application() {
                         )
                     )
                 )
+
             }
         }
     }
