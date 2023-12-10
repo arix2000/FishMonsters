@@ -29,7 +29,7 @@ import org.koin.compose.koinInject
 
 @Composable
 fun HistoryScreen(viewModel: HistoryViewModel = koinInject()) {
-    val state = viewModel.state.value
+    val state = viewModel.allContestsState.value
     ScreenBox(title = stringResource(id = R.string.history)) {
         HistoryScreenContent(state.contests)
     }

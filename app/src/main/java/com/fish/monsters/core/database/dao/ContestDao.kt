@@ -12,4 +12,7 @@ interface ContestDao {
 
     @Query("SELECT * FROM contest_info")
     suspend fun getAllContests(): List<Contest>
+
+    @Query("SELECT * FROM contest_info WHERE id = :contestId")
+    suspend fun getContestDetailsById(contestId: Long): Contest
 }

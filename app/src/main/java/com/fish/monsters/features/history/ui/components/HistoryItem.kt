@@ -40,6 +40,8 @@ import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.GameLocation
+import com.fish.monsters.core.navigation.Navigator
+import com.fish.monsters.core.navigation.Screen
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import org.koin.compose.koinInject
 
@@ -47,7 +49,8 @@ import org.koin.compose.koinInject
 fun HistoryItem(
     contestInfo: Contest,
     neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
-    shape: PartiallyCutCornerShape = PartiallyCutCornerShape(DpSize(12.dp, 31.dp))
+    shape: PartiallyCutCornerShape = PartiallyCutCornerShape(DpSize(12.dp, 31.dp)),
+    navigator: Navigator = koinInject()
 ) {
     Spacer(modifier = Modifier.height(7.5.dp))
     Box(
@@ -62,7 +65,7 @@ fun HistoryItem(
                     drawNeonStroke(DpSize(12.dp, 31.dp), DarkPrimaryColor)
             }
             .padding(horizontal = 15.dp)
-            .clickable { }
+            .clickable { navigator.navigateTo(Screen.HistoryDetailsScreen, contestInfo.id.toString()) }
     ) {
         Row(Modifier.fillMaxSize(), horizontalArrangement = Arrangement.SpaceBetween) {
             Column() {
