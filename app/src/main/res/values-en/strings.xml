@@ -30,4 +30,16 @@
     <string name="grass_award">Grass</string>
     <string name="flower_award">Flower</string>
     <string name="pumpkin_award">Pumpkin</string>
+
+    <string name="contest_details">Contest details</string>
+    <string name="contest_result">Game ended in </string>
+    <string name="success">Success</string>
+    <string name="failure">Failure</string>
+    <string name="date">Date</string>
+    <string name="survival_time">Survival Time</string>
+    <string name="points_scored">Points Scored</string>
+    <string name="difficulty_level">Difficulty Level</string>
+    <string name="awards_won">Awards Won</string>
+    <string name="avoided_creatures">Avoided Creatures</string>
+
 </resources>
