@@ -25,7 +25,7 @@ android {
 
         val localProperties = gradleLocalProperties(rootDir)
         val googleMapsApiKey = localProperties.getProperty("google_maps_api_key") ?: ""
-        manifestPlaceholders["GOOGLE_MAPS_API_KEY"] = googleMapsApiKey
+        resValue("string", "google_maps_api_key", googleMapsApiKey)
     }
 
     buildTypes {
