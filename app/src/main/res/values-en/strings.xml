@@ -30,4 +30,6 @@
     <string name="grass_award">Grass</string>
     <string name="flower_award">Flower</string>
     <string name="pumpkin_award">Pumpkin</string>
+    <string name="permission_denied">Permission have been denied</string>
+    <string name="permission_denied_content_text">In Fish monsters you yourself are the main character, the application needs permissions to your location to start the game. You can change the location permissions when you re-enter this screen or in the app settings.</string>
 </resources>

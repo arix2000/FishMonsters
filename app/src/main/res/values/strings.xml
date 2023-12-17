@@ -32,4 +32,6 @@
     <string name="grass_award">Trawa</string>
     <string name="flower_award">Kwiat</string>
     <string name="pumpkin_award">Dynia</string>
+    <string name="permission_denied">Uprawnienia zostały odrzucone</string>
+    <string name="permission_denied_content_text">W Fish monsters to ty sam jesteś główną postacią, aplikacja potrzebuje uprawnień do twojej lokalizacji aby rozpocząć gre. Uprawnienia do lokalizacji możesz zmienić przy ponownym wejściu w ten ekran lub w ustawieniach aplikacji.</string>
 </resources>

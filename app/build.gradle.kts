@@ -58,29 +58,30 @@ android {
 }
 
 dependencies {
-    implementation ("com.google.code.gson:gson:2.10.1")
-    ///Google maps
+    implementation("com.google.code.gson:gson:2.10.1")
+
+    /** Google maps **/
     implementation("com.google.android.gms:play-services-location:21.0.1")
     implementation("com.google.maps.android:maps-compose:2.9.0")
     implementation("com.google.android.gms:play-services-maps:18.1.0")
 
-    ///Permission handler
+    /** Permission handler **/
     implementation("com.google.accompanist:accompanist-permissions:0.31.3-beta")
 
-    ///Koin
+    /** Koin **/
     implementation("io.insert-koin:koin-androidx-compose:3.5.0")
 
-    ///Navigation
+    /** Navigation **/
     implementation("androidx.navigation:navigation-compose:2.7.4")
 
-    ///Room database
+    /** Room database **/
     val roomVersion = "2.5.2"
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
 
-    ///Jetpack Compose and Android core
+    /** Jetpack Compose and Android core **/
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     implementation("androidx.activity:activity-compose:1.8.0")
@@ -89,11 +90,13 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
     implementation("androidx.compose.material:material-icons-extended")
 
+    /** Accompanist **/
+    implementation("com.google.accompanist:accompanist-permissions:0.31.3-beta")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.27.0")
 
-    /// Testing
+    /** Testing **/
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
