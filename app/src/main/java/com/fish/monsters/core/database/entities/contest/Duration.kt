@@ -22,4 +22,8 @@ data class Duration(val hours: Int = 0, val minutes: Int, val seconds: Int) {
 
         return stringBuilder.toString()
     }
+
+    fun toSeconds(): Int {
+        return hours * 3600 + minutes * 60 + seconds
+    }
 }

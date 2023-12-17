@@ -41,5 +41,12 @@
     <string name="difficulty_level">Difficulty Level</string>
     <string name="awards_won">Awards Won</string>
     <string name="avoided_creatures">Avoided Creatures</string>
-
+    <string name="open_google_maps">Open Google Maps</string>
+    <string name="enhancements_history">History of enhancements</string>
+    <string name="history_game_start">Start</string>
+    <string name="history_game_end">End</string>
+    <string name="good_winds">Good winds</string>
+    <string name="quiet_zone">Quiet zone</string>
+    <string name="kraken_urine">Kraken\'s urine</string>
+    <string name="location_copied">Coordinates copied to clipboard</string>
 </resources>

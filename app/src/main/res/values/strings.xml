@@ -43,4 +43,12 @@
     <string name="difficulty_level">Poz. trudności</string>
     <string name="awards_won">Zdobyte nagrody</string>
     <string name="avoided_creatures">Uniknięte stwory</string>
+    <string name="open_google_maps">Otwórz Google Maps</string>
+    <string name="enhancements_history">Historia wzmocnień</string>
+    <string name="history_game_start">Start gry</string>
+    <string name="history_game_end">Koniec gry</string>
+    <string name="good_winds">Dobre wiatry</string>
+    <string name="quiet_zone">Spokojna strefa</string>
+    <string name="kraken_urine">Mocz krakena</string>
+    <string name="location_copied">Współrzędne skopiowano do schowka</string>
 </resources>

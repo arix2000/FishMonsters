@@ -47,8 +47,16 @@ class FishMonstersApp : Application() {
                         rewardsCount = 10,
                         enhancementsUsed = listOf(
                             Enhancement(
-                                name = "Enhancement 1",
-                                time = Duration(1, 3, 18)
+                                name = "good_winds",
+                                time = Duration(0, 25, 0)
+                            ),
+                            Enhancement(
+                                name = "quiet_zone",
+                                time = Duration(0, 55, 0)
+                            ),
+                            Enhancement(
+                                name = "kraken_urine",
+                                time = Duration(2, 0, 15)
                             )
                         ),
                         bypassedMonsters = 0,
@@ -57,8 +65,7 @@ class FishMonstersApp : Application() {
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(
-                            latitude = 10.0,
-                            longitude = 10.0
+                            52.41653257428317, 16.931677800000003
                         )
                     )
                 )
@@ -72,11 +79,15 @@ class FishMonstersApp : Application() {
                         rewardsCount = 8,
                         enhancementsUsed = listOf(
                             Enhancement(
-                                name = "Enhancement 2",
+                                name = "good_winds",
                                 time = Duration(0, 45, 0)
                             ),
                             Enhancement(
-                                name = "Enhancement 3",
+                                name = "good_winds",
+                                time = Duration(1, 31, 12)
+                            ),
+                            Enhancement(
+                                name = "kraken_urine",
                                 time = Duration(2, 0, 0)
                             )
                         ),
@@ -86,8 +97,7 @@ class FishMonstersApp : Application() {
                         ),
                         isGameSuccess = false,
                         gameLocation = GameLocation(
-                            latitude = 20.0,
-                            longitude = 15.0
+                            32.150225074707784, -110.83587388650932
                         )
                     )
                 )
@@ -108,8 +118,7 @@ class FishMonstersApp : Application() {
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(
-                            latitude = 30.0,
-                            longitude = 25.0
+                            26.357896, 127.783809
                         )
                     )
                 )
