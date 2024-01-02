@@ -23,14 +23,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
+import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.core.database.entities.Contest
-import com.fish.monsters.core.database.entities.contest.AwardsCount
+import com.fish.monsters.core.database.entities.contest.Award
+import com.fish.monsters.core.database.entities.contest.AwardType
+import com.fish.monsters.core.database.entities.contest.DifficultyLevel
+import com.fish.monsters.core.database.entities.contest.Duration
+import com.fish.monsters.core.database.entities.contest.Enhancement
+import com.fish.monsters.core.database.entities.contest.GameLocation
 import com.fish.monsters.core.theme.DarkPrimaryColor
 
 @Composable
-fun HistoryDetailsSummary(contestDetails: Contest?) {
+fun HistoryDetailsSummary(contestDetails: Contest) {
     if (contestDetails != null) {
         Column {
             Row(
@@ -224,7 +231,7 @@ fun HistoryDetailsSummary(contestDetails: Contest?) {
 }
 
 @Composable
-fun AwardCol(awardCount: AwardsCount) {
+fun AwardCol(awardCount: Award) {
     Column {
         Text(
             text = " ${awardCount.count}x",
@@ -237,6 +244,44 @@ fun AwardCol(awardCount: AwardsCount) {
             painter = painterResource(id = awardCount.getIconForAward(award = awardCount.award)),
             contentDescription = "Award Icon",
             modifier = Modifier.width(17.dp)
+        )
+    }
+}
+
+@Preview
+@Composable
+fun HistoryDetailsScreenContentPreview() {
+    PreviewContainer {
+        HistoryDetailsSummary(
+            contestDetails = Contest(
+                date = "08 November 2023",
+                duration = Duration(2, 30, 12),
+                points = 85,
+                difficultyLevel = DifficultyLevel.LOW,
+                rewardsCount = 10,
+                enhancementsUsed = listOf(
+                    Enhancement(
+                        name = "good_winds",
+                        time = Duration(0, 25, 0)
+                    ),
+                    Enhancement(
+                        name = "quiet_zone",
+                        time = Duration(0, 55, 0)
+                    ),
+                    Enhancement(
+                        name = "kraken_urine",
+                        time = Duration(2, 0, 15)
+                    )
+                ),
+                bypassedMonsters = 0,
+                awardsEarned = listOf(
+                    Award(AwardType.Flower, 1)
+                ),
+                isGameSuccess = true,
+                gameLocation = GameLocation(
+                    52.41653257428317, 16.931677800000003
+                )
+            )
         )
     }
 }

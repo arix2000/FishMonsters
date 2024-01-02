@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.fish.monsters.core.database.converters.ContestConverter
-import com.fish.monsters.core.database.entities.contest.AwardsCount
+import com.fish.monsters.core.database.entities.contest.Award
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.Enhancement
@@ -21,7 +21,7 @@ data class Contest(
     val rewardsCount: Int,
     val enhancementsUsed: List<Enhancement>,
     val bypassedMonsters: Int,
-    val awardsEarned: List<AwardsCount>,
+    val awardsEarned: List<Award>,
     val isGameSuccess: Boolean,
     val gameLocation: GameLocation
 )

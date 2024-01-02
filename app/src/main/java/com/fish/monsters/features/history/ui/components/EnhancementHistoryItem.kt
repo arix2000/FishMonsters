@@ -33,7 +33,7 @@ import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 
 @Composable
-fun EnhancementHistoryRow(
+fun EnhancementHistoryItem(
     enhancement: Enhancement,
     shape: PartiallyCutCornerShape = PartiallyCutCornerShape(
         DpSize(8.dp, 22.dp)
@@ -68,7 +68,7 @@ fun EnhancementHistoryRow(
                         .background(DarkPrimaryColorA12, shape = shape)
                 ) {
                     Icon(
-                        painter = painterResource(id = enhancement.getIcon(enhancement.name)),
+                        painter = painterResource(id = enhancement.iconId),
                         contentDescription = "Enhancement Icon",
                         modifier = Modifier
                             .size(17.dp)
@@ -77,7 +77,7 @@ fun EnhancementHistoryRow(
                     )
                 }
                 Text(
-                    text = stringResource(id = enhancement.getName(enhancement.name)),
+                    text = stringResource(id = enhancement.getName()),
                     modifier = Modifier.padding(start = 8.dp)
                 )
                 Spacer(
@@ -87,7 +87,7 @@ fun EnhancementHistoryRow(
                         .height(1.dp)
                         .background(DarkPrimaryColor)
                 )
-                PointStartEnd(checked = false)
+                EnhancementPoint(checked = false)
             }
             Text(
                 text = enhancement.time.toString(true),
@@ -100,9 +100,9 @@ fun EnhancementHistoryRow(
 
 @Preview
 @Composable
-private fun EnhancementHistoryRowPreview() {
+private fun EnhancementHistoryItemPreview() {
     PreviewContainer {
-        EnhancementHistoryRow(
+        EnhancementHistoryItem(
             Enhancement(
                 name = "good_winds",
                 time = Duration(1, 25, 21)

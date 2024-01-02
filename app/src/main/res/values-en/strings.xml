@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="copied_to_clipboard">Copied to clipboard</string>
+
     <string name="app_name">FishMonsters</string>
     <string name="start">Start</string>
     <string name="settings">Settings</string>
@@ -48,5 +50,6 @@
     <string name="good_winds">Good winds</string>
     <string name="quiet_zone">Quiet zone</string>
     <string name="kraken_urine">Kraken\'s urine</string>
-    <string name="location_copied">Coordinates copied to clipboard</string>
+    <string name="location">Location</string>
+    <string name="unknown_place">Unknown place</string>
 </resources>

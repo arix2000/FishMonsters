@@ -50,7 +50,7 @@ fun HistoryStartEndRow(title: String, isEndRow: Boolean, spacerHeight: Dp = 0.dp
                     .height(1.dp)
                     .background(DarkPrimaryColor)
             )
-            PointStartEnd(checked = true)
+            EnhancementPoint(checked = true)
         }
     }
 }

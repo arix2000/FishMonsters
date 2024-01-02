@@ -3,7 +3,7 @@ package com.fish.monsters.core.database.converters
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.fish.monsters.core.database.entities.contest.AwardsCount
+import com.fish.monsters.core.database.entities.contest.Award
 import com.fish.monsters.core.database.entities.contest.Enhancement
 import com.fish.monsters.core.database.entities.contest.GameLocation
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
@@ -24,13 +24,13 @@ class ContestConverter {
     }
 
     @TypeConverter
-    fun fromAwardsCountList(value: List<AwardsCount>): String {
+    fun fromAwardsCountList(value: List<Award>): String {
         return gson.toJson(value)
     }
 
     @TypeConverter
-    fun toAwardsCountList(value: String): List<AwardsCount> {
-        val listType = object : TypeToken<List<AwardsCount>>() {}.type
+    fun toAwardsCountList(value: String): List<Award> {
+        val listType = object : TypeToken<List<Award>>() {}.type
         return gson.fromJson(value, listType)
     }
 

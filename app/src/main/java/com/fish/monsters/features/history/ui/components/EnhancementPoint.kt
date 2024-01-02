@@ -16,7 +16,7 @@ import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 
 @Composable
-fun PointStartEnd(
+fun EnhancementPoint(
     shape: PartiallyCutCornerShape = PartiallyCutCornerShape(
         DpSize(2.dp, 6.dp)
     ),
@@ -36,6 +36,6 @@ fun PointStartEnd(
 
 @Preview
 @Composable
-fun PointStartEndPreview() {
-    PointStartEnd(checked = false)
+fun EnhancementPointPreview() {
+    EnhancementPoint(checked = false)
 }

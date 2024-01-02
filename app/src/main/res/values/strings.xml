@@ -50,5 +50,7 @@
     <string name="good_winds">Dobre wiatry</string>
     <string name="quiet_zone">Spokojna strefa</string>
     <string name="kraken_urine">Mocz krakena</string>
-    <string name="location_copied">Współrzędne skopiowano do schowka</string>
+    <string name="copied_to_clipboard">Skopiowano do schowka</string>
+    <string name="location">Lokalizacja</string>
+    <string name="unknown_place">Nieznane miejsce</string>
 </resources>

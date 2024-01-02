@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.screenContent.ScreenBox
 import com.fish.monsters.core.database.entities.Contest
+import com.fish.monsters.core.database.entities.contest.AwardType
 import com.fish.monsters.core.database.entities.contest.Award
-import com.fish.monsters.core.database.entities.contest.AwardsCount
 import com.fish.monsters.core.theme.FishMonstersTheme
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
@@ -30,7 +31,10 @@ import org.koin.compose.koinInject
 
 @Composable
 fun HistoryScreen(viewModel: HistoryViewModel = koinInject()) {
-    val state = viewModel.allContestsState.value
+    LaunchedEffect(true) {
+        viewModel.getAllContests()
+    }
+    val state = viewModel.historyState.value
     ScreenBox(title = stringResource(id = R.string.history)) {
         HistoryScreenContent(state.contests)
     }
@@ -76,7 +80,7 @@ private fun HistoryScreenPreviewWithData() {
             ),
             bypassedMonsters = 1,
             awardsEarned = listOf(
-                AwardsCount(Award.Grass, 1)
+                Award(AwardType.Grass, 1)
             ),
             isGameSuccess = true,
             gameLocation = GameLocation(
@@ -103,8 +107,8 @@ private fun HistoryScreenPreviewWithData() {
             ),
             bypassedMonsters = 3,
             awardsEarned = listOf(
-                AwardsCount(Award.Flower, 1),
-                AwardsCount(Award.Pumpkin, 1)
+                Award(AwardType.Flower, 1),
+                Award(AwardType.Pumpkin, 1)
             ),
             isGameSuccess = false,
             gameLocation = GameLocation(
@@ -122,9 +126,9 @@ private fun HistoryScreenPreviewWithData() {
             enhancementsUsed = emptyList(),
             bypassedMonsters = 0,
             awardsEarned = listOf(
-                AwardsCount(Award.Flower, 1),
-                AwardsCount(Award.Grass, 1),
-                AwardsCount(Award.Pumpkin, 1)
+                Award(AwardType.Flower, 1),
+                Award(AwardType.Grass, 1),
+                Award(AwardType.Pumpkin, 1)
             ),
             isGameSuccess = true,
             gameLocation = GameLocation(
