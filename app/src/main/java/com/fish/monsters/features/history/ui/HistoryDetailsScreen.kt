@@ -1,5 +1,6 @@
 package com.fish.monsters.features.history.ui
 
+import HistoryOfEnhancements
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -16,18 +17,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.fish.monsters.R
 import com.fish.monsters.common.extensions.roundToString
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
+import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.screenContent.ScreenBox
 import com.fish.monsters.core.database.entities.Contest
 import com.fish.monsters.core.database.entities.contest.Award
@@ -47,15 +45,12 @@ import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.Enhancement
 import com.fish.monsters.core.database.entities.contest.GameLocation
 import com.fish.monsters.core.theme.DangerColor
-import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
 import com.fish.monsters.core.theme.EasyColor
 import com.fish.monsters.core.theme.LightPrimaryColor
 import com.fish.monsters.features.history.HistoryViewModel
-import com.fish.monsters.features.history.ui.components.EnhancementHistoryRow
 import com.fish.monsters.features.history.ui.components.HistoryDetailsSummary
 import com.fish.monsters.features.history.ui.components.HistoryMap
-import com.fish.monsters.features.history.ui.components.HistoryStartEndRow
 import com.google.android.gms.maps.model.LatLng
 import org.koin.compose.koinInject
 import java.util.Locale
@@ -173,50 +168,7 @@ fun HistoryDetailsScreenContent(
                 )
             }
             if (contestDetails.enhancementsUsed.isNotEmpty()) {
-                Spacer(modifier = Modifier.height(24.dp))
-                Row(
-                    modifier = Modifier
-                        .padding(0.dp)
-                        .height(30.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.buff_icon),
-                        contentDescription = "Buff Icon",
-                        Modifier.size(20.dp),
-                        tint = DarkPrimaryColor
-                    )
-                    Spacer(modifier = Modifier.width(5.dp))
-                    Text(
-                        text = stringResource(id = R.string.enhancements_history),
-                        fontSize = 20.sp
-                    )
-                }
-                Spacer(modifier = Modifier.height(12.dp))
-                Column(modifier = Modifier.fillMaxWidth(0.95f)) {
-                    HistoryStartEndRow(
-                        title = stringResource(id = R.string.history_game_start),
-                        isEndRow = false
-                    )
-
-                    var previousTimeInSeconds = 0
-
-                    contestDetails.enhancementsUsed.forEach { enhancement ->
-                        val timeInSeconds = enhancement.time.toSeconds()
-                        val space = spaceFromTime(timeInSeconds - previousTimeInSeconds)
-                        EnhancementHistoryRow(
-                            enhancement = enhancement,
-                            height = space
-                        )
-                        previousTimeInSeconds = timeInSeconds
-                    }
-
-                    HistoryStartEndRow(
-                        title = stringResource(id = R.string.history_game_end),
-                        isEndRow = true,
-                        spacerHeight = spaceFromTime(contestDetails.duration.toSeconds() - previousTimeInSeconds)
-                    )
-                }
+                HistoryOfEnhancements(contestDetails)
             }
         }
     }
@@ -243,31 +195,33 @@ private fun parseStreetAndCity(addresses: List<Address>?): String {
 @Preview
 @Composable
 private fun HistoryDetailsScreenPreview() {
-    HistoryDetailsScreenContent(
-        Contest(
-            id = 4,
-            date = "10 march 2024",
-            duration = Duration(1, 15, 40),
-            points = 75,
-            difficultyLevel = DifficultyLevel.MEDIUM,
-            rewardsCount = 12,
-            enhancementsUsed = listOf(
-                Enhancement(
-                    name = "Enhancement 4",
-                    time = Duration(1, 30, 12)
+    PreviewContainer {
+        HistoryDetailsScreenContent(
+            Contest(
+                id = 4,
+                date = "10 march 2024",
+                duration = Duration(1, 15, 40),
+                points = 75,
+                difficultyLevel = DifficultyLevel.MEDIUM,
+                rewardsCount = 12,
+                enhancementsUsed = listOf(
+                    Enhancement(
+                        name = "Enhancement 4",
+                        time = Duration(1, 30, 12)
+                    )
+                ),
+                bypassedMonsters = 18,
+                awardsEarned = listOf(
+                    AwardsCount(Award.Grass, 2),
+                    AwardsCount(Award.Flower, 12),
+                    AwardsCount(Award.Pumpkin, 1)
+                ),
+                isGameSuccess = true,
+                gameLocation = GameLocation(
+                    latitude = 25.0,
+                    longitude = 20.0
                 )
-            ),
-            bypassedMonsters = 18,
-            awardsEarned = listOf(
-                AwardsCount(Award.Grass, 2),
-                AwardsCount(Award.Flower, 12),
-                AwardsCount(Award.Pumpkin, 1)
-            ),
-            isGameSuccess = true,
-            gameLocation = GameLocation(
-                latitude = 25.0,
-                longitude = 20.0
             )
         )
-    )
+    }
 }
