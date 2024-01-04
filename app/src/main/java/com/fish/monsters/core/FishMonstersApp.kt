@@ -5,6 +5,7 @@ import com.fish.monsters.common.utils.MusicManager
 import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.core.database.dao.ContestDao
 import com.fish.monsters.core.database.entities.Contest
+import com.fish.monsters.core.database.entities.contest.AwardType
 import com.fish.monsters.core.database.entities.contest.Award
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
@@ -46,21 +47,29 @@ class FishMonstersApp : Application() {
                         rewardsCount = 10,
                         enhancementsUsed = listOf(
                             Enhancement(
-                                name = "Enhancement 1",
-                                time = Duration(1, 3, 18)
+                                name = "good_winds",
+                                time = Duration(0, 25, 0)
+                            ),
+                            Enhancement(
+                                name = "quiet_zone",
+                                time = Duration(0, 55, 0)
+                            ),
+                            Enhancement(
+                                name = "kraken_urine",
+                                time = Duration(2, 0, 15)
                             )
                         ),
                         bypassedMonsters = 0,
                         awardsEarned = listOf(
-                            Award.Flower
+                            Award(AwardType.Flower, 1)
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(
-                            latitude = 10.0,
-                            longitude = 10.0
+                            52.41653257428317, 16.931677800000003
                         )
-                    ),
+                    )
                 )
+
                 contestDao.insertContest(
                     Contest(
                         date = "15 January 2024",
@@ -70,26 +79,29 @@ class FishMonstersApp : Application() {
                         rewardsCount = 8,
                         enhancementsUsed = listOf(
                             Enhancement(
-                                name = "Enhancement 2",
+                                name = "good_winds",
                                 time = Duration(0, 45, 0)
                             ),
                             Enhancement(
-                                name = "Enhancement 3",
+                                name = "good_winds",
+                                time = Duration(1, 31, 12)
+                            ),
+                            Enhancement(
+                                name = "kraken_urine",
                                 time = Duration(2, 0, 0)
                             )
                         ),
                         bypassedMonsters = 2,
                         awardsEarned = listOf(
-                            Award.Pumpkin,
-                            Award.Pumpkin
+                            Award(AwardType.Pumpkin, 2)
                         ),
                         isGameSuccess = false,
                         gameLocation = GameLocation(
-                            latitude = 20.0,
-                            longitude = 15.0
+                            32.150225074707784, -110.83587388650932
                         )
                     )
                 )
+
                 contestDao.insertContest(
                     Contest(
                         date = "20 June 2025",
@@ -100,17 +112,17 @@ class FishMonstersApp : Application() {
                         enhancementsUsed = emptyList(),
                         bypassedMonsters = 5,
                         awardsEarned = listOf(
-                            Award.Pumpkin,
-                            Award.Flower,
-                            Award.Grass
+                            Award(AwardType.Pumpkin, 1),
+                            Award(AwardType.Flower, 1),
+                            Award(AwardType.Grass, 1)
                         ),
                         isGameSuccess = true,
                         gameLocation = GameLocation(
-                            latitude = 30.0,
-                            longitude = 25.0
+                            26.357896, 127.783809
                         )
                     )
                 )
+
             }
         }
     }

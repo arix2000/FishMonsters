@@ -7,16 +7,21 @@ import androidx.lifecycle.viewModelScope
 import com.fish.monsters.core.database.dao.ContestDao
 import kotlinx.coroutines.launch
 
-class HistoryViewModel(private val contestDao: ContestDao): ViewModel(){
-    private val _state = mutableStateOf(HistoryState())
-    val state: State<HistoryState> = _state
-    init {
-        getAllContest()
+class HistoryViewModel(private val contestDao: ContestDao) : ViewModel() {
+    private val _historyState = mutableStateOf(HistoryState())
+    val historyState: State<HistoryState> = _historyState
+
+    fun getAllContests() {
+        viewModelScope.launch {
+            val allContests = contestDao.getAllContests()
+            _historyState.value = _historyState.value.copy(contests = allContests)
+        }
     }
 
-    private fun getAllContest() {
+    fun getContestDetailsById(contestId: Long) {
         viewModelScope.launch {
-            _state.value = _state.value.copy(contests = contestDao.getAllContests())
+            val contestDetails = contestDao.getContestDetailsById(contestId)
+            _historyState.value = _historyState.value.copy(selectedContest = contestDetails)
         }
     }
 }
