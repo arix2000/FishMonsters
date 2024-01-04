@@ -20,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,192 +40,108 @@ import com.fish.monsters.core.theme.DarkPrimaryColor
 
 @Composable
 fun HistoryDetailsSummary(contestDetails: Contest) {
-    if (contestDetails != null) {
         Column {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column() {
-                    Row {
-                        Icon(
-                            imageVector = Icons.Default.CalendarMonth,
-                            contentDescription = "Calendar Icon",
-                            tint = DarkPrimaryColor,
-                            modifier = Modifier.width(17.dp)
-                        )
-                        Text(
-                            text = " " + stringResource(id = R.string.date),
-                            color = DarkPrimaryColor,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-                Column {
-                    Text(
-                        text = contestDetails.date,
-                        color = DarkPrimaryColor,
-                        fontWeight = FontWeight.SemiBold
+            HistoryDetailsSummaryRow(
+                contestDetails = contestDetails,
+                isFirst = true,
+                detailTypeImageVector = Icons.Default.CalendarMonth,
+                imageContentDescription = "Calendar Icon",
+                detailTypeNameResourceId = R.string.date,
+                valueColText = contestDetails.date
+            )
+            HistoryDetailsSummaryRow(
+                contestDetails = contestDetails,
+                detailTypeImageVector = Icons.Default.AccessTime,
+                imageContentDescription = "Clock Icon",
+                detailTypeNameResourceId = R.string.survival_time,
+                valueColText = contestDetails.duration.toString(includeSeconds = true)
+            )
+            HistoryDetailsSummaryRow(
+                contestDetails = contestDetails,
+                detailTypeImageVector = Icons.Default.SportsScore,
+                imageContentDescription = "Score Icon",
+                detailTypeNameResourceId = R.string.points_scored,
+                valueColText = contestDetails.points.toString()
+            )
+            HistoryDetailsSummaryRow(
+                contestDetails = contestDetails,
+                detailTypeImageVector = Icons.Outlined.VideogameAsset,
+                imageContentDescription = "Difficulty Icon",
+                detailTypeNameResourceId = R.string.difficulty_level,
+                valueColText = stringResource(id = contestDetails.difficultyLevel.stringRes),
+                valueColTextColor = contestDetails.difficultyLevel.color
+            )
+            HistoryDetailsSummaryRow(
+                contestDetails = contestDetails,
+                detailTypeImageVector = Icons.Outlined.WineBar,
+                imageContentDescription = "Reward Icon",
+                detailTypeNameResourceId = R.string.awards_won,
+            )
+            HistoryDetailsSummaryRow(
+                contestDetails = contestDetails,
+                imageContentDescription = "Monsters Icon",
+                detailTypeNameResourceId = R.string.avoided_creatures,
+                valueColText = contestDetails.bypassedMonsters.toString(),
+            )
+        }
+    }
+
+@Composable
+private fun HistoryDetailsSummaryRow(contestDetails: Contest,
+                                     isFirst: Boolean = false,
+                                     detailTypeImageVector: ImageVector? = null,
+                                     imageContentDescription: String,
+                                     detailTypeNameResourceId: Int,
+                                     valueColText: String = "",
+                                     valueColTextColor: Color = DarkPrimaryColor,
+                                     ) {
+    if (!isFirst) {
+        Spacer(modifier = Modifier.height(12.dp))
+    }
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 15.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Column {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (detailTypeImageVector != null) {
+                    Icon(
+                        imageVector = detailTypeImageVector,
+                        contentDescription = imageContentDescription,
+                        tint = DarkPrimaryColor,
+                        modifier = Modifier.width(17.dp)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.fish_monter_icon),
+                        contentDescription = "Monsters Icon",
+                        modifier = Modifier.width(17.dp)
                     )
                 }
+                Text(
+                    text = " " + stringResource(id = detailTypeNameResourceId),
+                    color = DarkPrimaryColor,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.AccessTime,
-                            contentDescription = "Clock Icon",
-                            tint = DarkPrimaryColor,
-                            modifier = Modifier.width(17.dp)
-                        )
-                        Text(
-                            text = " " + stringResource(id = R.string.survival_time),
-                            color = DarkPrimaryColor,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-                Column {
-                    Text(
-                        text = contestDetails.duration.toString(includeSeconds = true),
-                        color = DarkPrimaryColor,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Default.SportsScore,
-                            contentDescription = "Score Icon",
-                            tint = DarkPrimaryColor,
-                            modifier = Modifier.width(17.dp)
-                        )
-                        Text(
-                            text = " " + stringResource(id = R.string.points_scored),
-                            color = DarkPrimaryColor,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-                Column {
-                    Text(
-                        text = contestDetails.points.toString(),
-                        color = DarkPrimaryColor,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Outlined.VideogameAsset,
-                            contentDescription = "Difficulty Icon",
-                            tint = DarkPrimaryColor,
-                            modifier = Modifier.width(17.dp)
-                        )
-                        Text(
-                            text = " " + stringResource(id = R.string.difficulty_level),
-                            color = DarkPrimaryColor,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-                Column {
-                    Text(
-                        text = stringResource(id = contestDetails.difficultyLevel.stringRes),
-                        color = contestDetails.difficultyLevel.color,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(
-                            imageVector = Icons.Outlined.WineBar,
-                            contentDescription = "Reward Icon",
-                            tint = DarkPrimaryColor,
-                            modifier = Modifier.width(17.dp)
-                        )
-                        Text(
-                            text = " " + stringResource(id = R.string.awards_won),
-                            color = DarkPrimaryColor,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-                Column {
-                    Row {
-                        for (awardCount in contestDetails.awardsEarned) {
-                            if (awardCount.count > 0) {
-                                AwardCol(awardCount = awardCount)
-                            }
+        }
+        Column {
+            if (valueColText != "") {
+                Text(
+                    text = valueColText,
+                    color = valueColTextColor,
+                    fontWeight = FontWeight.SemiBold
+                )
+            } else {
+                Row {
+                    for (awardCount in contestDetails.awardsEarned) {
+                        if (awardCount.count > 0) {
+                            AwardCol(awardCount = awardCount)
                         }
                     }
-                }
-            }
-            Spacer(modifier = Modifier.height(12.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = painterResource(id = R.drawable.fish_monter_icon),
-                            contentDescription = "Monsters Icon",
-                            modifier = Modifier.width(17.dp)
-                        )
-                        Text(
-                            text = " " + stringResource(id = R.string.avoided_creatures),
-                            color = DarkPrimaryColor,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                    }
-                }
-                Column {
-                    Text(
-                        text = contestDetails.bypassedMonsters.toString(),
-                        color = DarkPrimaryColor,
-                        fontWeight = FontWeight.SemiBold
-                    )
                 }
             }
         }
@@ -275,7 +193,8 @@ fun HistoryDetailsScreenContentPreview() {
                 ),
                 bypassedMonsters = 0,
                 awardsEarned = listOf(
-                    Award(AwardType.Flower, 1)
+                    Award(AwardType.Flower, 1),
+                    Award(AwardType.Pumpkin, 2)
                 ),
                 isGameSuccess = true,
                 gameLocation = GameLocation(
