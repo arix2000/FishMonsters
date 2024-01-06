@@ -11,15 +11,19 @@ data class Duration(val hours: Int = 0, val minutes: Int, val seconds: Int) {
         val stringBuilder = StringBuilder()
 
         if (hours > 0) {
-            stringBuilder.append("$hours h ")
+            stringBuilder.append("${hours}h ")
         }
 
-        stringBuilder.append("$minutes min")
+        stringBuilder.append("${minutes}min ")
 
         if (includeSeconds && seconds > 0) {
-            stringBuilder.append(" $seconds s")
+            stringBuilder.append("${seconds}s ")
         }
 
         return stringBuilder.toString()
+    }
+
+    fun toSeconds(): Int {
+        return hours * 3600 + minutes * 60 + seconds
     }
 }

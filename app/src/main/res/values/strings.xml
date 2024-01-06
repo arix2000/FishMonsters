@@ -32,6 +32,28 @@
     <string name="grass_award">Trawa</string>
     <string name="flower_award">Kwiat</string>
     <string name="pumpkin_award">Dynia</string>
+
+    <string name="contest_details">Szczegóły podejścia</string>
+    <string name="contest_result">Gra zakończona </string>
+    <string name="success">Sukcesem</string>
+    <string name="failure">Porażką</string>
+    <string name="date">Data</string>
+    <string name="survival_time">Czas przetrwania</string>
+    <string name="points_scored">Zdobyte punkty</string>
+    <string name="difficulty_level">Poz. trudności</string>
+    <string name="awards_won">Zdobyte nagrody</string>
+    <string name="avoided_creatures">Uniknięte stwory</string>
+    <string name="open_google_maps">Otwórz Google Maps</string>
+    <string name="enhancements_history">Historia wzmocnień</string>
+    <string name="history_game_start">Start gry</string>
+    <string name="history_game_end">Koniec gry</string>
+    <string name="good_winds">Dobre wiatry</string>
+    <string name="quiet_zone">Spokojna strefa</string>
+    <string name="kraken_urine">Mocz krakena</string>
+    <string name="copied_to_clipboard">Skopiowano do schowka</string>
+    <string name="location">Lokalizacja</string>
+    <string name="unknown_place">Nieznane miejsce</string>
+
     <string name="permission_denied">Uprawnienia zostały odrzucone</string>
     <string name="permission_denied_content_text">W Fish monsters to ty sam jesteś główną postacią, aplikacja potrzebuje uprawnień do twojej lokalizacji aby rozpocząć gre. Uprawnienia do lokalizacji możesz zmienić przy ponownym wejściu w ten ekran lub w ustawieniach aplikacji.</string>
 </resources>

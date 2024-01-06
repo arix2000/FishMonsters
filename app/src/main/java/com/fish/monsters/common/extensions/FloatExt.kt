@@ -9,3 +9,7 @@ fun Float.toPercents(): Int {
 fun Float.Companion.fromPercents(percents: Int): Float {
     return percents.toFloat().div(100)
 }
+
+fun Double.roundToString(decimals: Int): String {
+    return String.format("%.${decimals}f", this)
+}

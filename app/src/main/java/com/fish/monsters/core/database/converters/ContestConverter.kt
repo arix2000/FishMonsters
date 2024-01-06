@@ -24,12 +24,12 @@ class ContestConverter {
     }
 
     @TypeConverter
-    fun fromAwardList(value: List<Award>): String {
+    fun fromAwardsCountList(value: List<Award>): String {
         return gson.toJson(value)
     }
 
     @TypeConverter
-    fun toAwardList(value: String): List<Award> {
+    fun toAwardsCountList(value: String): List<Award> {
         val listType = object : TypeToken<List<Award>>() {}.type
         return gson.fromJson(value, listType)
     }
