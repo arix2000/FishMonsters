@@ -25,8 +25,8 @@ class LocationService(
             return@callbackFlow
         }
 
-        val request = LocationRequest.Builder(100L)
-            .setIntervalMillis(100L)
+        val request = LocationRequest.Builder(1000L)
+            .setIntervalMillis(1000L)
             .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
             .build()
 

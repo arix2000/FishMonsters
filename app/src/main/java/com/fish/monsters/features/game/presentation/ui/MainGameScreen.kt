@@ -1,9 +1,10 @@
 package com.fish.monsters.features.game.presentation.ui
 
 import android.Manifest
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.fish.monsters.R
@@ -14,13 +15,12 @@ import com.fish.monsters.core.navigation.Screen
 import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.game.presentation.MainGameEvent
 import com.fish.monsters.features.game.presentation.MainGameViewModel
+import com.fish.monsters.features.game.presentation.ui.map.MainGameMap
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.MapProperties
 import org.koin.compose.koinInject
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -51,16 +51,13 @@ fun MainGameScreen(
 
 @Composable
 private fun MainGameScreenContent(difficulty: Difficulty, userLocation: LatLng) {
-    Text(text = userLocation.toString())
-    GoogleMap(properties = MapProperties(isMyLocationEnabled = true)) {
-
-    }
+    MainGameMap(difficulty, userLocation)
 }
 
 @Preview
 @Composable
 private fun MainGameScreenPreview() {
-    PreviewContainer {
+    PreviewContainer(Modifier.fillMaxSize()) {
         MainGameScreenContent(Difficulty.HARD, LatLng(14.0, 14.0))
     }
 }
