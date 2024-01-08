@@ -34,4 +34,7 @@ sealed class Screen(
     object AboutScreen : Screen("AboutScreen")
 
     object MainGameScreen : Screen("MainGameScreen", "difficulty")
+
+    object SafetyInformationScreen : Screen("safety_information_screen")
+
 }

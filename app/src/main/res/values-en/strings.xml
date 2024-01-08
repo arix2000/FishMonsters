@@ -2,7 +2,7 @@
 <resources>
     <string name="safety_information">SECURITY INFORMATION</string>
     <string name="safety_warning">Warning!</string>
-    <string name="safety_info_text">\n"Make sure you are in a location where you are able to move in every direction. We prefer to play in open spaces without busy streets. The best places to play are parks, forests, playing fields, etc.\n\n"
+    <string name="safety_info_text">\n"Make sure you are in a location where you are able to move in every direction. We recommend to play in open spaces without busy streets. The best places to play are parks, forests, playing fields, etc.\n\n"
         "Wherever you are, remember to pay attention to your surroundings."\n\n
         "The game is designed to allow you to look away even on the most difficult difficulty levels."\n</string>
     <string name="do_not_show_again">Do not show again</string>

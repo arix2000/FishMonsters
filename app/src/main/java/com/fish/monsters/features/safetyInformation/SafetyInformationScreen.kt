@@ -13,6 +13,8 @@ import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,19 +33,28 @@ import com.fish.monsters.common.views.screenContent.ScreenBox
 import com.fish.monsters.core.navigation.Navigator
 import com.fish.monsters.core.navigation.Screen
 import com.fish.monsters.core.theme.TextColorLight
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.launch
+import com.fish.monsters.features.preferences.PreferencesViewModel
 
 @Composable
 fun SafetyInformationScreen(
-    checkboxState: Boolean,
-    navigator: Navigator,
-    preferencesManager: PreferencesManager
+    navigator: Navigator?,
+    preferencesViewModel: PreferencesViewModel?
 ) {
-    var showAgain by remember { mutableStateOf(checkboxState) }
+    var showAgain by remember { mutableStateOf(false) }
+
+    val shouldShowSafetyScreen =
+        preferencesViewModel?.shouldShowSafetyScreen?.collectAsState(initial = true)?.value ?: true
+
+    if (!shouldShowSafetyScreen) {
+        navigator?.navigateTo(Screen.MainGameScreen)
+        return
+    }
+
+    LaunchedEffect(shouldShowSafetyScreen) {
+        if (!shouldShowSafetyScreen) {
+            navigator?.navigateTo(Screen.MainGameScreen)
+        }
+    }
 
     ScreenBox(title = stringResource(R.string.safety_information)) {
         Column(
@@ -82,15 +93,15 @@ fun SafetyInformationScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
 
+
                 Checkbox(
                     checked = showAgain,
                     onCheckedChange = {
                         showAgain = it
-                        CoroutineScope(Dispatchers.IO).launch {
-                            preferencesManager.setShowSafetyScreen(it)
-                        }
+                        preferencesViewModel?.setShowSafetyScreen(it)
                     }
                 )
+
                 Spacer(Modifier.width(8.dp))
                 Text(text = stringResource(id = R.string.do_not_show_again))
             }
@@ -102,7 +113,7 @@ fun SafetyInformationScreen(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 onClick = {
-                    navigator.navigateTo(Screen.MainGameScreen)
+                    navigator?.navigateTo(Screen.MainGameScreen)
                 }
 
             ) {
@@ -115,30 +126,13 @@ fun SafetyInformationScreen(
     }
 }
 
-class MockPreferencesManager : PreferencesManager(null) {
-    override suspend fun setShowSafetyScreen(show: Boolean) {
-    }
-
-    override val showSafetyScreenFlow: Flow<Boolean> = flowOf(true)
-}
-
-class MockNavigator : Navigator() {
-
-    override fun navigateTo(screen: Screen) {
-    }
-
-    override fun navigateTo(screen: Screen, argument: String) {
-    }
-}
-
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun SafetyInformationScreenPreview() {
     PreviewContainer {
         SafetyInformationScreen(
-            checkboxState = false,
-            navigator = MockNavigator(),
-            preferencesManager = MockPreferencesManager()
+            navigator = null,
+            preferencesViewModel = null
         )
     }
 }

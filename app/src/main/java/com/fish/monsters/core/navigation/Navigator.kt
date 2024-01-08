@@ -20,7 +20,7 @@ import com.fish.monsters.common.extensions.putArgument
  *
  * **WARNING**: Do not access [Navigator] via its constructor unless you are in Preview mode!
  */
-open class Navigator {
+class Navigator {
     private lateinit var navController: NavHostController
 
     fun setNavController(navController: NavHostController) {
@@ -34,7 +34,7 @@ open class Navigator {
      * @see AppNavHost
      * @see Screen
      */
-    open fun navigateTo(screen: Screen) {
+    fun navigateTo(screen: Screen) {
         navController.navigate(screen.route)
     }
 
@@ -45,7 +45,7 @@ open class Navigator {
      * @see Screen.MainGameScreen
      * @see AppNavHost
      */
-    open fun navigateTo(screen: Screen, argument: String) {
+    fun navigateTo(screen: Screen, argument: String) {
         if (screen.argumentKeys.isNotEmpty()) {
             navController.navigate(
                 screen.route.putArgument(screen.argumentKeys[0], argument)
