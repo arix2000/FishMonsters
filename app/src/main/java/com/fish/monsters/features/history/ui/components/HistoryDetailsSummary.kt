@@ -1,6 +1,5 @@
 package com.fish.monsters.features.history.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -115,10 +114,11 @@ private fun HistoryDetailsSummaryRow(contestDetails: Contest,
                         modifier = Modifier.width(17.dp)
                     )
                 } else {
-                    Image(
+                    Icon(
                         painter = painterResource(id = R.drawable.fish_monter_icon),
                         contentDescription = "Monsters Icon",
-                        modifier = Modifier.width(17.dp)
+                        modifier = Modifier.width(17.dp),
+                        tint = DarkPrimaryColor
                     )
                 }
                 Text(
@@ -158,10 +158,11 @@ fun AwardCol(awardCount: Award) {
         )
     }
     Column {
-        Image(
+        Icon(
             painter = painterResource(id = awardCount.getIconForAward(award = awardCount.award)),
             contentDescription = "Award Icon",
-            modifier = Modifier.width(17.dp)
+            modifier = Modifier.width(17.dp),
+            tint = DarkPrimaryColor
         )
     }
 }

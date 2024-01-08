@@ -1,6 +1,7 @@
 package com.fish.monsters.features.history.ui.components
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -67,14 +68,23 @@ fun EnhancementHistoryItem(
                         .border(BorderStroke(1.dp, DarkPrimaryColor), shape = shape)
                         .background(DarkPrimaryColorA12, shape = shape)
                 ) {
-                    Icon(
-                        painter = painterResource(id = enhancement.iconId),
-                        contentDescription = "Enhancement Icon",
-                        modifier = Modifier
-                            .size(17.dp)
-                            .align(Alignment.Center),
-                        tint = DarkPrimaryColor
-                    )
+                    if (enhancement.name == "kraken_urine")
+                        Image(
+                            painter = painterResource(id = enhancement.iconId),
+                            contentDescription = "Enhancement Icon",
+                            modifier = Modifier
+                                .size(17.dp)
+                                .align(Alignment.Center),
+                        )
+                    else
+                        Icon(
+                            painter = painterResource(id = enhancement.iconId),
+                            contentDescription = "Enhancement Icon",
+                            modifier = Modifier
+                                .size(17.dp)
+                                .align(Alignment.Center),
+                            tint = DarkPrimaryColor
+                        )
                 }
                 Text(
                     text = stringResource(id = enhancement.getName()),
@@ -104,7 +114,7 @@ private fun EnhancementHistoryItemPreview() {
     PreviewContainer {
         EnhancementHistoryItem(
             Enhancement(
-                name = "good_winds",
+                name = "kraken_urine",
                 time = Duration(1, 25, 21)
             )
         )
