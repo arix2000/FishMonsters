@@ -19,7 +19,7 @@ fun MapAwardField(position: LatLng) {
     Circle(
         center = position,
         fillColor = TextColorDarkA80,
-        radius = 20.0,
+        radius = 10.0,
         strokeColor = DarkPrimaryColor
     )
     MarkerComposable(
