@@ -16,12 +16,11 @@ fun LatLng.fromOffset(latitude: Double, longitude: Double): LatLng {
  * @return [LatLng] which is new point moved by [offset].
  **/
 fun LatLng.moveInDirectionOf(point: LatLng, offset: Double): LatLng {
-
     val distance =
         sqrt((point.latitude - this.latitude).pow(2) + (point.longitude - this.longitude).pow(2))
 
     val newLatitude = this.latitude + offset * (point.latitude - this.latitude) / distance
-    val newLongitude = this.latitude + offset * (point.longitude - this.latitude) / distance
+    val newLongitude = this.longitude + offset * (point.longitude - this.longitude) / distance
 
     return LatLng(newLatitude, newLongitude)
 }

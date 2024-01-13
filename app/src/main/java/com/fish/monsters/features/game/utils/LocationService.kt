@@ -26,7 +26,7 @@ class LocationService(
         }
 
         val request = LocationRequest.Builder(1000L)
-            .setIntervalMillis(1000L)
+            .setMinUpdateIntervalMillis(1000L)
             .setPriority(Priority.PRIORITY_HIGH_ACCURACY)
             .build()
 
@@ -37,7 +37,6 @@ class LocationService(
                 }
             }
         }
-
         locationClient.requestLocationUpdates(
             request,
             locationCallback,
