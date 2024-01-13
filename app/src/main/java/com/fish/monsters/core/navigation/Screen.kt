@@ -31,6 +31,8 @@ sealed class Screen(
 
     object HistoryScreen : Screen("HistoryScreen")
 
+    object HistoryDetailsScreen : Screen("HistoryDetailsScreen", "contestId")
+
     object AboutScreen : Screen("AboutScreen")
 
     object MainGameScreen : Screen("MainGameScreen", "difficulty")

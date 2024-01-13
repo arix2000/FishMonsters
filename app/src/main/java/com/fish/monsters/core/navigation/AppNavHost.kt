@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.fish.monsters.features.about.AboutScreen
 import com.fish.monsters.features.game.MainGameScreen
 import com.fish.monsters.features.game.models.Difficulty
+import com.fish.monsters.features.history.ui.HistoryDetailsScreen
 import com.fish.monsters.features.history.ui.HistoryScreen
 import com.fish.monsters.features.home.HomeScreen
 import com.fish.monsters.features.safetyInformation.SafetyInformationScreen
@@ -62,6 +63,11 @@ fun AppNavHost() {
         }
         composable(Screen.HistoryScreen.route) {
             HistoryScreen()
+        }
+        composable(Screen.HistoryDetailsScreen.route) { backStackEntry ->
+            backStackEntry.arguments?.getString(Screen.HistoryDetailsScreen.argumentKeys[0])?.toLongOrNull()?.let { contestId ->
+                HistoryDetailsScreen(contestId)
+            }
         }
         composable(Screen.AboutScreen.route) {
             AboutScreen()
