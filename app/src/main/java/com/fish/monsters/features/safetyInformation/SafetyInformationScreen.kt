@@ -6,14 +6,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,30 +29,27 @@ import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.SafetyInformationCard
 import com.fish.monsters.common.views.buttons.FishButton
 import com.fish.monsters.common.views.screenContent.ScreenBox
+import com.fish.monsters.core.database.dataStore.dataStore
 import com.fish.monsters.core.navigation.Navigator
 import com.fish.monsters.core.navigation.Screen
 import com.fish.monsters.core.theme.TextColorLight
+import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.preferences.PreferencesViewModel
+import org.koin.compose.koinInject
 
 @Composable
 fun SafetyInformationScreen(
-    navigator: Navigator?,
-    preferencesViewModel: PreferencesViewModel?
+    navigator: Navigator = koinInject(),
+    preferencesViewModel: PreferencesViewModel = koinInject(),
+    difficulty: Difficulty
 ) {
-    var showAgain by remember { mutableStateOf(false) }
+    var isChecked by remember { mutableStateOf(false) }
 
     val shouldShowSafetyScreen =
-        preferencesViewModel?.shouldShowSafetyScreen?.collectAsState(initial = true)?.value ?: true
+        preferencesViewModel.shouldShowSafetyScreen.collectAsState(initial = true).value
 
     if (!shouldShowSafetyScreen) {
-        navigator?.navigateTo(Screen.MainGameScreen)
-        return
-    }
-
-    LaunchedEffect(shouldShowSafetyScreen) {
-        if (!shouldShowSafetyScreen) {
-            navigator?.navigateTo(Screen.MainGameScreen)
-        }
+        navigator.navigateTo(Screen.MainGameScreen, difficulty.name)
     }
 
     ScreenBox(title = stringResource(R.string.safety_information)) {
@@ -63,7 +59,7 @@ fun SafetyInformationScreen(
                 .padding(start = 16.dp, end = 16.dp, top = 30.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            Spacer(modifier = Modifier.height(60.dp))
+            Spacer(modifier = Modifier.weight(1f))
 
             Text(
                 text = stringResource(id = R.string.safety_warning),
@@ -92,13 +88,10 @@ fun SafetyInformationScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
-
                 Checkbox(
-                    checked = showAgain,
+                    checked = isChecked,
                     onCheckedChange = {
-                        showAgain = it
-                        preferencesViewModel?.setShowSafetyScreen(it)
+                        isChecked = it
                     }
                 )
 
@@ -113,7 +106,8 @@ fun SafetyInformationScreen(
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
                 onClick = {
-                    navigator?.navigateTo(Screen.MainGameScreen)
+                    preferencesViewModel.setShowSafetyScreen(!isChecked)
+                    navigator.navigateTo(Screen.MainGameScreen, difficulty.name)
                 }
 
             ) {
@@ -129,10 +123,12 @@ fun SafetyInformationScreen(
 @Preview
 @Composable
 private fun SafetyInformationScreenPreview() {
+    val context = LocalContext.current
     PreviewContainer {
         SafetyInformationScreen(
-            navigator = null,
-            preferencesViewModel = null
+            navigator = Navigator(),
+            preferencesViewModel = PreferencesViewModel(context.dataStore),
+            difficulty = Difficulty.EASY
         )
     }
 }

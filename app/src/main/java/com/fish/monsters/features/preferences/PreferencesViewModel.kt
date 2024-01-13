@@ -10,16 +10,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class PreferencesViewModel : ViewModel(), KoinComponent {
-    private val dataStore: DataStore<Preferences> by inject()
+class PreferencesViewModel(private val dataStore: DataStore<Preferences>) : ViewModel(),
+    KoinComponent {
 
     companion object {
         val SHOW_SAFETY_SCREEN = booleanPreferencesKey("show_safety_screen")
     }
 
-    val shouldShowSafetyScreen: Flow<Boolean> = dataStore.data
+    val shouldShowSafetyScreen: Flow<Boolean> = this.dataStore.data
         .map { preferences ->
             preferences[SHOW_SAFETY_SCREEN] ?: true
         }
