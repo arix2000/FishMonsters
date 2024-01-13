@@ -18,9 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
 import com.fish.monsters.common.models.ui.IconProps
+import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.buttons.IconFishButton
 import com.fish.monsters.common.views.screenContent.ScreenBox
 import com.fish.monsters.core.navigation.Navigator
@@ -79,7 +81,8 @@ fun StartScreen(navigator: Navigator = koinInject()) {
             }
             Box(
                 modifier = Modifier
-                    .fillMaxWidth().height(256.dp)
+                    .fillMaxWidth()
+                    .height(256.dp)
             ) {
 
                 Image(
@@ -155,3 +158,12 @@ fun StartScreen(navigator: Navigator = koinInject()) {
     }
 }
 
+@Preview
+@Composable
+private fun StartScreenPreview() {
+    PreviewContainer {
+        StartScreen(
+            Navigator()
+        )
+    }
+}
