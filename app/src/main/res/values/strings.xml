@@ -1,6 +1,12 @@
 <resources>
+    <string name="safety_information">INFORMACJE O BEZPIECZEŃSTWIE</string>
+    <string name="do_not_show_again">Nie pokazuj tego więcej</string>
+    <string name="safety_warning">Uwaga!</string>
+    <string name="safety_info_text">\n"Upewnij się, że znajdujesz się w lokalizacji, w której jesteś w stanie się poruszać w każdą stronę. Zalecamy granie w otwartych przestrzeniach bez ruchliwych ulic. Najlepsze miejsca do gry to parki, lasy, boiska itp.\n\n"
+                   "Gdziekolwiek się znajdujesz, pamiętaj aby zwracać uwagę na otoczenie.\n\n"
+                   "Gra została zaprojektowana tak, aby umożliwiać odrywanie wzroku nawet na najtrudniejszych poziomach trudności."\n</string>
     <string name="app_name">FishMonsters</string>
-    <string name="start">Rozpocznij</string>
+    <string name="start">ROZPOCZNIJ</string>
     <string name="settings">Ustawienia</string>
     <string name="history">Historia</string>
     <string name="about">O nas</string>

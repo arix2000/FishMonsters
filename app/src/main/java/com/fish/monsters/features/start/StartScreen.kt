@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,10 +32,25 @@ import com.fish.monsters.core.theme.LvlEasyColor
 import com.fish.monsters.core.theme.LvlHardColor
 import com.fish.monsters.core.theme.LvlMediumColor
 import com.fish.monsters.features.game.models.Difficulty
+import com.fish.monsters.features.preferences.PreferencesViewModel
 import org.koin.compose.koinInject
 
 @Composable
-fun StartScreen(navigator: Navigator = koinInject()) {
+fun StartScreen(
+    navigator: Navigator = koinInject(),
+    viewModel: PreferencesViewModel = koinInject()
+) {
+    val shouldShowSafetyScreen =
+        viewModel.shouldShowSafetyScreen.collectAsState(initial = true).value
+
+    fun Navigator.navigateToAppropriateScreen(shouldShowSafetyScreen: Boolean, difficulty: String) {
+        if (shouldShowSafetyScreen) {
+            this.navigateTo(Screen.SafetyInformationScreen, difficulty)
+        } else {
+            this.navigateTo(Screen.MainGameScreen, difficulty)
+        }
+    }
+
     ScreenBox(title = stringResource(id = R.string.start)) {
         Column(
             Modifier.fillMaxSize(),
@@ -60,8 +76,7 @@ fun StartScreen(navigator: Navigator = koinInject()) {
                         .height(258.dp)
                         .background(LvlEasyColor)
                         .clickable {
-                            navigator.navigateTo(
-                                Screen.MainGameScreen,
+                            navigator.navigateToAppropriateScreen(shouldShowSafetyScreen,
                                 Difficulty.EASY.name
                             )
                         },
@@ -99,8 +114,8 @@ fun StartScreen(navigator: Navigator = koinInject()) {
                         .height(260.dp)
                         .background(LvlMediumColor)
                         .clickable {
-                            navigator.navigateTo(
-                                Screen.MainGameScreen,
+                            navigator.navigateToAppropriateScreen(
+                                shouldShowSafetyScreen,
                                 Difficulty.NORMAL.name
                             )
                         },
@@ -136,8 +151,7 @@ fun StartScreen(navigator: Navigator = koinInject()) {
                         .height(260.dp)
                         .background(LvlHardColor)
                         .clickable {
-                            navigator.navigateTo(
-                                Screen.MainGameScreen,
+                            navigator.navigateToAppropriateScreen(shouldShowSafetyScreen,
                                 Difficulty.HARD.name
                             )
                         },
