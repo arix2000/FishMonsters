@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,6 +57,7 @@ fun HistoryMap(
 ) {
     val context = LocalContext.current
     val cameraPositionState = rememberCameraPositionState()
+    rememberCoroutineScope()
     Box(
         modifier = Modifier
             .height(153.dp)
@@ -69,7 +71,7 @@ fun HistoryMap(
     ) {
         GoogleMap(
             onMapLoaded = {
-                cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(gameLocation, 15f))
+                    cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(gameLocation, 15f))
             },
             modifier = Modifier
                 .fillMaxSize()

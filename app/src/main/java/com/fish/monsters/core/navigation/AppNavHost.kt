@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.fish.monsters.features.about.AboutScreen
-import com.fish.monsters.features.game.MainGameScreen
+import com.fish.monsters.features.game.presentation.ui.MainGameScreen
 import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.history.ui.HistoryDetailsScreen
 import com.fish.monsters.features.history.ui.HistoryScreen

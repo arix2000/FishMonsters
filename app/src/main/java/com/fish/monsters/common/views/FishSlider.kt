@@ -53,7 +53,7 @@ fun FishSlider(
                         drawRect(surfaceVariant)
                         drawRect(
                             DarkPrimaryColor,
-                            size = Size(size.width * sliderPosition.positionFraction, size.height)
+                            size = Size(size.width * sliderPosition.activeRange.endInclusive , size.height)
                         )
                     }
                 })
