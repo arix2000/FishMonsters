@@ -25,10 +25,9 @@ fun MapAwardFieldsUiManager(state: MainGameState, difficulty: Difficulty) {
     }
 
     awards.forEachIndexed { index, award ->
-        if (state.userLocation != null) {
+        if (state.userLocation != null)
             MapAwardField(userLocation = state.userLocation, type = award, onAwardRemoveRequest = {
                 awards.removeAt(index)
             })
-        }
     }
 }

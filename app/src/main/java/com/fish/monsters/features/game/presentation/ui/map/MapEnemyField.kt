@@ -11,12 +11,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.fromOffset
 import com.fish.monsters.common.extensions.getDistanceTo
-import com.fish.monsters.core.database.entities.contest.AwardType
-import com.fish.monsters.core.database.entities.contest.getIcon
-import com.fish.monsters.core.theme.DarkPrimaryColor
-import com.fish.monsters.core.theme.TextColorDarkA80
-import com.fish.monsters.features.game.utils.MapConstants.MAP_MAX_LAT_LNG_OFFSET_RANGE
-import com.fish.monsters.features.game.utils.MapConstants.MAP_MIN_LAT_LNG_OFFSET_RANGE
+import com.fish.monsters.features.game.models.Enemy
+import com.fish.monsters.features.game.utils.MapConstants
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.Circle
 import com.google.maps.android.compose.GoogleMapComposable
@@ -26,33 +22,34 @@ import kotlin.random.Random
 
 @Composable
 @GoogleMapComposable
-fun MapAwardField(userLocation: LatLng, type: AwardType, onAwardRemoveRequest: () -> Unit) {
+fun MapEnemyField(userLocation: LatLng, enemy: Enemy, onEnemyRemoveRequest: () -> Unit) {
     val initialPosition = remember {
         userLocation.fromOffset(
             Random.nextDouble(
-                MAP_MIN_LAT_LNG_OFFSET_RANGE.start,
-                MAP_MAX_LAT_LNG_OFFSET_RANGE.endInclusive
+                MapConstants.MAP_MIN_LAT_LNG_OFFSET_RANGE.start,
+                MapConstants.MAP_MAX_LAT_LNG_OFFSET_RANGE.endInclusive
             ),
             Random.nextDouble(
-                MAP_MIN_LAT_LNG_OFFSET_RANGE.start,
-                MAP_MAX_LAT_LNG_OFFSET_RANGE.endInclusive
+                MapConstants.MAP_MIN_LAT_LNG_OFFSET_RANGE.start,
+                MapConstants.MAP_MAX_LAT_LNG_OFFSET_RANGE.endInclusive
             )
         )
     }
     DisposableEffect(userLocation) {
         if (userLocation.getDistanceTo(initialPosition) <= 0.000039) {
-            onAwardRemoveRequest()
+            onEnemyRemoveRequest()
         }
         onDispose { }
     }
 
     Circle(
         center = initialPosition,
-        fillColor = TextColorDarkA80,
-        radius = 4.0,
-        strokeColor = DarkPrimaryColor,
+        fillColor = enemy.colorDark,
+        radius = enemy.radius,
+        strokeColor = enemy.color,
         strokeWidth = 5f
     )
+
     MarkerComposable(
         anchor = Offset(0.5f, 0.5f),
         state = MarkerState(
@@ -60,9 +57,9 @@ fun MapAwardField(userLocation: LatLng, type: AwardType, onAwardRemoveRequest: (
         )
     ) {
         Icon(
-            painter = painterResource(type.getIcon()),
+            painter = painterResource(enemy.icon),
             contentDescription = "",
-            tint = DarkPrimaryColor,
+            tint = enemy.color,
             modifier = Modifier.size(24.dp)
         )
     }

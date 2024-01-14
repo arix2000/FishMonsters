@@ -10,6 +10,7 @@ import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.game.presentation.MainGameEvent
 import com.fish.monsters.features.game.presentation.MainGameState
 import com.fish.monsters.features.game.presentation.ui.managers.MapAwardFieldsUiManager
+import com.fish.monsters.features.game.presentation.ui.managers.MapEnemyFieldsUiManager
 import com.fish.monsters.features.game.utils.MapConstants.DEFAULT_ZOOM
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -52,5 +53,6 @@ fun MainGameMap(
         uiSettings = DEFAULT_MAP_UI_SETTINGS,
     ) {
         MapAwardFieldsUiManager(state, difficulty)
+        MapEnemyFieldsUiManager(state, difficulty)
     }
 }
