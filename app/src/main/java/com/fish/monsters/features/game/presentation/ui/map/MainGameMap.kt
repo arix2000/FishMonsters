@@ -1,11 +1,25 @@
 package com.fish.monsters.features.game.presentation.ui.map
 
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
-import com.fish.monsters.core.MapDefaults.DEFAULT_MAP_UI_SETTINGS
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.fish.monsters.common.extensions.toReadableTime
+import com.fish.monsters.common.shapes.PartiallyCutCornerShape
+import com.fish.monsters.core.MapDefaults
+import com.fish.monsters.core.theme.DarkPrimaryColor
+import com.fish.monsters.core.theme.TextColorDark
 import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.game.presentation.MainGameEvent
 import com.fish.monsters.features.game.presentation.MainGameState
@@ -42,17 +56,30 @@ fun MainGameMap(
     }
     DisposableEffect(key1 = state.timeSeconds) {
         Log.d("TIME_IN_SECONDS", state.timeSeconds.toString())
-        onDispose {  }
+        onDispose { }
     }
-    GoogleMap(
-        properties = MapProperties(
-            mapType = MapType.SATELLITE,
-            isMyLocationEnabled = true
-        ),
-        cameraPositionState = cameraPosition,
-        uiSettings = DEFAULT_MAP_UI_SETTINGS,
-    ) {
-        MapAwardFieldsUiManager(state, difficulty)
-        MapEnemyFieldsUiManager(state, difficulty)
+    Box {
+        GoogleMap(
+            properties = MapProperties(
+                mapType = MapType.SATELLITE,
+                isMyLocationEnabled = true
+            ),
+            cameraPositionState = cameraPosition,
+            uiSettings = MapDefaults.DEFAULT_MAP_UI_SETTINGS,
+        ) {
+            MapAwardFieldsUiManager(state, difficulty)
+            MapEnemyFieldsUiManager(state, difficulty)
+        }
+        val shape = PartiallyCutCornerShape(DpSize(5.dp, 10.dp))
+        Box(
+            modifier = Modifier
+                .padding(7.dp)
+                .background(TextColorDark, shape)
+                .border(1.dp, DarkPrimaryColor, shape)
+                .padding(vertical = 10.dp, horizontal = 20.dp)
+                .align(Alignment.BottomStart)
+        ) {
+            Text(text = state.timeSeconds.toReadableTime(), fontSize = 20.sp)
+        }
     }
 }
