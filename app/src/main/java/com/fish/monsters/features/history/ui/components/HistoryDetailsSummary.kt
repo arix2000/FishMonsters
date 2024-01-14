@@ -35,7 +35,6 @@ import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.Enhancement
 import com.fish.monsters.core.database.entities.contest.GameLocation
-import com.fish.monsters.core.database.entities.contest.getIcon
 import com.fish.monsters.core.theme.DarkPrimaryColor
 
 @Composable
@@ -161,7 +160,7 @@ fun AwardCol(award: Award) {
     }
     Column {
         Icon(
-            painter = painterResource(award.type.getIcon()),
+            painter = painterResource(award.type.icon),
             contentDescription = "Award Icon",
             modifier = Modifier.width(17.dp),
             tint = DarkPrimaryColor

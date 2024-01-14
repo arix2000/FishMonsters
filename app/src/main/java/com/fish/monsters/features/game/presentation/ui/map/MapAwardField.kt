@@ -12,7 +12,6 @@ import androidx.compose.ui.unit.dp
 import com.fish.monsters.common.extensions.fromOffset
 import com.fish.monsters.common.extensions.getDistanceTo
 import com.fish.monsters.core.database.entities.contest.AwardType
-import com.fish.monsters.core.database.entities.contest.getIcon
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.TextColorDarkA80
 import com.fish.monsters.features.game.utils.MapConstants.MAP_MAX_LAT_LNG_OFFSET_RANGE
@@ -60,7 +59,7 @@ fun MapAwardField(userLocation: LatLng, type: AwardType, onAwardRemoveRequest: (
         )
     ) {
         Icon(
-            painter = painterResource(type.getIcon()),
+            painter = painterResource(type.icon),
             contentDescription = "",
             tint = DarkPrimaryColor,
             modifier = Modifier.size(24.dp)
