@@ -34,8 +34,8 @@ import com.fish.monsters.common.utils.settings.SettingsManager
 import com.fish.monsters.common.views.buttons.FishButton
 import com.fish.monsters.core.theme.DarkPrimaryColor
 import com.fish.monsters.core.theme.DarkPrimaryColorA12
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
@@ -55,9 +55,7 @@ fun HistoryMap(
     neonStyle: Boolean = if (isPreview()) false else koinInject<SettingsManager>().state.value.neonStyles,
 ) {
     val context = LocalContext.current
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(gameLocation, 15f)
-    }
+    val cameraPositionState = rememberCameraPositionState()
     Box(
         modifier = Modifier
             .height(153.dp)
@@ -70,6 +68,9 @@ fun HistoryMap(
             }
     ) {
         GoogleMap(
+            onMapLoaded = {
+                cameraPositionState.move(CameraUpdateFactory.newLatLngZoom(gameLocation, 15f))
+            },
             modifier = Modifier
                 .fillMaxSize()
                 .clip(shape),
