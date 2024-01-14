@@ -1,5 +1,6 @@
 package com.fish.monsters.common.extensions
 
+import android.location.Location
 import com.google.android.gms.maps.model.LatLng
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -25,6 +26,12 @@ fun LatLng.moveInDirectionOf(point: LatLng, offset: Double): LatLng {
     return LatLng(newLatitude, newLongitude)
 }
 
-fun LatLng.getDistanceTo(otherPoint: LatLng) = sqrt(
-    (otherPoint.latitude - this.latitude).pow(2) + (otherPoint.longitude - this.longitude).pow(2)
-)
+fun LatLng.getDistanceTo(otherPoint: LatLng): Float {
+    val results = FloatArray(1)
+    Location.distanceBetween(
+        this.latitude, this.longitude,
+        otherPoint.latitude, otherPoint.longitude,
+        results
+    )
+    return results[0]
+}

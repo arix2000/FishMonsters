@@ -25,7 +25,7 @@ fun MapEnemyFieldsUiManager(state: MainGameState, difficulty: Difficulty) {
     enemies.forEachIndexed { index, enemy ->
         if (state.userLocation != null)
             MapEnemyField(state.userLocation, enemy) {
-                //enemies.removeAt(index)
+                enemies.removeAt(index)
             }
     }
 }

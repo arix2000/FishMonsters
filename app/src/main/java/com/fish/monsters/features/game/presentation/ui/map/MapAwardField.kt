@@ -40,7 +40,7 @@ fun MapAwardField(userLocation: LatLng, type: AwardType, onAwardRemoveRequest: (
         )
     }
     DisposableEffect(userLocation) {
-        if (userLocation.getDistanceTo(initialPosition) <= 0.000039) {
+        if (userLocation.getDistanceTo(initialPosition) <= 4.0) {
             onAwardRemoveRequest()
         }
         onDispose { }

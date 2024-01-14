@@ -22,7 +22,7 @@ import kotlin.random.Random
 
 @Composable
 @GoogleMapComposable
-fun MapEnemyField(userLocation: LatLng, enemy: Enemy, onEnemyRemoveRequest: () -> Unit) {
+fun MapEnemyField(userLocation: LatLng, enemy: Enemy, onCaughtByEnemy: () -> Unit) {
     val initialPosition = remember {
         userLocation.fromOffset(
             Random.nextDouble(
@@ -36,8 +36,8 @@ fun MapEnemyField(userLocation: LatLng, enemy: Enemy, onEnemyRemoveRequest: () -
         )
     }
     DisposableEffect(userLocation) {
-        if (userLocation.getDistanceTo(initialPosition) <= 0.000039) {
-            onEnemyRemoveRequest()
+        if (userLocation.getDistanceTo(initialPosition) <= enemy.radius) {
+            onCaughtByEnemy()
         }
         onDispose { }
     }

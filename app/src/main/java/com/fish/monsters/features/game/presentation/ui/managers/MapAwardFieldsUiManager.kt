@@ -15,7 +15,7 @@ import com.google.maps.android.compose.GoogleMapComposable
 @Composable
 @GoogleMapComposable
 fun MapAwardFieldsUiManager(state: MainGameState, difficulty: Difficulty) {
-    val awards: SnapshotStateList<AwardType> = remember { mutableStateListOf() }
+    val awards: SnapshotStateList<AwardType?> = remember { mutableStateListOf() }
 
     DisposableEffect(key1 = state.timeSeconds) {
         val awardOrNull = RandomFieldManager(difficulty).getRandomAward()
@@ -25,9 +25,9 @@ fun MapAwardFieldsUiManager(state: MainGameState, difficulty: Difficulty) {
     }
 
     awards.forEachIndexed { index, award ->
-        if (state.userLocation != null)
+        if (state.userLocation != null && award != null)
             MapAwardField(userLocation = state.userLocation, type = award, onAwardRemoveRequest = {
-                awards.removeAt(index)
+                awards[index] = null
             })
     }
 }
