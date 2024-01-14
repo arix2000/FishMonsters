@@ -67,7 +67,7 @@ fun HistoryDetailsScreen(contestId: Long, viewModel: HistoryViewModel = koinInje
     val addresses = contestDetails?.gameLocation?.let {
         geocoder.getFromLocation(
             it.latitude,
-            contestDetails.gameLocation.longitude,
+            it.longitude,
             1
         )
     }
@@ -131,6 +131,7 @@ fun HistoryDetailsScreenContent(
                     .fillMaxWidth()
                     .background(DarkPrimaryColorA12, shape)
                     .padding(vertical = 28.dp),
+
             ) {
                 HistoryDetailsSummary(contestDetails)
             }
