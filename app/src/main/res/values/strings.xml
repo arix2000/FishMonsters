@@ -59,4 +59,7 @@
     <string name="copied_to_clipboard">Skopiowano do schowka</string>
     <string name="location">Lokalizacja</string>
     <string name="unknown_place">Nieznane miejsce</string>
+
+    <string name="created_by">Stworzone z pasją przez:</string>
+    <string name="meet_us">Poznaj nas:</string>
 </resources>

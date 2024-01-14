@@ -57,4 +57,6 @@
     <string name="kraken_urine">Kraken\'s urine</string>
     <string name="location">Location</string>
     <string name="unknown_place">Unknown place</string>
+    <string name="created_by">Created with passion by:</string>
+    <string name="meet_us">Get to know us:</string>
 </resources>
