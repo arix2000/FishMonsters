@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="safety_information">SECURITY INFORMATION</string>
+    <string name="safety_warning">Warning!</string>
+    <string name="safety_info_text">\n"Make sure you are in a location where you are able to move in every direction. We recommend to play in open spaces without busy streets. The best places to play are parks, forests, playing fields, etc.\n\n"
+        "Wherever you are, remember to pay attention to your surroundings."\n\n
+        "The game is designed to allow you to look away even on the most difficult difficulty levels."\n</string>
+    <string name="do_not_show_again">Do not show again</string>
     <string name="copied_to_clipboard">Copied to clipboard</string>
-
     <string name="app_name">FishMonsters</string>
-    <string name="start">Start</string>
+    <string name="start">START</string>
     <string name="settings">Settings</string>
     <string name="history">History</string>
     <string name="about">About us</string>
@@ -52,7 +57,8 @@
     <string name="kraken_urine">Kraken\'s urine</string>
     <string name="location">Location</string>
     <string name="unknown_place">Unknown place</string>
-
+    <string name="created_by">Created with passion by:</string>
+    <string name="meet_us">Get to know us:</string>
     <string name="permission_denied">Permission have been denied</string>
     <string name="permission_denied_content_text">In Fish monsters you yourself are the main character, the application needs permissions to your location to start the game. You can change the location permissions when you re-enter this screen or in the app settings.</string>
 </resources>

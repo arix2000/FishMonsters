@@ -14,6 +14,7 @@ import com.fish.monsters.features.game.models.Difficulty
 import com.fish.monsters.features.history.ui.HistoryDetailsScreen
 import com.fish.monsters.features.history.ui.HistoryScreen
 import com.fish.monsters.features.home.HomeScreen
+import com.fish.monsters.features.safetyInformation.SafetyInformationScreen
 import com.fish.monsters.features.settings.ui.SettingsScreen
 import com.fish.monsters.features.start.StartScreen
 import org.koin.compose.koinInject
@@ -75,6 +76,12 @@ fun AppNavHost() {
             backStackEntry.arguments?.getString(Screen.MainGameScreen.argumentKeys[0])?.let {
                 MainGameScreen(Difficulty.valueOf(it))
             }
+        }
+        composable(Screen.SafetyInformationScreen.route) { backStackEntry ->
+            backStackEntry.arguments?.getString(Screen.SafetyInformationScreen.argumentKeys[0])
+                ?.let {
+                    SafetyInformationScreen(difficulty = Difficulty.valueOf(it))
+                }
         }
     }
 }
