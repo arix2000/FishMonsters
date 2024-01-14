@@ -16,3 +16,7 @@ val EasyColor = Color(0,152,0)
 
 
 val LightPrimaryColor = Color(0xFF13AB99)
+
+val LvlEasyColor = Color(0xCC002F00)
+val LvlMediumColor = Color(0xD932370F)
+val LvlHardColor = Color(0xD9260C0C)
