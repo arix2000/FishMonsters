@@ -1,10 +1,13 @@
 package com.fish.monsters.features.game.presentation.ui.map
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.SportsScore
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -38,6 +41,7 @@ import kotlinx.coroutines.launch
 fun MainGameMap(
     difficulty: Difficulty,
     state: MainGameState,
+    onGameOver: () -> Unit,
     invokeEvent: (event: MainGameEvent) -> Unit
 ) {
     val userLocation = state.userLocation!!
@@ -54,10 +58,6 @@ fun MainGameMap(
         }
         onDispose { }
     }
-    DisposableEffect(key1 = state.timeSeconds) {
-        Log.d("TIME_IN_SECONDS", state.timeSeconds.toString())
-        onDispose { }
-    }
     Box {
         GoogleMap(
             properties = MapProperties(
@@ -67,8 +67,11 @@ fun MainGameMap(
             cameraPositionState = cameraPosition,
             uiSettings = MapDefaults.DEFAULT_MAP_UI_SETTINGS,
         ) {
-            MapAwardFieldsUiManager(state, difficulty)
-            MapEnemyFieldsUiManager(state, difficulty)
+            MapAwardFieldsUiManager(
+                state,
+                difficulty,
+                onAwardEarned = { invokeEvent(MainGameEvent.AddPoints(it.points)) })
+            MapEnemyFieldsUiManager(state, difficulty, onCaughtByEnemy = onGameOver)
         }
         val shape = PartiallyCutCornerShape(DpSize(5.dp, 10.dp))
         Box(
@@ -80,6 +83,23 @@ fun MainGameMap(
                 .align(Alignment.BottomStart)
         ) {
             Text(text = state.timeSeconds.toReadableTime(), fontSize = 20.sp)
+        }
+        Box(
+            modifier = Modifier
+                .padding(7.dp)
+                .background(TextColorDark, shape)
+                .border(1.dp, DarkPrimaryColor, shape)
+                .padding(vertical = 10.dp, horizontal = 20.dp)
+                .align(Alignment.BottomEnd)
+        ) {
+            Row {
+                Icon(
+                    imageVector = Icons.Default.SportsScore,
+                    contentDescription = "score",
+                    tint = DarkPrimaryColor
+                )
+                Text(text = state.points.toString(), fontSize = 20.sp)
+            }
         }
     }
 }

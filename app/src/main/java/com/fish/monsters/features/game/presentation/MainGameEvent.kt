@@ -5,4 +5,6 @@ sealed class MainGameEvent {
         MainGameEvent()
 
     data object ListenOnTime: MainGameEvent()
+
+    data class AddPoints(val points: Int): MainGameEvent()
 }

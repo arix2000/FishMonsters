@@ -34,7 +34,8 @@ fun MainGameScreen(
         state.isLoading -> DefaultLoadingScreen()
         state.userLocation != null -> MainGameMap(
             difficulty,
-            state
+            state,
+            onGameOver = { navigator.popBackStack(Screen.HomeScreen) }
         ) { viewModel.invokeEvent(it) }
 
         locationPermissionState.status.isGranted -> LaunchedEffect(true) {

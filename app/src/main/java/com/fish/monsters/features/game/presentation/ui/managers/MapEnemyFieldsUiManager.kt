@@ -12,8 +12,12 @@ import com.fish.monsters.features.game.presentation.ui.map.MapEnemyField
 import com.fish.monsters.features.game.utils.RandomFieldManager
 
 @Composable
-fun MapEnemyFieldsUiManager(state: MainGameState, difficulty: Difficulty) {
-    val enemies: SnapshotStateList<Enemy> = remember { mutableStateListOf() }
+fun MapEnemyFieldsUiManager(
+    state: MainGameState,
+    difficulty: Difficulty,
+    onCaughtByEnemy: () -> Unit
+) {
+    val enemies: SnapshotStateList<Enemy?> = remember { mutableStateListOf() }
 
     DisposableEffect(key1 = state.timeSeconds) {
         val enemyOrNull = RandomFieldManager(difficulty).getRandomEnemy()
@@ -23,9 +27,10 @@ fun MapEnemyFieldsUiManager(state: MainGameState, difficulty: Difficulty) {
     }
 
     enemies.forEachIndexed { index, enemy ->
-        if (state.userLocation != null)
+        if (state.userLocation != null && enemy != null)
             MapEnemyField(state.userLocation, enemy) {
-                enemies.removeAt(index)
+                enemies[index] = null
+                onCaughtByEnemy()
             }
     }
 }

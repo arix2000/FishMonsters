@@ -16,6 +16,7 @@ class MainGameViewModel(private val locationService: LocationService) : ViewMode
         when (event) {
             MainGameEvent.ListenOnUserLocationChanges -> listenOnUserLocationChanged()
             MainGameEvent.ListenOnTime -> listenOnTime()
+            is MainGameEvent.AddPoints -> addPoints(event.points)
         }
     }
 
@@ -35,6 +36,16 @@ class MainGameViewModel(private val locationService: LocationService) : ViewMode
                 _state.apply {
                     value = value.copy(timeSeconds = value.timeSeconds + 1)
                 }
+                if (_state.value.timeSeconds % 10 == 0)
+                    addPoints(1)
+            }
+        }
+    }
+
+    private fun addPoints(points: Int) {
+        viewModelScope.launch {
+            _state.apply {
+                value = value.copy(points = value.points + points)
             }
         }
     }
