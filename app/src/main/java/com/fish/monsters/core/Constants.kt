@@ -15,7 +15,7 @@ object Developers {
         lastName = "Mądry",
         email = "amadry@edu.cdv.pl",
         phone = "+48530304270",
-        albumNumber = 27308,
+        albumNumber = 27181,
         githubLink = "https://github.com/arix2000",
         linkedinLink = "https://www.linkedin.com/in/arkadiusz-madry/",
         photoUrl = R.drawable.arek_avatar
@@ -35,7 +35,7 @@ object Developers {
         lastName = "Lehmann",
         email = "dlehmann@edu.cdv.pl",
         phone = "+48570281772",
-        albumNumber = 27181,
+        albumNumber = 27308,
         githubLink = "https://github.com/lunore",
         linkedinLink = "https://www.linkedin.com/in/dianalehmann/",
         photoUrl = R.drawable.diana_avatar
