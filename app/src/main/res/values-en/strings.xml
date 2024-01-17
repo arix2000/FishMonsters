@@ -59,4 +59,6 @@
     <string name="unknown_place">Unknown place</string>
     <string name="created_by">Created with passion by:</string>
     <string name="meet_us">Get to know us:</string>
+    <string name="permission_denied">Permission have been denied</string>
+    <string name="permission_denied_content_text">In Fish monsters you yourself are the main character, the application needs permissions to your location to start the game. You can change the location permissions when you re-enter this screen or in the app settings.</string>
 </resources>
