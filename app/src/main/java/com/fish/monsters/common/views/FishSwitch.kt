@@ -71,7 +71,6 @@ fun FishSwitch(
     }
     val animatedContainerColor by animateColorAsState(
         targetValue = containerColor, label = "animateColorAsState", animationSpec = colorAnimations
-
     )
 
     var thumbColor by remember {
