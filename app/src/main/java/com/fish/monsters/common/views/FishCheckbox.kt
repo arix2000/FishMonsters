@@ -62,7 +62,7 @@ fun FishCheckbox(
             .clickable { onCheckedChange(!checked) }
     ) {
         AnimatedVisibility(visible = checked) {
-            Icon(imageVector = Icons.Default.Check, contentDescription = "", tint = TextColorDark)
+            Icon(imageVector = Icons.Default.Check, contentDescription = "checked icon", tint = TextColorDark)
         }
     }
 }
