@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.fish.monsters.R
+import com.fish.monsters.common.views.FishCheckbox
 import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.SafetyInformationCard
 import com.fish.monsters.common.views.buttons.FishButton
@@ -88,7 +88,7 @@ fun SafetyInformationScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Checkbox(
+                FishCheckbox(
                     checked = isChecked,
                     onCheckedChange = {
                         isChecked = it
@@ -113,7 +113,6 @@ fun SafetyInformationScreen(
             ) {
                 Text(
                     text = stringResource(id = R.string.start),
-                    style = MaterialTheme.typography.labelLarge
                 )
             }
         }
