@@ -110,21 +110,21 @@ fun HistoryDetailsScreenContent(
             Text(
                 text = stringResource(id = R.string.contest_result).plus(" "),
                 color = LightPrimaryColor,
-                fontSize = 24.sp,
+                fontSize = 28.sp,
                 fontWeight = FontWeight.SemiBold
             )
             if (contestDetails.isGameSuccess) {
                 Text(
                     text = stringResource(id = R.string.success),
                     color = EasyColor,
-                    fontSize = 24.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.SemiBold
                 )
             } else {
                 Text(
                     text = stringResource(id = R.string.failure),
                     color = DangerColor,
-                    fontSize = 24.sp,
+                    fontSize = 28.sp,
                     fontWeight = FontWeight.SemiBold
                 )
             }
@@ -140,7 +140,7 @@ fun HistoryDetailsScreenContent(
         }
         Spacer(modifier = Modifier.height(20.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-            Text(text = streetAndCity)
+            Text(text = streetAndCity, fontSize = 18.sp)
         }
         Spacer(modifier = Modifier.height(7.dp))
         HistoryMap(
@@ -164,7 +164,8 @@ fun HistoryDetailsScreenContent(
                 },
             textAlign = TextAlign.Center,
             text = contestDetails.gameLocation.latitude.roundToString(5) + ", " +
-                    contestDetails.gameLocation.longitude.roundToString(5)
+                    contestDetails.gameLocation.longitude.roundToString(5),
+                fontSize = 14.sp
         )
         if (contestDetails.enhancementsUsed.isNotEmpty()) {
             EnhancementsHistory(contestDetails)

@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.fish.monsters.R
 import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.core.database.entities.Contest
@@ -112,20 +113,21 @@ private fun HistoryDetailsSummaryRow(
                         imageVector = detailTypeImageVector,
                         contentDescription = imageContentDescription,
                         tint = DarkPrimaryColor,
-                        modifier = Modifier.width(17.dp)
+                        modifier = Modifier.width(20.dp)
                     )
                 } else {
                     Icon(
                         painter = painterResource(id = R.drawable.fish_monter_icon),
                         contentDescription = "Monsters Icon",
-                        modifier = Modifier.width(17.dp),
+                        modifier = Modifier.width(20.dp),
                         tint = DarkPrimaryColor
                     )
                 }
                 Text(
                     text = " " + stringResource(id = detailTypeNameResourceId),
                     color = DarkPrimaryColor,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp
                 )
             }
         }
@@ -134,7 +136,8 @@ private fun HistoryDetailsSummaryRow(
                 Text(
                     text = valueColText,
                     color = valueColTextColor,
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 18.sp
                 )
             } else {
                 Row {
@@ -162,7 +165,7 @@ fun AwardCol(award: Award) {
         Icon(
             painter = painterResource(award.type.icon),
             contentDescription = "Award Icon",
-            modifier = Modifier.width(17.dp),
+            modifier = Modifier.width(20.dp),
             tint = DarkPrimaryColor
         )
     }

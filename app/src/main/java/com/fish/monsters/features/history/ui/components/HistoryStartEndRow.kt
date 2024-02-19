@@ -41,7 +41,7 @@ fun HistoryStartEndRow(title: String, isEndRow: Boolean, spacerHeight: Dp = 0.dp
         ) {
             Text(
                 text = title,
-                fontSize = 20.sp
+                fontSize = 22.sp
             )
             Spacer(
                 modifier = Modifier

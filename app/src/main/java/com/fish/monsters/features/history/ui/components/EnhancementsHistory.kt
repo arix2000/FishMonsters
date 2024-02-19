@@ -42,20 +42,20 @@ fun EnhancementsHistory(contestDetails: Contest) {
         Icon(
             painter = painterResource(id = R.drawable.buff_icon),
             contentDescription = "Buff Icon",
-            Modifier.size(20.dp),
+            Modifier.size(22.dp),
             tint = DarkPrimaryColor
         )
         Spacer(modifier = Modifier.width(5.dp))
         Text(
             text = stringResource(id = R.string.enhancements_history),
-            fontSize = 20.sp
+            fontSize = 22.sp
         )
     }
     Spacer(modifier = Modifier.height(12.dp))
     Column(modifier = Modifier.fillMaxWidth(0.95f)) {
         HistoryStartEndRow(
             title = stringResource(id = R.string.history_game_start),
-            isEndRow = false
+            isEndRow = false,
         )
 
         var previousTimeInSeconds = 0
@@ -75,6 +75,7 @@ fun EnhancementsHistory(contestDetails: Contest) {
             isEndRow = true,
             spacerHeight = spaceFromTime(contestDetails.duration.toSeconds() - previousTimeInSeconds)
         )
+        Spacer(modifier = Modifier.height(24.dp))
     }
 }
 
