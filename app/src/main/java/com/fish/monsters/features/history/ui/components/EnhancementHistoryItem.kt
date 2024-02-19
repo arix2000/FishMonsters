@@ -81,14 +81,15 @@ fun EnhancementHistoryItem(
                             painter = painterResource(id = enhancement.iconId),
                             contentDescription = "Enhancement Icon",
                             modifier = Modifier
-                                .size(17.dp)
+                                .size(20.dp)
                                 .align(Alignment.Center),
                             tint = DarkPrimaryColor
                         )
                 }
                 Text(
                     text = stringResource(id = enhancement.getName()),
-                    modifier = Modifier.padding(start = 8.dp)
+                    modifier = Modifier.padding(start = 8.dp),
+                    fontSize = 18.sp
                 )
                 Spacer(
                     modifier = Modifier
