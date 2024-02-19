@@ -16,6 +16,9 @@ class MusicManager(private val mediaPlayer: MediaPlayer, private val context: Co
             mediaPlayer.reset()
         } else if (mediaPlayer.isPlaying) {
             return
+        } else if (isPaused()) {
+            mediaPlayer.start()
+            return
         }
 
         currentMedia = resId
@@ -27,6 +30,8 @@ class MusicManager(private val mediaPlayer: MediaPlayer, private val context: Co
             start()
         }
     }
+
+    private fun isPaused() = !mediaPlayer.isPlaying && mediaPlayer.currentPosition > 1
 
     fun resetToDefault() {
         currentMedia = R.raw.app_default_music

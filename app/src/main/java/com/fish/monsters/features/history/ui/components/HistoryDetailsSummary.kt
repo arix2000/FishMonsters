@@ -40,61 +40,62 @@ import com.fish.monsters.core.theme.DarkPrimaryColor
 
 @Composable
 fun HistoryDetailsSummary(contestDetails: Contest) {
-        Column {
-            HistoryDetailsSummaryRow(
-                contestDetails = contestDetails,
-                isFirst = true,
-                detailTypeImageVector = Icons.Default.CalendarMonth,
-                imageContentDescription = "Calendar Icon",
-                detailTypeNameResourceId = R.string.date,
-                valueColText = contestDetails.date
-            )
-            HistoryDetailsSummaryRow(
-                contestDetails = contestDetails,
-                detailTypeImageVector = Icons.Default.AccessTime,
-                imageContentDescription = "Clock Icon",
-                detailTypeNameResourceId = R.string.survival_time,
-                valueColText = contestDetails.duration.toString(includeSeconds = true)
-            )
-            HistoryDetailsSummaryRow(
-                contestDetails = contestDetails,
-                detailTypeImageVector = Icons.Default.SportsScore,
-                imageContentDescription = "Score Icon",
-                detailTypeNameResourceId = R.string.points_scored,
-                valueColText = contestDetails.points.toString()
-            )
-            HistoryDetailsSummaryRow(
-                contestDetails = contestDetails,
-                detailTypeImageVector = Icons.Outlined.VideogameAsset,
-                imageContentDescription = "Difficulty Icon",
-                detailTypeNameResourceId = R.string.difficulty_level,
-                valueColText = stringResource(id = contestDetails.difficultyLevel.stringRes),
-                valueColTextColor = contestDetails.difficultyLevel.color
-            )
-            HistoryDetailsSummaryRow(
-                contestDetails = contestDetails,
-                detailTypeImageVector = Icons.Outlined.WineBar,
-                imageContentDescription = "Reward Icon",
-                detailTypeNameResourceId = R.string.awards_won,
-            )
-            HistoryDetailsSummaryRow(
-                contestDetails = contestDetails,
-                imageContentDescription = "Monsters Icon",
-                detailTypeNameResourceId = R.string.avoided_creatures,
-                valueColText = contestDetails.bypassedMonsters.toString(),
-            )
-        }
+    Column {
+        HistoryDetailsSummaryRow(
+            contestDetails = contestDetails,
+            isFirst = true,
+            detailTypeImageVector = Icons.Default.CalendarMonth,
+            imageContentDescription = "Calendar Icon",
+            detailTypeNameResourceId = R.string.date,
+            valueColText = contestDetails.date
+        )
+        HistoryDetailsSummaryRow(
+            contestDetails = contestDetails,
+            detailTypeImageVector = Icons.Default.AccessTime,
+            imageContentDescription = "Clock Icon",
+            detailTypeNameResourceId = R.string.survival_time,
+            valueColText = contestDetails.duration.toString(includeSeconds = true)
+        )
+        HistoryDetailsSummaryRow(
+            contestDetails = contestDetails,
+            detailTypeImageVector = Icons.Default.SportsScore,
+            imageContentDescription = "Score Icon",
+            detailTypeNameResourceId = R.string.points_scored,
+            valueColText = contestDetails.points.toString()
+        )
+        HistoryDetailsSummaryRow(
+            contestDetails = contestDetails,
+            detailTypeImageVector = Icons.Outlined.VideogameAsset,
+            imageContentDescription = "Difficulty Icon",
+            detailTypeNameResourceId = R.string.difficulty_level,
+            valueColText = stringResource(id = contestDetails.difficultyLevel.stringRes),
+            valueColTextColor = contestDetails.difficultyLevel.color
+        )
+        HistoryDetailsSummaryRow(
+            contestDetails = contestDetails,
+            detailTypeImageVector = Icons.Outlined.WineBar,
+            imageContentDescription = "Reward Icon",
+            detailTypeNameResourceId = R.string.awards_won,
+        )
+        HistoryDetailsSummaryRow(
+            contestDetails = contestDetails,
+            imageContentDescription = "Monsters Icon",
+            detailTypeNameResourceId = R.string.avoided_creatures,
+            valueColText = contestDetails.bypassedMonsters.toString(),
+        )
     }
+}
 
 @Composable
-private fun HistoryDetailsSummaryRow(contestDetails: Contest,
-                                     isFirst: Boolean = false,
-                                     detailTypeImageVector: ImageVector? = null,
-                                     imageContentDescription: String,
-                                     detailTypeNameResourceId: Int,
-                                     valueColText: String = "",
-                                     valueColTextColor: Color = DarkPrimaryColor,
-                                     ) {
+private fun HistoryDetailsSummaryRow(
+    contestDetails: Contest,
+    isFirst: Boolean = false,
+    detailTypeImageVector: ImageVector? = null,
+    imageContentDescription: String,
+    detailTypeNameResourceId: Int,
+    valueColText: String = "",
+    valueColTextColor: Color = DarkPrimaryColor,
+) {
     if (!isFirst) {
         Spacer(modifier = Modifier.height(12.dp))
     }
@@ -142,7 +143,7 @@ private fun HistoryDetailsSummaryRow(contestDetails: Contest,
                 Row {
                     for (awardCount in contestDetails.awardsEarned) {
                         if (awardCount.count > 0) {
-                            AwardCol(awardCount = awardCount)
+                            AwardCol(award = awardCount)
                         }
                     }
                 }
@@ -152,17 +153,17 @@ private fun HistoryDetailsSummaryRow(contestDetails: Contest,
 }
 
 @Composable
-fun AwardCol(awardCount: Award) {
+fun AwardCol(award: Award) {
     Column {
         Text(
-            text = " ${awardCount.count}x",
+            text = " ${award.count}x",
             color = DarkPrimaryColor,
             fontWeight = FontWeight.SemiBold
         )
     }
     Column {
         Icon(
-            painter = painterResource(id = awardCount.getIconForAward(award = awardCount.award)),
+            painter = painterResource(award.type.icon),
             contentDescription = "Award Icon",
             modifier = Modifier.width(20.dp),
             tint = DarkPrimaryColor

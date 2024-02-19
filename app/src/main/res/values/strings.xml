@@ -59,7 +59,8 @@
     <string name="copied_to_clipboard">Skopiowano do schowka</string>
     <string name="location">Lokalizacja</string>
     <string name="unknown_place">Nieznane miejsce</string>
-
     <string name="created_by">Stworzone z pasją przez:</string>
     <string name="meet_us">Poznaj nas:</string>
+    <string name="permission_denied">Uprawnienia zostały odrzucone</string>
+    <string name="permission_denied_content_text">W Fish monsters to ty sam jesteś główną postacią, aplikacja potrzebuje uprawnień do twojej lokalizacji aby rozpocząć gre. Uprawnienia do lokalizacji możesz zmienić przy ponownym wejściu w ten ekran lub w ustawieniach aplikacji.</string>
 </resources>

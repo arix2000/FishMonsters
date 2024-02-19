@@ -21,10 +21,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -32,11 +32,12 @@ import androidx.compose.ui.unit.sp
 import com.fish.monsters.R
 import com.fish.monsters.common.extensions.roundToString
 import com.fish.monsters.common.shapes.PartiallyCutCornerShape
+import com.fish.monsters.common.views.DefaultLoadingScreen
 import com.fish.monsters.common.views.PreviewContainer
 import com.fish.monsters.common.views.screenContent.ScreenBox
 import com.fish.monsters.core.database.entities.Contest
-import com.fish.monsters.core.database.entities.contest.AwardType
 import com.fish.monsters.core.database.entities.contest.Award
+import com.fish.monsters.core.database.entities.contest.AwardType
 import com.fish.monsters.core.database.entities.contest.DifficultyLevel
 import com.fish.monsters.core.database.entities.contest.Duration
 import com.fish.monsters.core.database.entities.contest.Enhancement
@@ -74,7 +75,10 @@ fun HistoryDetailsScreen(contestId: Long, viewModel: HistoryViewModel = koinInje
     val streetAndCity = parseStreetAndCity(addresses, context)
 
     ScreenBox(title = stringResource(id = R.string.contest_details)) {
-        HistoryDetailsScreenContent(contestDetails, streetAndCity)
+        if (contestDetails != null)
+            HistoryDetailsScreenContent(contestDetails, streetAndCity)
+        else
+            DefaultLoadingScreen()
     }
 }
 
@@ -96,77 +100,75 @@ fun HistoryDetailsScreenContent(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        if (contestDetails != null) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(74.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(74.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = stringResource(id = R.string.contest_result).plus(" "),
+                color = LightPrimaryColor,
+                fontSize = 28.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+            if (contestDetails.isGameSuccess) {
                 Text(
-                    text = stringResource(id = R.string.contest_result).plus(" "),
-                    color = LightPrimaryColor,
+                    text = stringResource(id = R.string.success),
+                    color = EasyColor,
                     fontSize = 28.sp,
                     fontWeight = FontWeight.SemiBold
                 )
-                if (contestDetails.isGameSuccess) {
-                    Text(
-                        text = stringResource(id = R.string.success),
-                        color = EasyColor,
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                } else {
-                    Text(
-                        text = stringResource(id = R.string.failure),
-                        color = DangerColor,
-                        fontSize = 28.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                }
+            } else {
+                Text(
+                    text = stringResource(id = R.string.failure),
+                    color = DangerColor,
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(DarkPrimaryColorA12, shape)
-                    .padding(vertical = 28.dp),
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(DarkPrimaryColorA12, shape)
+                .padding(vertical = 28.dp),
 
             ) {
-                HistoryDetailsSummary(contestDetails)
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                Text(text = streetAndCity, fontSize = 18.sp)
-            }
-            Spacer(modifier = Modifier.height(7.dp))
-            HistoryMap(
-                LatLng(
-                    contestDetails.gameLocation.latitude,
-                    contestDetails.gameLocation.longitude
-                )
+            HistoryDetailsSummary(contestDetails)
+        }
+        Spacer(modifier = Modifier.height(20.dp))
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+            Text(text = streetAndCity, fontSize = 18.sp)
+        }
+        Spacer(modifier = Modifier.height(7.dp))
+        HistoryMap(
+            LatLng(
+                contestDetails.gameLocation.latitude,
+                contestDetails.gameLocation.longitude
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        copyLocationToClipboard(
-                            context,
-                            context.getString(R.string.location),
-                            contestDetails.gameLocation.latitude.roundToString(5) + ", " + contestDetails.gameLocation.longitude.roundToString(
-                                5
-                            )
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    copyLocationToClipboard(
+                        context,
+                        context.getString(R.string.location),
+                        contestDetails.gameLocation.latitude.roundToString(5) + ", " + contestDetails.gameLocation.longitude.roundToString(
+                            5
                         )
-                    },
-                textAlign = TextAlign.Center,
-                text = contestDetails.gameLocation.latitude.roundToString(5) + ", " +
-                        contestDetails.gameLocation.longitude.roundToString(5),
+                    )
+                },
+            textAlign = TextAlign.Center,
+            text = contestDetails.gameLocation.latitude.roundToString(5) + ", " +
+                    contestDetails.gameLocation.longitude.roundToString(5),
                 fontSize = 14.sp
-            )
-            if (contestDetails.enhancementsUsed.isNotEmpty()) {
-                EnhancementsHistory(contestDetails)
-            }
+        )
+        if (contestDetails.enhancementsUsed.isNotEmpty()) {
+            EnhancementsHistory(contestDetails)
         }
     }
 }

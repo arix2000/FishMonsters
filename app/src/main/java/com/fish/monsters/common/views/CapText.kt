@@ -31,6 +31,7 @@ fun CapText(
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
+    minLines: Int = 1,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current
 ) {
@@ -49,6 +50,7 @@ fun CapText(
         overflow,
         softWrap,
         maxLines,
+        minLines,
         onTextLayout,
         style,
     )
